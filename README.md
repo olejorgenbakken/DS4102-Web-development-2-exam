@@ -1,1 +1,1 @@
-# Eksamen: Webutvikling 2
+# Webutvikling 2
