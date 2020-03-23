@@ -16,7 +16,7 @@ namespace RestaurantAPI.Migrations
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<int>(nullable: false),
                     Photo = table.Column<string>(nullable: true),
-                    IngredientsJSON = table.Column<string>(nullable: true),
+                    Ingredients = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {

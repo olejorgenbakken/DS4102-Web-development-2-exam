@@ -26,7 +26,7 @@ namespace RestaurantAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("IngredientsJSON")
+                    b.Property<string>("Ingredients")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

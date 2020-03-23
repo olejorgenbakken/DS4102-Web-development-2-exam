@@ -15,7 +15,7 @@ namespace RestaurantAPI.Models
 
         public string Photo { get; set; }
 
-        public string IngredientsJSON { get; set; }
+        public string Ingredients { get; set; }
     }
 
 }

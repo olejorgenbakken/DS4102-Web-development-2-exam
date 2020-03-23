@@ -4,11 +4,12 @@
     <DishItem
       v-for="dish in dishes"
       :key="dish.id"
+      :id="dish.id"
       :name="dish.name"
       :price="dish.price"
       :description="dish.description"
       :photo="dish.photo"
-      :ingredients="JSON.parse(dish.ingredientsJSON)"
+      :ingredients="JSON.parse(dish.ingredients)"
     ></DishItem>
   </section>
 </template>

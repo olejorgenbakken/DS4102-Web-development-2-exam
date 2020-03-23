@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto my-12" max-width="374" :ingredients="ingredients">
+  <v-card class="mx-auto my-12" max-width="374" :ingredients="ingredients" :id="'dish-' + id">
     <v-img height="250" :src="photo"></v-img>
 
     <v-card-title>{{name}}</v-card-title>

@@ -23,7 +23,7 @@ export default {
           price: 0,
           photo:
             "https://toppng.com/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png",
-          ingredientsJSON: '["empty", "efef"]'
+          ingredients: '["empty", "efef"]'
         }
       ]
     };
@@ -35,7 +35,6 @@ export default {
       setTimeout(() => {
         this.dishes = response.data;
       }, 3000);
-      console.log(response.data);
     });
   }
 };
