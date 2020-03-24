@@ -1,6 +1,8 @@
 <template>
   <div class="admin">
-    <h1>Welcome, admin</h1>
+    <header class="header">
+      <h1 class="headline font-weight-medium">Welcome, admin</h1>
+    </header>
     <DishTable></DishTable>
   </div>
 </template>

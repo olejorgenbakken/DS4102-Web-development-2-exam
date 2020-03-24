@@ -1,29 +1,24 @@
 <template>
-  <v-card class="mx-auto my-12" max-width="374" :ingredients="ingredients" :id="'dish-' + id">
-    <v-img height="250" :src="photo"></v-img>
+  <v-card class="mx-auto" max-width="400">
+    <v-img :src="photo" height="200px"></v-img>
+    <v-card-title>
+      <h2 class="display-1">{{name}}</h2>
+      <v-spacer></v-spacer>
+      <span class="title">{{price}} kr</span>
+    </v-card-title>
 
-    <v-card-title>{{name}}</v-card-title>
+    <v-card-text>{{description}}</v-card-text>
 
-    <v-card-text>
-      <div>{{description}}</div>
-    </v-card-text>
+    <v-card-text v-if="packs">
+      <span class="subheading">Velg antall</span>
 
-    <v-card-title>Prisinfomrasjon</v-card-title>
-
-    <v-card-text>
-      <v-chip-group active-class="deep-purple accent-4 white--text" column>
-        <v-chip>Ta med: 1 pakke (8 stk.): {{price}} kr</v-chip>
-
-        <v-chip>Sitte inne: 1 pakke (8 stk.): {{price + 20}} kr</v-chip>
-
-        <v-chip>Ta med: 2 pakker (16 stk.): {{price * 2}} kr</v-chip>
-
-        <v-chip>Sitte inne: 2 pakker (16 stk.): {{price * 2 + 20}} kr</v-chip>
+      <v-chip-group active-class="deep-purple--text text--accent-4">
+        <v-chip v-for="i in packSize" :key="i">{{i*2}} stk: {{price + ((i - 1) * 30)}} kr</v-chip>
       </v-chip-group>
     </v-card-text>
 
-    <v-card-actions>
-      <v-btn color="deep-purple lighten-2" text>Velg</v-btn>
+    <v-card-actions class="button">
+      <v-btn block class="white--text" color="deep-purple accent-4">Add to Cart</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -37,7 +32,9 @@ export default {
     description: String,
     price: Number,
     photo: String,
-    ingredients: Array
+    ingredients: Array,
+    packs: Boolean,
+    packSize: Number
   }
 };
 </script>
