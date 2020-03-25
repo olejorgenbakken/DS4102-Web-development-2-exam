@@ -3,6 +3,7 @@ RestaurantAPI/bin
 .DS_Store
 node_modules
 /dist
+obj
 
 # local env files
 .env.local
