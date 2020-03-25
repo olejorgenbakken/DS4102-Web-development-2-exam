@@ -1,5 +1,11 @@
 <template>
-  <v-data-table :headers="headers" :items="dishes" :items-per-page="15" class="elevation-1"></v-data-table>
+  <v-data-table
+    :headers="headers"
+    :items="dishes"
+    :items-per-page="15"
+    class="elevation-1 table"
+    id="menu-table"
+  ></v-data-table>
 </template>
 
 <script>
@@ -33,3 +39,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.table {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  margin: 0 auto;
+}
+</style>
