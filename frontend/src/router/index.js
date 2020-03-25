@@ -1,19 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import User from "../views/User.vue"
+import Home from "../views/user/Home.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'User',
-    component: User
+    name: 'Frontpage',
+    component: Home
   },
   {
-    path: '/admin',
-    name: 'Admin',
-    component: () => import(/* webpackChunkName: 'Administration' */ '../views/Admin.vue')
+    path: '/admin/:id',
+    name: 'admin',
+    component: () => import(/* webpackChunkName: 'Administration' */ '../views/admin/Admin.vue')
   }
 ]
 

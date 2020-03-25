@@ -11,19 +11,30 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900|Montserrat:400,700&display=swap");
+:root {
+  --black: #111;
+  --heading: "Cinzel Decorative", cursive;
+  --subheading: "Montserrat", sans-serif;
+}
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
-.header {
-  width: 100%;
-  text-align: center;
-  padding: 80px 0 40px 0;
+img {
+  max-width: 100%;
 }
 
-.title {
-  font-size: 2.5em;
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
 }
 </style>

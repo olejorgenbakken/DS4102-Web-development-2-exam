@@ -1,28 +1,68 @@
 <template>
-  <section class="dish-list">
-    <header class="header">
-      <h1 class="headline font-weight-medium">Sushi meny</h1>
+  <section class="dish-list" id="menu">
+    <header>
+      <h2 class="dish-list-heading">Meny</h2>
     </header>
-    <v-container fluid>
-      <v-row>
-        <v-col cols="12">
-          <v-row class="menu-list">
-            <DishItem
-              v-for="dish in dishes"
-              :key="dish.id"
-              :id="dish.id"
-              :name="dish.name"
-              :price="dish.price"
-              :description="dish.description"
-              :photo="dish.photo"
-              :ingredients="JSON.parse(dish.ingredients)"
-              :packs="dish.packs"
-              :packSize="dish.packSize"
-            ></DishItem>
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
+    <section id="starter-dishes" class="menu">
+      <header class="menu-header">
+        <h3>Starters</h3>
+      </header>
+      <DishItem
+        v-for="dish in dishes"
+        :key="dish.id"
+        :id="dish.id"
+        :name="dish.name"
+        :price="dish.price"
+        :description="dish.description"
+        :photo="dish.photo"
+        :ingredients="JSON.parse(dish.ingredients)"
+        :packs="dish.packs"
+        :packSize="dish.packSize"
+        :type="dish.type"
+        :list="'starter'"
+        :color="color"
+      ></DishItem>
+    </section>
+    <section id="main-dishes" class="menu">
+      <header class="menu-header">
+        <h3>Hovedretter</h3>
+      </header>
+      <DishItem
+        v-for="dish in dishes"
+        :key="dish.id"
+        :id="dish.id"
+        :name="dish.name"
+        :price="dish.price"
+        :description="dish.description"
+        :photo="dish.photo"
+        :ingredients="JSON.parse(dish.ingredients)"
+        :packs="dish.packs"
+        :packSize="dish.packSize"
+        :type="dish.type"
+        :list="'main'"
+        :color="color"
+      ></DishItem>
+    </section>
+    <section id="desserts" class="menu">
+      <header class="menu-header">
+        <h3>Desserter</h3>
+      </header>
+      <DishItem
+        v-for="dish in dishes"
+        :key="dish.id"
+        :id="dish.id"
+        :name="dish.name"
+        :price="dish.price"
+        :description="dish.description"
+        :photo="dish.photo"
+        :ingredients="JSON.parse(dish.ingredients)"
+        :packs="dish.packs"
+        :packSize="dish.packSize"
+        :type="dish.type"
+        :list="'dessert'"
+        :color="color"
+      ></DishItem>
+    </section>
   </section>
 </template>
 
@@ -35,13 +75,73 @@ export default {
     DishItem
   },
   props: {
-    dishes: Array
+    dishes: Array,
+    color: String
   }
 };
 </script>
 
 <style scoped>
-.menu-list {
-  padding: 30px 0;
+#menu {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.dish-list-heading {
+  font-size: 1.7em;
+  font-weight: 600;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: var(--subheading);
+  font-size: 0.8em;
+}
+
+.menu-header::before {
+  content: "";
+  height: 2px;
+  width: 10px;
+  background: var(--black);
+  display: block;
+  margin-right: 10px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "items";
+  gap: 10px 20px;
+}
+
+.menu-header {
+  grid-area: header;
+}
+
+@media only screen and (min-width: 650px) {
+  .menu {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "header header"
+      "items items";
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .menu {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      "header header header"
+      "items items items";
+  }
 }
 </style>
