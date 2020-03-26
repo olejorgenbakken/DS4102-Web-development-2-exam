@@ -2,6 +2,7 @@
   <main class="mainpage">
     <TheHeader></TheHeader>
     <DishHighlight
+      v-if="highlighted.id != null && highlighted.id != undefined"
       :id="highlighted.id"
       :photo="highlighted.photo"
       :name="highlighted.name"

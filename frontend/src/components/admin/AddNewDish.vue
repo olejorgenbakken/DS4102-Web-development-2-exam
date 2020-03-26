@@ -2,11 +2,11 @@
   <form class="upload">
     <section>
       <label>Navn</label>
-      <input type="text" placeholder="Navn" id="new-dish-name" />
+      <input type="text" placeholder="Navn" id="new-dish-name" autocomplete="off" />
     </section>
     <section>
       <label>Beskrivelse</label>
-      <textarea placeholder="Beskrivelse" id="new-dish-desc"></textarea>
+      <textarea placeholder="Beskrivelse" id="new-dish-desc" autocomplete="off"></textarea>
     </section>
     <section>
       <label>Type</label>
@@ -15,11 +15,12 @@
         <option value="Starter" selected>Starter</option>
         <option value="Main">Forrett</option>
         <option value="Dessert">Dessert</option>
+        <option value="Drink">Drikke</option>
       </select>
     </section>
     <section>
       <label>Pris</label>
-      <input type="text" placeholder="99 kr" id="new-dish-price" />
+      <input type="text" placeholder="99 kr" id="new-dish-price" autocomplete="off" />
     </section>
     <section>
       <label>Kommer den i flere størrelser</label>
@@ -61,16 +62,24 @@ export default {
 
       this.newDish.Name = document.querySelector("#new-dish-name").value;
       this.newDish.Description = document.querySelector("#new-dish-desc").value;
-      this.newDish.Type = document.querySelector("#new-dish-type").value;
       this.newDish.Price = parseInt(
         document.querySelector("#new-dish-price").value
       );
-      this.newDish.Packs = parseInt(
-        document.querySelector("#new-dish-packs").value
-      );
-      this.newDish.Highlighted = parseInt(
-        document.querySelector("#new-dish-highlighted").value
-      );
+      this.newDish.Type = document.querySelector("#new-dish-type").value;
+
+      if (parseInt(document.querySelector("#new-dish-packs").value) == 1) {
+        this.newDish.Packs = true;
+      } else {
+        this.newDish.Packs = false;
+      }
+
+      if (
+        parseInt(document.querySelector("#new-dish-highlighted").value) == 1
+      ) {
+        this.newDish.Highlighted = true;
+      } else {
+        this.newDish.Highlighted = false;
+      }
 
       let photo = document.querySelector("#new-dish-photo");
       let imageData = new FormData();
@@ -106,7 +115,8 @@ export default {
 }
 
 input:not([type="file"]),
-textarea {
+textarea,
+select {
   background: white;
   border: 1px solid grey;
   width: 100%;
@@ -115,6 +125,10 @@ textarea {
 
 textarea {
   resize: vertical;
+}
+
+select {
+  appearance: initial;
 }
 
 button {
