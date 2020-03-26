@@ -27,6 +27,13 @@ namespace RestaurantAPI.Controllers
             List<User> UserList = await _context.User.ToListAsync();
             return UserList;
         }
+
+        [HttpGet("{id}")]
+        public async Task<User> Get(int id)
+        {
+            User thisUser = await _context.User.FirstOrDefaultAsync(user => user.Id == id);
+            return thisUser;
+        }
     }
 
 }
