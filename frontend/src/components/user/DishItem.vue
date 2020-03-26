@@ -31,7 +31,6 @@ export default {
     description: String,
     price: Number,
     photo: String,
-    ingredients: Array,
     packs: Boolean,
     packSize: Number,
     type: String,

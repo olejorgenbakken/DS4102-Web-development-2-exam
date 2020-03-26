@@ -38,8 +38,7 @@ export default {
           description: "A description",
           price: 0,
           photo:
-            "https://toppng.com/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png",
-          ingredients: '["empty", "efef"]'
+            "https://toppng.com/uploads/preview/clipart-free-seaweed-clipart-draw-food-placeholder-11562968708qhzooxrjly.png"
         }
       ]
     };

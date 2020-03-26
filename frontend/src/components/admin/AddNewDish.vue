@@ -2,31 +2,42 @@
   <form class="upload">
     <section>
       <label>Navn</label>
-      <input type="text" placeholder="Navn" id="name" />
+      <input type="text" placeholder="Navn" id="new-dish-name" />
     </section>
     <section>
       <label>Beskrivelse</label>
-      <textarea placeholder="Beskrivelse"></textarea>
+      <textarea placeholder="Beskrivelse" id="new-dish-desc"></textarea>
     </section>
     <section>
       <label>Type</label>
-      <input type="text" placeholder="Type" />
+      <select id="new-dish-type">
+        <option disabled>Velg type</option>
+        <option value="starter" selected>Starter</option>
+        <option value="main">Forrett</option>
+        <option value="dessert">Dessert</option>
+      </select>
     </section>
     <section>
       <label>Pris</label>
-      <input type="text" placeholder="Pris" />
+      <input type="text" placeholder="99 kr" id="new-dish-price" />
     </section>
     <section>
       <label>Kommer den i flere størrelser</label>
-      <input type="text" placeholder="Flere størrelser?" />
+      <select id="new-dish-packs">
+        <option value="1" selected>Ja</option>
+        <option value="0">Nei</option>
+      </select>
     </section>
     <section>
       <label>Skal den fremheves?</label>
-      <input type="text" placeholder="Fremhevet" />
+      <select id="new-dish-highlighted">
+        <option value="1">Ja</option>
+        <option value="0" selected>Nei</option>
+      </select>
     </section>
     <section>
       <label>Last opp bilde</label>
-      <input id="upload-img" type="file" name="upload-img" />
+      <input type="file" name="upload-img" id="new-dish-photo" />
     </section>
     <button @click="addNewDish">Last opp ny rett</button>
   </form>
@@ -48,11 +59,24 @@ export default {
       e.preventDefault();
       const webAPIUrl = "https://localhost:5001/api/dishes";
 
-      let file = document.getElementById("upload-img");
-      let imageData = new FormData();
-      imageData.append("file", file.files[0]);
+      this.newDish.Name = document.querySelector("#new-dish-name").value;
+      this.newDish.Description = document.querySelector("#new-dish-desc").value;
+      this.newDish.Type = document.querySelector("#new-dish-type").value;
+      this.newDish.Price = parseInt(
+        document.querySelector("#new-dish-price").value
+      );
+      this.newDish.Packs = parseInt(
+        document.querySelector("#new-dish-packs").value
+      );
+      this.newDish.Highlighted = parseInt(
+        document.querySelector("#new-dish-highlighted").value
+      );
 
-      this.newDish.Photo = file.files[0].name;
+      let photo = document.querySelector("#new-dish-photo");
+      let imageData = new FormData();
+      imageData.append("file", photo.files[0]);
+
+      this.newDish.Photo = photo.files[0].name;
 
       console.log(this.newDish);
 
