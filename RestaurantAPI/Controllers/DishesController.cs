@@ -8,15 +8,15 @@ namespace RestaurantAPI.Controllers
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/dishes")]
 
     public class DishesController : ControllerBase
     {
 
 
-        private readonly DishesContext _context;
+        private readonly RestaurantsContext _context;
 
-        public DishesController(DishesContext context)
+        public DishesController(RestaurantsContext context)
         {
             _context = context;
         }
@@ -26,6 +26,13 @@ namespace RestaurantAPI.Controllers
         {
             List<Dish> dishList = await _context.Dish.ToListAsync();
             return dishList;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<Dish> Get(int id)
+        {
+            Dish thisDish = await _context.Dish.FirstOrDefaultAsync(dish => dish.Id == id);
+            return thisDish;
         }
     }
 

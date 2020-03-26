@@ -4,6 +4,7 @@ RestaurantAPI/bin
 node_modules
 /dist
 obj
+Migrations
 
 # local env files
 .env.local

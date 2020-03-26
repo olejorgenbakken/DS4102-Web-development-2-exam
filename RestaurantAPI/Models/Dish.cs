@@ -15,6 +15,7 @@ namespace RestaurantAPI.Models
         public int PackSize { get; set; }
         public string Photo { get; set; }
         public string Ingredients { get; set; }
+        public bool Highlighted { get; set; }
     }
 
 }

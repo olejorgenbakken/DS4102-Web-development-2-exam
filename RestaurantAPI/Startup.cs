@@ -40,7 +40,7 @@ namespace RestaurantAPI
                     );
                 }
             );
-            services.AddDbContext<DishesContext>(options => options.UseSqlite("Data Source=Dishes.db"));
+            services.AddDbContext<RestaurantsContext>(options => options.UseSqlite("Data Source=Restaurant.db"));
             services.AddControllers();
         }
 
