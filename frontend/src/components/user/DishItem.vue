@@ -8,7 +8,7 @@
       <img :src="photo" />
     </figure>
 
-    <section class="item-info" :style="'background:' + color">
+    <section class="item-info">
       <h3 class="item-name">
         {{name}}
         <small class="item-price">{{price}} kr</small>
@@ -35,12 +35,11 @@ export default {
     packs: Boolean,
     packSize: Number,
     type: String,
-    list: String,
-    color: String
+    list: String
   },
   methods: {
     addToCart() {
-      let webAPIUrl = "https://localhost:5001/dishes/";
+      let webAPIUrl = "https://localhost:5001/api/dishes/";
 
       axios.get(webAPIUrl).then(response => {
         response.data.forEach(dish => {
@@ -87,6 +86,7 @@ export default {
   height: 200px;
   clip-path: polygon(0 0, 100% 2%, 100% 100%, 0% 100%);
   color: var(--black);
+  background: var(--orange);
 }
 
 .item-name {

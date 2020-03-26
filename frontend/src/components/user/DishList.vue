@@ -20,7 +20,6 @@
         :packSize="dish.packSize"
         :type="dish.type"
         :list="'starter'"
-        :color="color"
       ></DishItem>
     </section>
     <section id="main-dishes" class="menu">
@@ -40,7 +39,6 @@
         :packSize="dish.packSize"
         :type="dish.type"
         :list="'main'"
-        :color="color"
       ></DishItem>
     </section>
     <section id="desserts" class="menu">
@@ -60,7 +58,6 @@
         :packSize="dish.packSize"
         :type="dish.type"
         :list="'dessert'"
-        :color="color"
       ></DishItem>
     </section>
   </section>

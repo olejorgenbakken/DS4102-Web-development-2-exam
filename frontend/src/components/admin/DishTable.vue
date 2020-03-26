@@ -1,11 +1,16 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="dishes"
-    :items-per-page="15"
-    class="elevation-1 table"
-    id="menu-table"
-  ></v-data-table>
+  <table class="dishes">
+    <tr class="headings">
+      <th>Navn</th>
+      <th>Beskrivelse</th>
+      <th>Pris (kr)</th>
+    </tr>
+    <tr v-for="dish in dishes" :key="dish.name">
+      <td class="name">{{dish.name}}</td>
+      <td>{{dish.description}}</td>
+      <td>{{dish.price}}</td>
+    </tr>
+  </table>
 </template>
 
 <script>
@@ -15,13 +20,6 @@ export default {
   name: "DishTable",
   data() {
     return {
-      headers: [
-        { text: "Navn", align: "start", sortable: true, value: "name" },
-        { text: "Beskrivelse", value: "description", sortable: false },
-        { text: "Ingredienser", value: "ingredients", sortable: false },
-        { text: "Bilde (URL)", value: "photo", sortable: false },
-        { text: "Pris (kr)", value: "price" }
-      ],
       dishes: [
         {
           name: "Frozen Yogurt",
@@ -31,7 +29,7 @@ export default {
     };
   },
   created() {
-    const webAPIUrl = "https://localhost:5001/dishes/";
+    const webAPIUrl = "https://localhost:5001/api/dishes/";
 
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;
@@ -41,10 +39,18 @@ export default {
 </script>
 
 <style scoped>
-.table {
+.dishes {
   width: 100%;
-  max-width: 1200px;
-  padding: 20px;
   margin: 0 auto;
+  background: rgb(233, 233, 233);
+  padding: 5px 20px;
+}
+
+.headings {
+  text-align: left;
+}
+
+.name {
+  font-weight: bold;
 }
 </style>

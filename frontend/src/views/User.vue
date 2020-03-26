@@ -7,22 +7,21 @@
       :name="dishes[1].name"
       :price="dishes[1].price"
       :description="dishes[1].description"
-      :color="color"
     ></DishHighlight>
-    <DishList :dishes="dishes" :color="color"></DishList>
+    <DishList :dishes="dishes"></DishList>
     <TheFooter></TheFooter>
   </main>
 </template>
 
 <script>
 import axios from "axios";
-import TheHeader from "../../components/TheHeader.vue";
-import DishHighlight from "../../components/user/DishHighlight.vue";
-import DishList from "../../components/user/DishList.vue";
-import TheFooter from "../../components/TheFooter.vue";
+import TheHeader from "../components/TheHeader.vue";
+import DishHighlight from "../components/user/DishHighlight.vue";
+import DishList from "../components/user/DishList.vue";
+import TheFooter from "../components/TheFooter.vue";
 
 export default {
-  name: "Home",
+  name: "UserHome",
   components: {
     TheHeader,
     DishHighlight,
@@ -31,7 +30,6 @@ export default {
   },
   data() {
     return {
-      color: "rgb(255, 166, 63)",
       dishes: [
         {
           id: 0,
@@ -46,7 +44,7 @@ export default {
     };
   },
   created() {
-    const webAPIUrl = "https://localhost:5001/dishes/";
+    const webAPIUrl = "https://localhost:5001/api/dishes/";
 
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;

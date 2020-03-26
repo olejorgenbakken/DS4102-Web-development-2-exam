@@ -16,6 +16,7 @@ export default {
   --black: #111;
   --heading: "Cinzel Decorative", cursive;
   --subheading: "Montserrat", sans-serif;
+  --orange: rgb(255, 166, 63);
 }
 * {
   box-sizing: border-box;
