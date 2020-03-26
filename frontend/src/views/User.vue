@@ -2,11 +2,11 @@
   <main class="mainpage">
     <TheHeader></TheHeader>
     <DishHighlight
-      :id="dishes[1].id"
-      :photo="dishes[1].photo"
-      :name="dishes[1].name"
-      :price="dishes[1].price"
-      :description="dishes[1].description"
+      :id="highlighted.id"
+      :photo="highlighted.photo"
+      :name="highlighted.name"
+      :price="highlighted.price"
+      :description="highlighted.description"
     ></DishHighlight>
     <DishList :dishes="dishes"></DishList>
     <TheFooter></TheFooter>
@@ -30,6 +30,7 @@ export default {
   },
   data() {
     return {
+      highlighted: {},
       dishes: [
         {
           id: 0,
@@ -48,6 +49,11 @@ export default {
 
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;
+      response.data.forEach(dish => {
+        if (dish.highlighted) {
+          this.highlighted = dish;
+        }
+      });
     });
   }
 };
