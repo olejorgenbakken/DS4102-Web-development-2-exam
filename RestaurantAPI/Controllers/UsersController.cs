@@ -14,9 +14,9 @@ namespace RestaurantAPI.Controllers
     {
 
 
-        private readonly UsersContext _context;
+        private readonly RestaurantsContext _context;
 
-        public UsersController(UsersContext context)
+        public UsersController(RestaurantsContext context)
         {
             _context = context;
         }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantAPI.Models;
+using System.Linq;
 
 namespace RestaurantAPI.Controllers
 {
@@ -14,9 +15,9 @@ namespace RestaurantAPI.Controllers
     {
 
 
-        private readonly AdminsContext _context;
+        private readonly RestaurantsContext _context;
 
-        public AdminsController(AdminsContext context)
+        public AdminsController(RestaurantsContext context)
         {
             _context = context;
         }
@@ -26,6 +27,13 @@ namespace RestaurantAPI.Controllers
         {
             List<Admin> AdminList = await _context.Admin.ToListAsync();
             return AdminList;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<Admin> Get(int id)
+        {
+            Admin thisAdmin = await _context.Admin.FirstOrDefaultAsync(admin => admin.Id == id);
+            return thisAdmin;
         }
     }
 
