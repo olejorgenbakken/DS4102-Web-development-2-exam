@@ -54,7 +54,7 @@
         :list="'dessert'"
       ></DishItem>
     </section>
-    <section id="desserts" class="menu">
+    <section id="drinks" class="menu">
       <header class="menu-header">
         <h3>Drikke</h3>
       </header>
