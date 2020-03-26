@@ -8,24 +8,24 @@ namespace RestaurantAPI.Controllers
 {
 
     [ApiController]
-    [Route("api/dishes")]
+    [Route("api/users")]
 
-    public class DishesController : ControllerBase
+    public class UsersController : ControllerBase
     {
 
 
-        private readonly DishesContext _context;
+        private readonly UsersContext _context;
 
-        public DishesController(DishesContext context)
+        public UsersController(UsersContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Dish>> Get()
+        public async Task<IEnumerable<User>> Get()
         {
-            List<Dish> dishList = await _context.Dish.ToListAsync();
-            return dishList;
+            List<User> UserList = await _context.User.ToListAsync();
+            return UserList;
         }
     }
 
