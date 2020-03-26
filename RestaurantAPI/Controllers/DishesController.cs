@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantAPI.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace RestaurantAPI.Controllers
 {
@@ -15,10 +18,33 @@ namespace RestaurantAPI.Controllers
 
 
         private readonly RestaurantsContext _context;
+        private readonly IWebHostEnvironment _hosting;
 
-        public DishesController(RestaurantsContext context)
+        public DishesController(RestaurantsContext context, IWebHostEnvironment hosting)
         {
             _context = context;
+            _hosting = hosting;
+        }
+
+        [HttpPost]
+        public async Task<Dish> Post(Dish newDish)
+        {
+            _context.Dish.Add(newDish);
+            await _context.SaveChangesAsync();
+            return newDish;
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public void Upload(IFormFile file)
+        {
+            string webrootpath = _hosting.WebRootPath;
+            string absolutepath = Path.Combine($"{webrootpath}/images/{file.FileName}");
+
+            using (var filestream = new FileStream(absolutepath, FileMode.Create))
+            {
+                file.CopyTo(filestream);
+            }
         }
 
         [HttpGet]

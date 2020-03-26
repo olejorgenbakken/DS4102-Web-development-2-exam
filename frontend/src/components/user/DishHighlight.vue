@@ -1,6 +1,6 @@
 <template>
   <section class="dish-hero" :style="'background-image: url(' + photo + ')'" :dish="id">
-    <section class="overlay" :style="'background-color:' + color">
+    <section class="overlay">
       <section class="content">
         <h2>
           {{name}}
@@ -25,12 +25,11 @@ export default {
     photo: String,
     name: String,
     price: Number,
-    description: String,
-    color: String
+    description: String
   },
   methods: {
     addToCart() {
-      let webAPIUrl = "https://localhost:5001/dishes/";
+      let webAPIUrl = "https://localhost:5001/api/dishes/";
 
       axios.get(webAPIUrl).then(response => {
         response.data.forEach(dish => {
@@ -68,6 +67,7 @@ export default {
   width: 100%;
   clip-path: polygon(0 0, 100% 10%, 100% 100%, 0% 100%);
   padding: 30px;
+  background: var(--orange);
 }
 
 .content {

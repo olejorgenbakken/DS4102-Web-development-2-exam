@@ -29,10 +29,11 @@ namespace RestaurantAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<RestaurantsContext>(options => options.UseSqlite("Data Source=Restaurant.db"));
             services.AddCors(
                 options =>
                 {
-                    options.AddPolicy("AllowAnyOrigin",
+                    options.AddPolicy("AllowAll",
                     builder => builder
                     .AllowAnyHeader()
                     .AllowAnyMethod()
@@ -40,7 +41,6 @@ namespace RestaurantAPI
                     );
                 }
             );
-            services.AddDbContext<RestaurantsContext>(options => options.UseSqlite("Data Source=Restaurant.db"));
             services.AddControllers();
         }
 
@@ -51,8 +51,9 @@ namespace RestaurantAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
 
-            app.UseCors("AllowAnyOrigin");
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
 

@@ -15,12 +15,9 @@
         :price="dish.price"
         :description="dish.description"
         :photo="dish.photo"
-        :ingredients="JSON.parse(dish.ingredients)"
         :packs="dish.packs"
-        :packSize="dish.packSize"
         :type="dish.type"
         :list="'starter'"
-        :color="color"
       ></DishItem>
     </section>
     <section id="main-dishes" class="menu">
@@ -35,12 +32,9 @@
         :price="dish.price"
         :description="dish.description"
         :photo="dish.photo"
-        :ingredients="JSON.parse(dish.ingredients)"
         :packs="dish.packs"
-        :packSize="dish.packSize"
         :type="dish.type"
         :list="'main'"
-        :color="color"
       ></DishItem>
     </section>
     <section id="desserts" class="menu">
@@ -55,12 +49,26 @@
         :price="dish.price"
         :description="dish.description"
         :photo="dish.photo"
-        :ingredients="JSON.parse(dish.ingredients)"
         :packs="dish.packs"
-        :packSize="dish.packSize"
         :type="dish.type"
         :list="'dessert'"
-        :color="color"
+      ></DishItem>
+    </section>
+    <section id="drinks" class="menu">
+      <header class="menu-header">
+        <h3>Drikke</h3>
+      </header>
+      <DishItem
+        v-for="dish in dishes"
+        :key="dish.id"
+        :id="dish.id"
+        :name="dish.name"
+        :price="dish.price"
+        :description="dish.description"
+        :photo="dish.photo"
+        :packs="dish.packs"
+        :type="dish.type"
+        :list="'drinks'"
       ></DishItem>
     </section>
   </section>
