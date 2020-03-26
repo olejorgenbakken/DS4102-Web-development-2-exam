@@ -16,7 +16,6 @@
         :description="dish.description"
         :photo="dish.photo"
         :packs="dish.packs"
-        :packSize="dish.packSize"
         :type="dish.type"
         :list="'starter'"
       ></DishItem>
@@ -34,7 +33,6 @@
         :description="dish.description"
         :photo="dish.photo"
         :packs="dish.packs"
-        :packSize="dish.packSize"
         :type="dish.type"
         :list="'main'"
       ></DishItem>
@@ -52,7 +50,6 @@
         :description="dish.description"
         :photo="dish.photo"
         :packs="dish.packs"
-        :packSize="dish.packSize"
         :type="dish.type"
         :list="'dessert'"
       ></DishItem>

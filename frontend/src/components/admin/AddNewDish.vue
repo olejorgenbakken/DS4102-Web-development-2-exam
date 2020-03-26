@@ -12,9 +12,9 @@
       <label>Type</label>
       <select id="new-dish-type">
         <option disabled>Velg type</option>
-        <option value="starter" selected>Starter</option>
-        <option value="main">Forrett</option>
-        <option value="dessert">Dessert</option>
+        <option value="Starter" selected>Starter</option>
+        <option value="Main">Forrett</option>
+        <option value="Dessert">Dessert</option>
       </select>
     </section>
     <section>

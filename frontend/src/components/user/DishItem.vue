@@ -32,7 +32,6 @@ export default {
     price: Number,
     photo: String,
     packs: Boolean,
-    packSize: Number,
     type: String,
     list: String
   },

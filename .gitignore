@@ -5,7 +5,7 @@ node_modules
 /dist
 obj
 Migrations
-wwwwroot/images
+wwwwroot/images/*
 
 # local env files
 .env.local
