@@ -7,6 +7,7 @@
       <th>Type</th>
       <th>Pris (kr)</th>
       <th>Fremhevet</th>
+      <th>Slett rett</th>
     </tr>
     <tr v-for="dish in dishes" :key="dish.id" class="rows">
       <td class="photo">
@@ -21,6 +22,9 @@
       <td>{{dish.price}}</td>
       <td v-if="dish.highlighted">Ja</td>
       <td v-else>Nei</td>
+      <td>
+        <button @click="deleteDish" :id="dish.id">Slett</button>
+      </td>
     </tr>
   </table>
 </template>
@@ -41,11 +45,20 @@ export default {
     };
   },
   created() {
-    const webAPIUrl = "https://localhost:5001/api/dishes/";
+    let webAPIUrl = "https://localhost:5001/api/dishes/";
 
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;
     });
+  },
+  methods: {
+    deleteDish(e) {
+      let webAPIUrl = `https://localhost:5001/api/dishes/${e.target.id}`;
+      console.log(e.target.id);
+      axios.delete(webAPIUrl).then(result => {
+        this.deleteStatus = JSON.stringify(result.data);
+      });
+    }
   }
 };
 </script>
@@ -62,7 +75,7 @@ export default {
 
 .rows {
   display: grid;
-  grid-template-columns: 70px repeat(2, 1fr) 150px 100px 100px;
+  grid-template-columns: 70px repeat(2, 1fr) 150px 100px 100px 50px;
   text-align: left;
   align-items: center;
 }

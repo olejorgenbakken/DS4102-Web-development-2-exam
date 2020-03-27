@@ -132,7 +132,7 @@ select {
 }
 
 button {
-  background: white;
+  background: var(--button);
   padding: 10px 25px;
   border-radius: 30px;
   font-size: 0.9em;

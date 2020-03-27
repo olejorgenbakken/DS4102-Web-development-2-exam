@@ -4,7 +4,7 @@
     <header class="header">
       <h2 class="greeting">Velkommen, {{loggedIn.FirstName}}</h2>
     </header>
-    <section class="dishes">
+    <section class="dishes" id="menu-table">
       <h3>Retter på menyen</h3>
       <DishTable></DishTable>
     </section>
@@ -63,6 +63,6 @@ h3 {
 
 .new-dish {
   padding: 20px;
-  background: var(--orange);
+  background: var(--color);
 }
 </style>

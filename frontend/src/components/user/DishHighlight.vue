@@ -67,7 +67,7 @@ export default {
   width: 100%;
   clip-path: polygon(0 0, 100% 10%, 100% 100%, 0% 100%);
   padding: 30px;
-  background: var(--orange);
+  background: var(--color);
 }
 
 .content {

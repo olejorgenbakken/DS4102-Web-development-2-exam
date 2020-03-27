@@ -60,6 +60,15 @@ namespace RestaurantAPI.Controllers
             Dish thisDish = await _context.Dish.FirstOrDefaultAsync(dish => dish.Id == id);
             return thisDish;
         }
+
+        [HttpDelete("{id}")]
+        public async Task<Dish> Delete(int id)
+        {
+            Dish dishToDelete = await _context.Dish.FirstOrDefaultAsync(dish => dish.Id == id);
+            _context.Remove(dishToDelete);
+            await _context.SaveChangesAsync();
+            return dishToDelete;
+        }
     }
 
 }

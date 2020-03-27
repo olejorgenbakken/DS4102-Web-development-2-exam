@@ -6,9 +6,16 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '*',
     name: 'Frontpage',
-    component: UserHome
+    component: UserHome,
+    children: [
+      {
+        path: 'dish/:id',
+        name: 'Dish',
+        component: () => import(/* webpackChunkName: 'Dish' */ '../components/user/Dish.vue')
+      }
+    ]
   },
   {
     path: '/admin/:id',
