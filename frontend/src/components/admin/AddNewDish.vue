@@ -1,5 +1,8 @@
 <template>
-  <form class="upload">
+  <form id="upload">
+    <header>
+      <h3>Last opp rett</h3>
+    </header>
     <section>
       <label>Navn</label>
       <input type="text" placeholder="Navn" id="new-dish-name" autocomplete="off" />
@@ -10,12 +13,9 @@
     </section>
     <section>
       <label>Type</label>
-      <select id="new-dish-type">
-        <option disabled>Velg type</option>
-        <option value="Maki" selected>Maki</option>
-        <option value="Sashimi">Sashimi</option>
-        <option value="Nigiri">Nigiri</option>
-        <option value="Vegetar">Vegetar</option>
+      <select id="new-dish-type" v-model="dishTypes">
+        <option selected disabled>Velg en</option>
+        <option v-for="type in dishTypes" :key="type">{{type}}</option>
       </select>
     </section>
     <section>
@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       dish: [],
+      dishTypes: ["Forrett", "Maki", "Sashimi", "Nigiri", "Vegetar", "Drikke"],
       newDish: {}
     };
   },
@@ -90,41 +91,4 @@ export default {
 </script>
 
 <style scoped>
-.upload {
-  width: 100%;
-  max-width: 500px;
-}
-
-.upload > section {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-input:not([type="file"]),
-textarea,
-select {
-  background: white;
-  border: 1px solid grey;
-  width: 100%;
-  padding: 2px;
-}
-
-textarea {
-  resize: vertical;
-}
-
-select {
-  appearance: initial;
-}
-
-button {
-  background: var(--button);
-  padding: 10px 25px;
-  border-radius: 30px;
-  font-size: 0.9em;
-  font-weight: 600;
-  font-family: var(--subheading);
-  width: max-content;
-}
 </style>

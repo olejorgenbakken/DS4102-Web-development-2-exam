@@ -4,14 +4,8 @@
     <header class="header">
       <h2 class="greeting">Velkommen, {{loggedIn.FirstName}}</h2>
     </header>
-    <section class="dishes" id="menu-table">
-      <h3>Retter på menyen</h3>
-      <DishTable></DishTable>
-    </section>
-    <section class="new-dish">
-      <h3>Legg til ny rett</h3>
-      <AddNewDish></AddNewDish>
-    </section>
+    <DishTable></DishTable>
+    <AddNewDish></AddNewDish>
   </section>
 </template>
 

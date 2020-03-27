@@ -1,7 +1,8 @@
 <template>
   <nav class="global-navigation">
     <section class="admin-nav nav" v-if="$route.name == 'admin'">
-      <a href="#menu-table">Retter på menyen</a>
+      <a href="#upload">Legg til ny rett</a>
+      <a href="#menu">Retter på menyen</a>
       <router-link to="/">Forside</router-link>
     </section>
     <section class="user-nav nav" v-else>
@@ -23,7 +24,7 @@ export default {
 <style scoped>
 .nav {
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(3, auto);
   gap: 20px;
 }
 

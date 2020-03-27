@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      dishTypes: ["Maki", "Sashimi", "Nigiri", "Vegetar"]
+      dishTypes: ["Forrett", "Maki", "Sashimi", "Nigiri", "Vegetar", "Drikke"]
     };
   },
   props: {
