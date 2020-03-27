@@ -1,11 +1,11 @@
 <template>
   <section class="dish-list" id="menu">
-    <header>
+    <header class="dish-list-header">
       <h2 class="dish-list-heading">Meny</h2>
     </header>
-    <section id="starter-dishes" class="menu">
+    <section class="menu" v-for="type in dishTypes" :key="type">
       <header class="menu-header">
-        <h3>Starters</h3>
+        <h3>{{type}}</h3>
       </header>
       <DishItem
         v-for="dish in dishes"
@@ -17,58 +17,7 @@
         :photo="dish.photo"
         :packs="dish.packs"
         :type="dish.type"
-        :list="'starter'"
-      ></DishItem>
-    </section>
-    <section id="main-dishes" class="menu">
-      <header class="menu-header">
-        <h3>Hovedretter</h3>
-      </header>
-      <DishItem
-        v-for="dish in dishes"
-        :key="dish.id"
-        :id="dish.id"
-        :name="dish.name"
-        :price="dish.price"
-        :description="dish.description"
-        :photo="dish.photo"
-        :packs="dish.packs"
-        :type="dish.type"
-        :list="'main'"
-      ></DishItem>
-    </section>
-    <section id="desserts" class="menu">
-      <header class="menu-header">
-        <h3>Desserter</h3>
-      </header>
-      <DishItem
-        v-for="dish in dishes"
-        :key="dish.id"
-        :id="dish.id"
-        :name="dish.name"
-        :price="dish.price"
-        :description="dish.description"
-        :photo="dish.photo"
-        :packs="dish.packs"
-        :type="dish.type"
-        :list="'dessert'"
-      ></DishItem>
-    </section>
-    <section id="drinks" class="menu">
-      <header class="menu-header">
-        <h3>Drikke</h3>
-      </header>
-      <DishItem
-        v-for="dish in dishes"
-        :key="dish.id"
-        :id="dish.id"
-        :name="dish.name"
-        :price="dish.price"
-        :description="dish.description"
-        :photo="dish.photo"
-        :packs="dish.packs"
-        :type="dish.type"
-        :list="'drinks'"
+        :list="type"
       ></DishItem>
     </section>
   </section>
@@ -82,6 +31,11 @@ export default {
   components: {
     DishItem
   },
+  data() {
+    return {
+      dishTypes: ["Maki", "Sashimi", "Nigiri", "Vegetar"]
+    };
+  },
   props: {
     dishes: Array,
     color: String
@@ -93,11 +47,15 @@ export default {
 #menu {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 50px;
   padding: 30px;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+}
+
+.dish-list-heading {
+  margin-bottom: -35px;
 }
 
 .dish-list-heading {

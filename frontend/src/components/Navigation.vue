@@ -22,9 +22,8 @@ export default {
 
 <style scoped>
 .nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
   gap: 20px;
 }
 
