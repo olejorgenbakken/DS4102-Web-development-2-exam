@@ -16,7 +16,7 @@
       <p class="item-description">{{description}}</p>
 
       <router-link :to="'dish/' + id" class="more-button">Les mer</router-link>
-      <button class="buy-button" @click="addToCart">Legg til</button>
+      <button class="buy-button" @click="addToCart">Kjøp</button>
     </section>
   </article>
 </template>
@@ -78,8 +78,8 @@ export default {
 
 .item-info {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: 5px;
   margin-top: 140px;
   padding: 20px 10px;
   padding-bottom: 80px;
@@ -114,7 +114,10 @@ button {
 .more-button {
   margin-top: 10px;
   margin-bottom: 0;
+  font-weight: 700;
+  font-size: 0.9em;
   width: max-content;
+  font-family: var(--subheading);
 }
 
 .buy-button {

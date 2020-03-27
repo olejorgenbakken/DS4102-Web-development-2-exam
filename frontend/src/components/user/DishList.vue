@@ -1,11 +1,11 @@
 <template>
   <section class="dish-list" id="menu">
-    <header>
+    <header class="dish-list-header">
       <h2 class="dish-list-heading">Meny</h2>
     </header>
     <section id="starter-dishes" class="menu">
       <header class="menu-header">
-        <h3>Starters</h3>
+        <h3>Maki</h3>
       </header>
       <DishItem
         v-for="dish in dishes"
@@ -22,7 +22,7 @@
     </section>
     <section id="main-dishes" class="menu">
       <header class="menu-header">
-        <h3>Hovedretter</h3>
+        <h3>Sashimi</h3>
       </header>
       <DishItem
         v-for="dish in dishes"
@@ -39,7 +39,7 @@
     </section>
     <section id="desserts" class="menu">
       <header class="menu-header">
-        <h3>Desserter</h3>
+        <h3>Nigiri</h3>
       </header>
       <DishItem
         v-for="dish in dishes"
@@ -56,7 +56,7 @@
     </section>
     <section id="drinks" class="menu">
       <header class="menu-header">
-        <h3>Drikke</h3>
+        <h3>Vegetar</h3>
       </header>
       <DishItem
         v-for="dish in dishes"
@@ -93,11 +93,15 @@ export default {
 #menu {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 50px;
   padding: 30px;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+}
+
+.dish-list-heading {
+  margin-bottom: -35px;
 }
 
 .dish-list-heading {

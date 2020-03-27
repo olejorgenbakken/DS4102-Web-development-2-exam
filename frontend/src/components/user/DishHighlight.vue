@@ -13,7 +13,12 @@
 
         <p>{{description}}</p>
 
-        <button @click="addToCart">Kjøp nå</button>
+        <section class="links">
+          <router-link :to="'dish/' + id" class="more-button">
+            <button>Les mer</button>
+          </router-link>
+          <button @click="addToCart">Kjøp</button>
+        </section>
       </section>
     </section>
   </section>
@@ -61,7 +66,7 @@ export default {
   max-width: 1250px;
   margin: 0 auto 20px auto;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -76,6 +81,8 @@ export default {
 
 .content {
   color: var(--black);
+  display: grid;
+  gap: 10px;
 }
 
 .content h2,
@@ -92,6 +99,12 @@ export default {
   font-weight: 400;
   font-size: 0.8em;
   margin-left: 5px;
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 15px;
 }
 
 .content button {
@@ -119,7 +132,7 @@ export default {
   }
 
   .content button {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 }
 </style>

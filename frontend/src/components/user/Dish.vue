@@ -20,10 +20,15 @@
             <h2>{{theDish.price}} kr</h2>
           </section>
         </header>
-        <label>Beskrivelse</label>
-        <p>{{theDish.description}}</p>
-        <label>Ingredienser</label>
-        <p v-for="ingredient in theDish.ingredients" :key="ingredient">{{ingredient}}</p>
+        <section>
+          <label>Beskrivelse</label>
+          <p>{{theDish.description}}</p>
+        </section>
+        <section>
+          <label>Ingredienser</label>
+          <p v-for="ingredient in theDish.ingredients" :key="ingredient">{{ingredient}}</p>
+        </section>
+
         <button
           class="edit-button"
           @click="editDish"
@@ -136,6 +141,8 @@ aside {
 
 .dish-info {
   padding: 20px;
+  display: grid;
+  gap: 20px;
 }
 
 .dish-info header {
@@ -183,6 +190,10 @@ button {
 @media only screen and (min-width: 1000px) {
   .dish {
     padding-top: 100px;
+  }
+
+  .photo {
+    height: 400px;
   }
 
   .dish-info {

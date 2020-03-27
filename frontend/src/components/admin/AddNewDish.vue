@@ -12,22 +12,15 @@
       <label>Type</label>
       <select id="new-dish-type">
         <option disabled>Velg type</option>
-        <option value="Starter" selected>Starter</option>
-        <option value="Main">Hovedrett</option>
-        <option value="Dessert">Dessert</option>
-        <option value="Drink">Drikke</option>
+        <option value="Maki" selected>Maki</option>
+        <option value="Sashimi">Sashimi</option>
+        <option value="Nigiri">Nigiri</option>
+        <option value="Vegetar">Vegetar</option>
       </select>
     </section>
     <section>
       <label>Pris</label>
       <input type="text" placeholder="99 kr" id="new-dish-price" autocomplete="off" />
-    </section>
-    <section>
-      <label>Kommer den i flere størrelser</label>
-      <select id="new-dish-packs">
-        <option value="1" selected>Ja</option>
-        <option value="0">Nei</option>
-      </select>
     </section>
     <section>
       <label>Skal den fremheves?</label>
@@ -66,12 +59,6 @@ export default {
         document.querySelector("#new-dish-price").value
       );
       this.newDish.Type = document.querySelector("#new-dish-type").value;
-
-      if (parseInt(document.querySelector("#new-dish-packs").value) == 1) {
-        this.newDish.Packs = true;
-      } else {
-        this.newDish.Packs = false;
-      }
 
       if (
         parseInt(document.querySelector("#new-dish-highlighted").value) == 1
