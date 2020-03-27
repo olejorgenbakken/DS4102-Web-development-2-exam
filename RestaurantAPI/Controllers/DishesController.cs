@@ -54,6 +54,14 @@ namespace RestaurantAPI.Controllers
             return dishList;
         }
 
+        [HttpPut]
+        public async Task<Dish> Put(Dish updateWord)
+        {
+            _context.Update(updateWord);
+            await _context.SaveChangesAsync();
+            return updateWord;
+        }
+
         [HttpGet("{id}")]
         public async Task<Dish> Get(int id)
         {
