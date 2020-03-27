@@ -7,7 +7,7 @@
         </aside>
       </router-link>
       <figure class="photo">
-        <img :src="'https:/localhost:5001/images/' + dish.photo" />
+        <img :src="'https:/localhost:5001/images/' + theDish.photo" />
       </figure>
       <section class="dish-info">
         <header>
@@ -143,14 +143,9 @@ aside {
 }
 
 .dish-info header h1,
-.dish-info header h2,
-label {
+.dish-info header h2 {
   font-weight: 900;
   font-family: var(--subheading);
-}
-
-label {
-  font-size: 0.9em;
 }
 
 .dish-info header h1 {

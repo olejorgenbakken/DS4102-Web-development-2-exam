@@ -39,4 +39,10 @@ h1,
 h2 {
   font-family: var(--heading);
 }
+
+label {
+  font-family: var(--subheading);
+  font-weight: 700;
+  font-size: 0.8em;
+}
 </style>

@@ -89,7 +89,12 @@ export default {
 }
 
 .item-name {
-  font-size: 1.5em;
+  font-size: 1.4em;
+  font-family: var(--subheading);
+}
+
+.item-name small {
+  font-weight: 400;
 }
 
 button {

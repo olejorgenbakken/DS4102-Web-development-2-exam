@@ -13,7 +13,7 @@
       <select id="new-dish-type">
         <option disabled>Velg type</option>
         <option value="Starter" selected>Starter</option>
-        <option value="Main">Forrett</option>
+        <option value="Main">Hovedrett</option>
         <option value="Dessert">Dessert</option>
         <option value="Drink">Drikke</option>
       </select>
