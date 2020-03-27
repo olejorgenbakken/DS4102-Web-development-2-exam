@@ -15,7 +15,8 @@
       </h3>
       <p class="item-description">{{description}}</p>
 
-      <button class="item-button" @click="addToCart">Legg til</button>
+      <router-link :to="'dish/' + id" class="more-button">Les mer</router-link>
+      <button class="buy-button" @click="addToCart">Legg til</button>
     </section>
   </article>
 </template>
@@ -81,28 +82,42 @@ export default {
   flex-direction: column;
   margin-top: 140px;
   padding: 20px 10px;
-  height: 200px;
+  padding-bottom: 80px;
   clip-path: polygon(0 0, 100% 2%, 100% 100%, 0% 100%);
   color: var(--black);
-  background: var(--orange);
+  background: var(--color);
 }
 
 .item-name {
   font-size: 1.5em;
 }
 
-.item-button {
+button {
   position: absolute;
-  background: white;
+  background: var(--button);
+  color: var(--black);
   padding: 10px 25px;
   border-radius: 30px;
   font-size: 0.9em;
   bottom: 20px;
-  right: 20px;
   font-weight: 600;
   font-family: var(--subheading);
   align-self: flex-end;
   width: max-content;
+}
+
+.more-button {
+  margin-top: 10px;
+  margin-bottom: 0;
+  width: max-content;
+}
+
+.buy-button {
+  right: 20px;
+}
+
+.item-description {
+  margin-bottom: 0;
 }
 
 @media only screen and (min-width: 420px) {

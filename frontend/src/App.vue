@@ -1,7 +1,7 @@
 <template>
-  <v-app>
+  <main>
     <router-view></router-view>
-  </v-app>
+  </main>
 </template>
 
 <script>
@@ -16,7 +16,8 @@ export default {
   --black: #111;
   --heading: "Cinzel Decorative", cursive;
   --subheading: "Montserrat", sans-serif;
-  --orange: rgb(255, 166, 63);
+  --color: rgb(238, 238, 238);
+  --button: rgb(255, 255, 255);
 }
 * {
   box-sizing: border-box;
