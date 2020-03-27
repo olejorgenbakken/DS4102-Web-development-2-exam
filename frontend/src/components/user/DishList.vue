@@ -3,9 +3,9 @@
     <header class="dish-list-header">
       <h2 class="dish-list-heading">Meny</h2>
     </header>
-    <section id="starter-dishes" class="menu">
+    <section class="menu" v-for="type in dishTypes" :key="type">
       <header class="menu-header">
-        <h3>Maki</h3>
+        <h3>{{type}}</h3>
       </header>
       <DishItem
         v-for="dish in dishes"
@@ -17,58 +17,7 @@
         :photo="dish.photo"
         :packs="dish.packs"
         :type="dish.type"
-        :list="'starter'"
-      ></DishItem>
-    </section>
-    <section id="main-dishes" class="menu">
-      <header class="menu-header">
-        <h3>Sashimi</h3>
-      </header>
-      <DishItem
-        v-for="dish in dishes"
-        :key="dish.id"
-        :id="dish.id"
-        :name="dish.name"
-        :price="dish.price"
-        :description="dish.description"
-        :photo="dish.photo"
-        :packs="dish.packs"
-        :type="dish.type"
-        :list="'main'"
-      ></DishItem>
-    </section>
-    <section id="desserts" class="menu">
-      <header class="menu-header">
-        <h3>Nigiri</h3>
-      </header>
-      <DishItem
-        v-for="dish in dishes"
-        :key="dish.id"
-        :id="dish.id"
-        :name="dish.name"
-        :price="dish.price"
-        :description="dish.description"
-        :photo="dish.photo"
-        :packs="dish.packs"
-        :type="dish.type"
-        :list="'dessert'"
-      ></DishItem>
-    </section>
-    <section id="drinks" class="menu">
-      <header class="menu-header">
-        <h3>Vegetar</h3>
-      </header>
-      <DishItem
-        v-for="dish in dishes"
-        :key="dish.id"
-        :id="dish.id"
-        :name="dish.name"
-        :price="dish.price"
-        :description="dish.description"
-        :photo="dish.photo"
-        :packs="dish.packs"
-        :type="dish.type"
-        :list="'drinks'"
+        :list="type"
       ></DishItem>
     </section>
   </section>
@@ -81,6 +30,11 @@ export default {
   name: "DishList",
   components: {
     DishItem
+  },
+  data() {
+    return {
+      dishTypes: ["Maki", "Sashimi", "Nigiri", "Vegetar"]
+    };
   },
   props: {
     dishes: Array,

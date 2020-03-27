@@ -11,21 +11,39 @@
     </tr>
     <tr v-for="dish in dishes" :key="dish.id" class="rows">
       <td class="photo">
+        <input type="file" name="upload-img" @change="sendData" :dish="dish.id" class="chosenPic" />
         <img :src="'https:/localhost:5001/images/' + dish.photo" />
       </td>
-      <td class="name">
-        <input v-model="dish.name" @click="highlightInput" />
+      <td>
+        <input v-model="dish.name" @focusout="sendData" id="15" :dish="dish.id" class="name" />
       </td>
       <td>
-        <textarea v-model="dish.description"></textarea>
+        <textarea
+          v-model="dish.description"
+          @focusout="sendData"
+          :dish="dish.id"
+          class="description"
+        ></textarea>
       </td>
-      <td v-if="dish.type == 'Sashimi'">Sashimi</td>
-      <td v-else-if="dish.type == 'Nigiri'">Nigiri</td>
-      <td v-else-if="dish.type == 'Vegetar'">Vegetar</td>
-      <td v-else>Maki</td>
-      <td>{{dish.price}}</td>
-      <td v-if="dish.highlighted">Ja</td>
-      <td v-else>Nei</td>
+      <td>
+        <select v-model="dish.type" @change="sendData" :dish="dish.id">
+          <option disabled value>Velg en</option>
+          <option>Maki</option>
+          <option>Sashimi</option>
+          <option>Nigiri</option>
+          <option>Vegetar</option>
+        </select>
+      </td>
+      <td>
+        <input v-model="dish.price" @focusout="sendData" :dish="dish.id" class="price" />
+      </td>
+      <td>
+        <select v-model="dish.highlighted" @change="sendData" :dish="dish.id" class="highlighted">
+          <option disabled value>Fremhevet?</option>
+          <option value="true">Ja</option>
+          <option value="false">Nei</option>
+        </select>
+      </td>
       <td>
         <button @click="deleteDish" :id="dish.id" class="delete-btn">Slett</button>
       </td>
@@ -40,12 +58,7 @@ export default {
   name: "DishTable",
   data() {
     return {
-      dishes: [
-        {
-          name: "Frozen Yogurt",
-          price: 159
-        }
-      ]
+      dishes: []
     };
   },
   created() {
@@ -63,8 +76,39 @@ export default {
         this.deleteStatus = JSON.stringify(result.data);
       });
     },
-    highlightInput(e) {
-      console.log(e.target);
+    sendData(e) {
+      let webAPIUrl = "https://localhost:5001/api/dishes/";
+      let oldDish = `https://localhost:5001/api/dishes/${e.target.getAttribute(
+        "dish"
+      )}`;
+      axios
+        .get(oldDish)
+        .then(response => {
+          oldDish = response.data;
+        })
+        .then(() => {
+          let updatedDish = oldDish;
+          updatedDish.description = document.querySelector(
+            ".description[dish='" + oldDish.id + "']"
+          ).value;
+          updatedDish.name = document.querySelector(
+            ".name[dish='" + oldDish.id + "']"
+          ).value;
+          updatedDish.price = parseInt(
+            document.querySelector(".price[dish='" + oldDish.id + "']").value
+          );
+          if (
+            (updatedDish.highlighted =
+              document.querySelector(".highlighted[dish='" + oldDish.id + "']")
+                .value == "true")
+          ) {
+            updatedDish.highlighted = true;
+          } else {
+            updatedDish.highlighted = false;
+          }
+          console.log(updatedDish);
+          axios.put(webAPIUrl, updatedDish);
+        });
     }
   }
 };
@@ -83,7 +127,7 @@ export default {
 
 .rows {
   display: grid;
-  grid-template-columns: 50px 200px 1fr 100px 80px 100px 70px;
+  grid-template-columns: 50px 200px 1fr 120px 80px 100px 70px;
   text-align: left;
   align-items: flex-start;
   gap: 20px;
@@ -107,12 +151,36 @@ textarea {
 
 .photo {
   height: 50px;
+  position: relative;
+}
+
+.chosenPic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+  z-index: 2;
 }
 
 .photo img {
   height: 100%;
   width: 100%;
   object-fit: cover;
+}
+
+.dish-type {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+}
+
+.dish-type label {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 10px;
 }
 
 .delete-btn {

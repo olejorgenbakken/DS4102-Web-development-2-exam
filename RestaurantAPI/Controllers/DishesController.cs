@@ -55,11 +55,11 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<Dish> Put(Dish updateWord)
+        public async Task<Dish> Put(Dish updateDish)
         {
-            _context.Update(updateWord);
+            _context.Update(updateDish);
             await _context.SaveChangesAsync();
-            return updateWord;
+            return updateDish;
         }
 
         [HttpGet("{id}")]
