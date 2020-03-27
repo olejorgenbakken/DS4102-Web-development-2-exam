@@ -5,7 +5,7 @@
     :dish="id"
   >
     <figure class="item-photo">
-      <img :src="photo" />
+      <img :src="'https:/localhost:5001/images/' + photo" />
     </figure>
 
     <section class="item-info">

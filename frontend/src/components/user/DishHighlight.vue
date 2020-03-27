@@ -1,5 +1,9 @@
 <template>
-  <section class="dish-hero" :style="'background-image: url(' + photo + ')'" :dish="id">
+  <section
+    class="dish-hero"
+    :style="'background-image: url(https:localhost:5001/images/' + photo + ')'"
+    :dish="id"
+  >
     <section class="overlay">
       <section class="content">
         <h2>

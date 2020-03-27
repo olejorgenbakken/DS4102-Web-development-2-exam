@@ -11,9 +11,11 @@
     </tr>
     <tr v-for="dish in dishes" :key="dish.id" class="rows">
       <td class="photo">
-        <img :src="dish.photo" />
+        <img :src="'https:/localhost:5001/images/' + dish.photo" />
       </td>
-      <td class="name">{{dish.name}}</td>
+      <td class="name">
+        <input :value="dish.name" @click="highlightInput" />
+      </td>
       <td>{{dish.description}}</td>
       <td v-if="dish.type == 'Main'">Hovedrett</td>
       <td v-else-if="dish.type == 'Dessert'">Dessert</td>
@@ -58,6 +60,9 @@ export default {
       axios.delete(webAPIUrl).then(result => {
         this.deleteStatus = JSON.stringify(result.data);
       });
+    },
+    highlightInput(e) {
+      console.log(e.target);
     }
   }
 };

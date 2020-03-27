@@ -7,7 +7,7 @@
         </aside>
       </router-link>
       <figure class="photo">
-        <img :src="theDish.photo" />
+        <img :src="'https:/localhost:5001/images/' + dish.photo" />
       </figure>
       <section class="dish-info">
         <header>
