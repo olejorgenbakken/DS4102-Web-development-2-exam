@@ -5,7 +5,10 @@
       <h2 class="greeting">Velkommen, {{loggedIn.FirstName}}</h2>
     </header>
     <DishTable></DishTable>
-    <AddNewDish></AddNewDish>
+    <section class="uploads">
+      <AddNewDish></AddNewDish>
+      <AddAdmin></AddAdmin>
+    </section>
   </section>
 </template>
 
@@ -13,13 +16,15 @@
 import TheHeader from "../components/TheHeader.vue";
 import DishTable from "../components/admin/DishTable.vue";
 import AddNewDish from "../components/admin/AddNewDish.vue";
+import AddAdmin from "../components/admin/AddAdmin.vue";
 
 export default {
   name: "AdminHome",
   components: {
     TheHeader,
     DishTable,
-    AddNewDish
+    AddNewDish,
+    AddAdmin
   },
   data() {
     return {
@@ -58,5 +63,17 @@ h3 {
 .new-dish {
   padding: 20px;
   background: var(--color);
+}
+
+.uploads {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media only screen and (min-width: 700px) {
+  .uploads {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 </style>

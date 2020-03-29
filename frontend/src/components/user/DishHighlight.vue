@@ -6,7 +6,7 @@
   >
     <section class="overlay">
       <section class="content">
-        <h2>
+        <h2 class="title">
           {{name}}
           <small>fra {{price}} kr</small>
         </h2>
@@ -62,6 +62,7 @@ export default {
 <style scoped>
 .dish-hero {
   height: 80vh;
+  min-height: 400px;
   width: 100%;
   max-width: 1250px;
   margin: 0 auto 20px auto;
@@ -120,6 +121,7 @@ export default {
 @media only screen and (min-width: 700px) {
   .dish-hero {
     height: 75vh;
+    min-height: 500px;
   }
   .overlay {
     position: relative;
@@ -129,6 +131,10 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .title {
+    width: 95%;
   }
 
   .content button {

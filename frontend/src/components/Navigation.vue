@@ -1,13 +1,11 @@
 <template>
   <nav class="global-navigation">
     <section class="admin-nav nav" v-if="$route.name == 'admin'">
-      <a href="#upload">Legg til ny rett</a>
-      <a href="#menu">Retter på menyen</a>
       <router-link to="/">Forside</router-link>
     </section>
     <section class="user-nav nav" v-else>
       <a href="#menu">Meny</a>
-      <router-link :to="{ name: 'admin', params: { id: 1 }}">Logg inn</router-link>
+      <router-link :to="{ name: 'Login'}">Logg inn</router-link>
     </section>
   </nav>
 </template>
