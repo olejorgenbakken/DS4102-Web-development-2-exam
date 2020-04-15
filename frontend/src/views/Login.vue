@@ -3,11 +3,19 @@
     <header>
       <h1>Login</h1>
     </header>
-    <section class="inputs">
-      <input type="text" v-model="name" />
-      <input type="password" v-model="pass" />
+    <form>
+      <section>
+        <label>Username</label>
+        <input type="text" v-model="name" />
+      </section>
+      <section>
+        <label>Password</label>
+        <input type="password" v-model="pass" />
+      </section>
+
       <button @click="login">Logg inn</button>
-    </section>
+    </form>
+    <section class="feedback"></section>
   </section>
 </template>
 
@@ -18,33 +26,36 @@ export default {
   data() {
     return {
       name: "",
-      pass: "",
-      user: {
-        username: this.name,
-        password: this.pass
-      }
+      pass: ""
     };
   },
   methods: {
-    login() {
-      let userDB = "https://localhost:5001/api/users";
-      axios.get(userDB).then(response => {
-        console.log(response.data);
-        console.log(this.user);
-        if (
-          response.data.username === this.user.username &&
-          response.data.password === this.user.password
-        ) {
-          console.log("login successfull");
-        } else if (
-          response.data.username === this.user.username &&
-          response.data.password != this.user.password
-        ) {
-          console.log("wrong password");
-        } else {
-          console.log("no user with that username");
-        }
-      });
+    login(e) {
+      e.preventDefault();
+      let user = { username: this.name, password: this.pass };
+      let userDB = "https://localhost:5001/api/users/username/" + user.username;
+      axios
+        .get(userDB)
+        .then(response => {
+          if (response.status == 200) {
+            if (
+              response.data.username == user.username &&
+              response.data.password == user.password
+            ) {
+              let id = response.data.id;
+              sessionStorage.setItem("user", JSON.stringify(response.data));
+              this.$router.push({
+                name: "admin",
+                params: { id }
+              });
+            }
+          }
+        })
+        .catch(error => {
+          if (error.response.status == 404) {
+            console.log("User not found");
+          }
+        });
     }
   }
 };
@@ -58,9 +69,45 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  padding-bottom: 200px;
+  font-family: var(--paragraph);
 }
 
 header {
-  height: 100px;
+  height: 70px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-left: 4px;
+}
+
+input {
+  margin-top: 2px;
+  border: 1px solid black;
+  padding: 7px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+button {
+  background: black;
+  color: white;
+  font-size: 1em;
+  height: 30px;
+  border-radius: 20px;
 }
 </style>

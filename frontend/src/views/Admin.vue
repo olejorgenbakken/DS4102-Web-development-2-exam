@@ -2,7 +2,7 @@
   <section class="admin">
     <TheHeader></TheHeader>
     <header class="header">
-      <h2 class="greeting">Velkommen, {{loggedIn.FirstName}}</h2>
+      <h2 class="greeting">Velkommen, {{user.firstName}}</h2>
     </header>
     <DishTable></DishTable>
     <section class="uploads">
@@ -28,17 +28,14 @@ export default {
   },
   data() {
     return {
-      loggedIn: {},
-      users: [
-        { id: 1, Username: "Admin", FirstName: "Siv", LastName: "Jensen" }
-      ]
+      user: {}
     };
   },
   created() {
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.$route.params.id == this.users[i].id) {
-        this.loggedIn = this.users[i];
-      }
+    if (sessionStorage.getItem("user") == null) {
+      this.$router.push({ name: "Login" });
+    } else {
+      this.user = JSON.parse(sessionStorage.getItem("user"));
     }
   }
 };
