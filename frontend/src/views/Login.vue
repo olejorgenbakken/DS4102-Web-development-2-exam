@@ -52,7 +52,12 @@ export default {
               response.data.password == user.password
             ) {
               let id = response.data.id;
-              sessionStorage.setItem("user", JSON.stringify(response.data));
+              let user = {
+                id: response.data.id,
+                username: response.data.username,
+                firstName: response.data.firstName
+              };
+              sessionStorage.setItem("user", JSON.stringify(user));
               this.$router.push({
                 name: "admin",
                 params: { id }
