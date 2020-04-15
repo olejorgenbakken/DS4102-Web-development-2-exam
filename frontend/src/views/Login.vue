@@ -29,6 +29,15 @@ export default {
       pass: ""
     };
   },
+  created() {
+    if (sessionStorage.getItem("user") != null) {
+      let id = JSON.parse(sessionStorage.getItem("user")).id;
+      this.$router.push({
+        name: "admin",
+        params: { id }
+      });
+    }
+  },
   methods: {
     login(e) {
       e.preventDefault();
