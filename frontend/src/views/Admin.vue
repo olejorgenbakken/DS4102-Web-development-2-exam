@@ -2,15 +2,12 @@
   <section class="admin">
     <TheHeader></TheHeader>
     <header class="header">
-      <h2 class="greeting">Velkommen, {{loggedIn.FirstName}}</h2>
+      <h2 class="greeting">Velkommen, {{user.firstName}}</h2>
     </header>
-    <section class="dishes" id="menu-table">
-      <h3>Retter på menyen</h3>
-      <DishTable></DishTable>
-    </section>
-    <section class="new-dish">
-      <h3>Legg til ny rett</h3>
+    <DishTable></DishTable>
+    <section class="uploads">
       <AddNewDish></AddNewDish>
+      <AddAdmin></AddAdmin>
     </section>
   </section>
 </template>
@@ -19,27 +16,26 @@
 import TheHeader from "../components/TheHeader.vue";
 import DishTable from "../components/admin/DishTable.vue";
 import AddNewDish from "../components/admin/AddNewDish.vue";
+import AddAdmin from "../components/admin/AddAdmin.vue";
 
 export default {
   name: "AdminHome",
   components: {
     TheHeader,
     DishTable,
-    AddNewDish
+    AddNewDish,
+    AddAdmin
   },
   data() {
     return {
-      loggedIn: {},
-      users: [
-        { id: 1, Username: "Admin", FirstName: "Siv", LastName: "Jensen" }
-      ]
+      user: {}
     };
   },
   created() {
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.$route.params.id == this.users[i].id) {
-        this.loggedIn = this.users[i];
-      }
+    if (sessionStorage.getItem("user") == null) {
+      this.$router.push({ name: "Login" });
+    } else {
+      this.user = JSON.parse(sessionStorage.getItem("user"));
     }
   }
 };
@@ -64,5 +60,17 @@ h3 {
 .new-dish {
   padding: 20px;
   background: var(--color);
+}
+
+.uploads {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media only screen and (min-width: 700px) {
+  .uploads {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 </style>
