@@ -72,13 +72,20 @@ export default {
     },
     // Update method being called whenever a change is made on the dish
     sendData() {
+      this.dish.price = parseInt(this.dish.price);
       let input = this.$el.querySelector("#uploaded-pic");
 
       let dishUploadURL = `https://localhost:5001/api/dishes/upload`;
 
-      if (input.files[0].name == this.dish.photo) {
+      if (
+        input.files[0] != undefined &&
+        input.files[0].name == this.dish.photo
+      ) {
         this.dish.photo = input.files[0].name;
-      } else {
+      } else if (
+        input.files[0] != undefined &&
+        input.files[0].name == this.dish.photo
+      ) {
         let imageData = new FormData();
         imageData.append("file", input.files[0]);
         axios
@@ -90,6 +97,9 @@ export default {
             let dishURL = `https://localhost:5001/api/dishes/`;
             axios.put(dishURL, this.dish);
           });
+      } else {
+        let dishURL = `https://localhost:5001/api/dishes/`;
+        axios.put(dishURL, this.dish);
       }
     }
   }
