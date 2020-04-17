@@ -69,6 +69,20 @@ namespace RestaurantAPI.Controllers
             return thisDish;
         }
 
+        [HttpGet("highlighted/{highlighted}")]
+        public async Task<Dish> Get(bool highlighted)
+        {
+            Dish highlightedDish = await _context.Dish.FirstOrDefaultAsync(dish => dish.Highlighted == highlighted);
+            return highlightedDish;
+        }
+
+        [HttpGet("type/{type}")]
+        public async Task<IEnumerable<Dish>> Get(string type)
+        {
+            List<Dish> dishesOfType = await _context.Dish.ToListAsync();
+            return dishesOfType;
+        }
+
         [HttpDelete("{id}")]
         public async Task<Dish> Delete(int id)
         {

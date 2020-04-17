@@ -1,29 +1,19 @@
 <template>
-  <article
-    class="menu-item"
-    v-if="type != null && list.toLowerCase() == type.toLowerCase()"
-    :dish="id"
-  >
-    <figure class="item-photo">
-      <img :src="'https:/localhost:5001/images/' + photo" />
-    </figure>
+  <router-link :to="{ name: 'Dish', params: {dishId: id}}">
+    <article class="menu-item">
+      <figure class="item-photo">
+        <img :src="'https:/localhost:5001/images/' + photo" />
+      </figure>
 
-    <section class="item-info">
-      <h3 class="item-name">
+      <h3 class="item-title">
         {{name}}
-        <small class="item-price">{{price}} kr</small>
+        <small class="item-price">{{price}}kr</small>
       </h3>
-      <p class="item-description">{{description}}</p>
-
-      <router-link :to="'dish/' + id" class="more-button">Les mer</router-link>
-      <button class="buy-button" @click="addToCart">Kjøp</button>
-    </section>
-  </article>
+    </article>
+  </router-link>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "Dish",
   props: {
@@ -32,42 +22,24 @@ export default {
     description: String,
     price: Number,
     photo: String,
-    packs: Boolean,
-    type: String,
-    list: String
-  },
-  methods: {
-    addToCart() {
-      let webAPIUrl = "https://localhost:5001/api/dishes/";
-
-      axios.get(webAPIUrl).then(response => {
-        response.data.forEach(dish => {
-          if (dish.id == this.$el.getAttribute("dish")) {
-            if (localStorage.getItem("order") == null) {
-              let order = [dish];
-              localStorage.setItem("order", JSON.stringify(order));
-            } else {
-              let order = JSON.parse(localStorage.getItem("order"));
-              order.push(dish);
-              localStorage.setItem("order", JSON.stringify(order));
-            }
-          }
-        });
-      });
-    }
+    type: String
   }
 };
 </script>
 
 <style scoped>
 .menu-item {
-  position: relative;
+  transition: 0.05s ease-in-out;
+}
+
+.menu-item:hover {
+  transform: scale3d(1.01, 1.01, 1.01);
 }
 
 .item-photo {
-  position: absolute;
-  height: 180px;
-  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 200px;
 }
 
 .item-photo img {
@@ -76,65 +48,33 @@ export default {
   object-fit: cover;
 }
 
-.item-info {
-  position: relative;
-  display: grid;
-  gap: 5px;
-  margin-top: 140px;
-  padding: 20px 10px;
-  padding-bottom: 80px;
-  clip-path: polygon(0 0, 100% 2%, 100% 100%, 0% 100%);
-  color: var(--black);
-  background: var(--color);
-}
-
-.item-name {
-  font-size: 1.4em;
-  font-family: var(--subheading);
-}
-
-.item-name small {
-  font-weight: 400;
-}
-
-button {
-  position: absolute;
-  background: var(--button);
-  color: var(--black);
-  padding: 10px 25px;
-  border-radius: 30px;
-  font-size: 0.9em;
-  bottom: 20px;
-  font-weight: 600;
-  font-family: var(--subheading);
-  align-self: flex-end;
-  width: max-content;
-}
-
-.more-button {
-  margin-top: 10px;
-  margin-bottom: 0;
+.item-title {
+  width: 100%;
+  padding: 5px;
   font-weight: 700;
-  font-size: 0.9em;
-  width: max-content;
-  font-family: var(--subheading);
+  grid-area: title;
 }
 
-.buy-button {
-  right: 20px;
+.item-price {
+  font-weight: 500;
 }
 
 .item-description {
-  margin-bottom: 0;
+  grid-area: description;
 }
 
-@media only screen and (min-width: 420px) {
-  .item-photo {
-    height: 190px;
-  }
+.buy-button {
+  margin: 0 auto;
+  padding: 10px 30px;
+  grid-area: buy;
+}
 
-  .item-info {
-    margin-top: 170px;
-  }
+.more-button {
+  font-family: var(--paragraph);
+  color: var(--color);
+  font-weight: 600;
+  grid-area: more;
+  width: max-content;
+  padding: 5px 5px 5px 2px;
 }
 </style>

@@ -1,37 +1,44 @@
 <template>
-  <form id="upload">
+  <form class="upload">
     <header>
-      <h3>Last opp rett</h3>
+      <h3>Legg til rett</h3>
     </header>
     <section>
       <label>Navn</label>
-      <input type="text" placeholder="Navn" id="new-dish-name" autocomplete="off" />
+      <input type="text" placeholder="Navn" autocomplete="off" v-model="dish.name" />
     </section>
     <section class="price">
       <label>Pris</label>
-      <input type="number" placeholder="99" id="new-dish-price" autocomplete="off" />
+      <input type="number" placeholder="99" autocomplete="off" v-model="dish.price" />
     </section>
     <section>
       <label>Beskrivelse</label>
-      <textarea placeholder="Beskrivelse" id="new-dish-desc" autocomplete="off"></textarea>
+      <textarea placeholder="Beskrivelse" autocomplete="off" v-model="dish.description"></textarea>
     </section>
     <section class="photo">
       <label>Bilde</label>
-      <input type="file" name="upload-img" id="new-dish-photo" @change="showPicture" />
-      <img src="#" alt="Last opp et bilde" id="preview" />
+      <input type="file" name="upload-img" id="new-pic" @change="showPicture" />
+      <img :src="dish.photo" alt="Last opp et bilde" />
     </section>
     <section class="type">
       <label>Type</label>
-      <select id="new-dish-type">
+      <select v-model="dish.type">
+        <option default disabled selected>Velg type</option>
         <option v-for="type in dishTypes" :value="type" :key="type">{{ type }}</option>
       </select>
     </section>
     <section class="highlighted">
       <label>Skal den fremheves?</label>
-      <select id="new-dish-highlighted">
-        <option value="1">Ja</option>
-        <option value="0" selected>Nei</option>
-      </select>
+      <section class="input-highlighted">
+        <label>
+          <input type="radio" v-model="dish.highlighted" :value="true" />
+          <p>Ja</p>
+        </label>
+        <label>
+          <input type="radio" v-model="dish.highlighted" :value="false" />
+          <p>Nei</p>
+        </label>
+      </section>
     </section>
     <button @click="addNewDish">Last opp ny rett</button>
   </form>
@@ -44,57 +51,30 @@ export default {
   name: "AddNewDish",
   data() {
     return {
-      dish: [],
       dishTypes: ["Forrett", "Maki", "Sashimi", "Nigiri", "Vegetar", "Drikke"],
-      newDish: {}
+      dish: {}
     };
   },
   methods: {
     showPicture() {
-      let input = document.querySelector("#new-dish-photo");
+      let input = document.querySelector("#new-pic");
       if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-          document
-            .querySelector("#preview")
-            .setAttribute("src", e.target.result);
-          document
-            .querySelector("#preview")
-            .setAttribute("alt", "Lastet opp bilde");
+        let reader = new FileReader();
+        reader.onload = e => {
+          this.dish.photo = e.target.result;
         };
-
         reader.readAsDataURL(input.files[0]);
       }
     },
     addNewDish(e) {
       e.preventDefault();
-      const webAPIUrl = "https://localhost:5001/api/dishes";
-
-      this.newDish.Name = document.querySelector("#new-dish-name").value;
-      this.newDish.Description = document.querySelector("#new-dish-desc").value;
-      this.newDish.Price = parseInt(
-        document.querySelector("#new-dish-price").value
-      );
-      this.newDish.Type = document.querySelector("#new-dish-type").value;
-
-      if (
-        parseInt(document.querySelector("#new-dish-highlighted").value) == 1
-      ) {
-        this.newDish.Highlighted = true;
-      } else {
-        this.newDish.Highlighted = false;
-      }
-
-      let photo = document.querySelector("#new-dish-photo");
+      let dishesURL = "https://localhost:5001/api/dishes";
       let imageData = new FormData();
-      imageData.append("file", photo.files[0]);
-
-      this.newDish.Photo = photo.files[0].name;
-
-      console.log(this.newDish);
-
-      axios.post(webAPIUrl, this.newDish).then(() => {
+      let input = this.$el.querySelector("#new-pic");
+      imageData.append("file", input.files[0]);
+      this.dish.price = parseInt(this.dish.price);
+      this.dish.photo = input.files[0].name;
+      axios.post(dishesURL, this.dish).then(() => {
         axios({
           method: "post",
           url: "https://localhost:5001/api/dishes/upload",
@@ -108,57 +88,15 @@ export default {
 </script>
 
 <style scoped>
-#upload {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  width: 100%;
-  margin: 0 auto;
-  gap: 15px;
-  padding: 5px;
-}
-
-#upload section,
-button {
+.upload {
   display: grid;
   grid-template-columns: 1fr;
-  font-family: var(--paragraph);
-  grid-column: 1 / span 2;
-  gap: 2px;
+  gap: 20px;
+  padding: 20px;
 }
 
-header {
-  font-family: var(--subheading);
-}
-
-#preview {
-  width: 100%;
-  min-height: 100px;
-  max-height: 300px;
-  object-fit: cover;
-}
-
-#new-dish-name,
-#new-dish-price,
-textarea,
-select {
-  border: 1px solid lightgray;
-}
-
-#new-dish-name,
-#new-dish-price,
-textarea {
-  padding: 2px;
-}
-
-textarea {
-  min-height: 30px;
-  height: 30px;
-  max-height: 130px;
-  resize: vertical;
-}
-
-.type,
-.highlighted {
-  grid-column: span 1 !important;
+.upload section {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 </style>
