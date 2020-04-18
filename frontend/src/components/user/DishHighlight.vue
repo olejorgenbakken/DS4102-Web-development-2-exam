@@ -14,10 +14,10 @@
         <p>{{dish.description}}</p>
 
         <section class="links">
-          <router-link :to="{ name: 'Dish', params: {dishId: dish.id}}">
+          <router-link :to="{ name: 'Details', params: {id: dish.id}}">
             <button class="more-button">Les mer</button>
           </router-link>
-          <button @click="addToCart" class="buy-button">Kjøp</button>
+          <BuyButton :id="dish.id"></BuyButton>
         </section>
       </section>
     </section>
@@ -26,9 +26,13 @@
 
 <script>
 import axios from "axios";
+import BuyButton from "./BuyButton";
 
 export default {
   name: "DishHighlight",
+  components: {
+    BuyButton
+  },
   data() {
     return {
       dish: {}
@@ -39,23 +43,6 @@ export default {
     axios.get(highlightedDish).then(response => {
       this.dish = response.data;
     });
-  },
-  methods: {
-    addToCart() {
-      let id = this.$el.getAttribute("dish");
-      let webAPIUrl = `https://localhost:5001/api/dishes/${id}`;
-
-      axios.get(webAPIUrl).then(response => {
-        if (localStorage.getItem("order") == null) {
-          let order = [response.data];
-          localStorage.setItem("order", JSON.stringify(order));
-        } else {
-          let order = JSON.parse(localStorage.getItem("order"));
-          order.push(response.data);
-          localStorage.setItem("order", JSON.stringify(order));
-        }
-      });
-    }
   }
 };
 </script>
@@ -104,7 +91,7 @@ export default {
 
 .links {
   display: grid;
-  grid-template-columns: repeat(2, max-content);
+  grid-template-columns: max-content 100px;
   gap: 15px;
 }
 

@@ -1,6 +1,6 @@
 <template>
   <section class="dishes">
-    <DishItem v-for="dish in dishes" :key="dish.id" :dishId="dish.id"></DishItem>
+    <DishItem v-for="dish in dishes" :key="dish.id" :id="dish.id"></DishItem>
   </section>
 </template>
 

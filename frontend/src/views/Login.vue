@@ -2,7 +2,7 @@
   <section class="login">
     <TheHeader class="padding"></TheHeader>
     <section class="wrapper">
-      <section class="content">
+      <section class="content card">
         <header class="login-header">
           <h2>Login</h2>
         </header>
@@ -120,9 +120,6 @@ export default {
 }
 
 .wrapper {
-  background: url("https://images.unsplash.com/photo-1586982469023-9f3e18321fc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1955&q=80");
-  background-size: cover;
-  background-position: center center;
   width: 100%;
   height: 100%;
   display: flex;
@@ -134,10 +131,8 @@ export default {
 .content {
   width: 80%;
   max-width: 400px;
-  border-radius: 3px;
-  background: white;
+  border-radius: 20px;
   padding: 20px 20px 25px 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
@@ -167,7 +162,7 @@ form section {
 
 form input {
   border: 2px solid var(--color);
-  border-radius: 2px;
+  border-radius: 5px;
   padding: 5px;
   font-family: var(--paragraph);
 }

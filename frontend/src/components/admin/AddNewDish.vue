@@ -1,5 +1,5 @@
 <template>
-  <form class="upload">
+  <form class="upload card">
     <header>
       <h3>Legg til rett</h3>
     </header>
@@ -95,18 +95,11 @@ export default {
   grid-template-columns: 1fr;
   gap: 20px;
   padding: 20px;
-  background: #ffffff;
-  box-shadow: 9px 9px 18px #ebebeb, -9px -9px 18px #ffffff;
-  transition: 0.2s ease-in-out;
   font-family: var(--paragraph);
 }
 
 .upload section {
   display: grid;
-}
-
-.upload:hover {
-  box-shadow: 9px 9px 18px #d6d6d6, -9px -9px 18px #ffffff;
 }
 
 .price,

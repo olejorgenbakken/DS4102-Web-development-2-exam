@@ -5,13 +5,12 @@
     <header class="dish-list-header">
       <h2 class="dish-list-heading">Meny</h2>
     </header>
-    <DishList :dishes="menu" class="menu"></DishList>
+    <DishList class="menu"></DishList>
     <TheFooter></TheFooter>
   </main>
 </template>
 
 <script>
-import axios from "axios";
 import TheHeader from "../components/TheHeader.vue";
 import DishHighlight from "../components/user/DishHighlight.vue";
 import DishList from "../components/user/DishList.vue";
@@ -24,17 +23,6 @@ export default {
     DishHighlight,
     DishList,
     TheFooter
-  },
-  data() {
-    return {
-      menu: []
-    };
-  },
-  created() {
-    const webAPIUrl = `https://localhost:5001/api/dishes`;
-    axios.get(webAPIUrl).then(response => {
-      this.menu = response.data;
-    });
   }
 };
 </script>

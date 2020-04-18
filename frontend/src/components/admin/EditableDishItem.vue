@@ -1,5 +1,5 @@
 <template>
-  <article class="dish" @change="sendData">
+  <article class="dish card" @change="sendData">
     <section class="photo">
       <figure class="figure">
         <input type="file" name="upload-img" id="uploaded-pic" />
@@ -56,10 +56,10 @@ export default {
     };
   },
   props: {
-    dishId: Number
+    id: Number
   },
   created() {
-    let dish = `https://localhost:5001/api/dishes/${this.dishId}`;
+    let dish = `https://localhost:5001/api/dishes/${this.id}`;
     axios.get(dish).then(response => {
       this.dish = response.data;
     });
@@ -123,13 +123,6 @@ export default {
     "del del del del del del del";
   gap: 20px;
   border-radius: 20px;
-  background: #ffffff;
-  box-shadow: 9px 9px 18px #ebebeb, -9px -9px 18px #ffffff;
-  transition: 0.2s ease-in-out;
-}
-
-.dish:hover {
-  box-shadow: 9px 9px 18px #d6d6d6, -9px -9px 18px #ffffff;
 }
 
 section {

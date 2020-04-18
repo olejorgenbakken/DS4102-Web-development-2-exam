@@ -1,20 +1,16 @@
 <template>
   <section class="dish">
     <TheHeader class="padding"></TheHeader>
-    <DetailedDish
-      :id="theDish.id"
-      :name="theDish.name"
-      :price="theDish.price"
-      :description="theDish.description"
-      :photo="theDish.photo"
-      :ingredients="theDish.ingredients"
-    ></DetailedDish>
+    <router-view>
+      <DetailedDish></DetailedDish>
+    </router-view>
+
     <section class="related">
       <header>
         <h3>Andre retter</h3>
       </header>
       <section class="dishes">
-        <DishList :dishes="relatedDishes"></DishList>
+        <DishList></DishList>
       </section>
     </section>
     <TheFooter></TheFooter>
@@ -22,7 +18,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import TheHeader from "../components/TheHeader.vue";
 import DetailedDish from "../components/user/DetailedDish";
 import DishList from "../components/user/DishList";
@@ -34,26 +29,6 @@ export default {
     TheFooter,
     DishList,
     DetailedDish
-  },
-  data() {
-    return {
-      theDish: {},
-      relatedDishes: []
-    };
-  },
-  created() {
-    const webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.dishId}`;
-    axios
-      .get(webAPIUrl)
-      .then(response => {
-        this.theDish = response.data;
-      })
-      .then(() => {
-        let typeUrl = `https://localhost:5001/api/dishes/type/${this.theDish.type}`;
-        axios.get(typeUrl).then(response => {
-          this.relatedDishes = response.data;
-        });
-      });
   }
 };
 </script>
