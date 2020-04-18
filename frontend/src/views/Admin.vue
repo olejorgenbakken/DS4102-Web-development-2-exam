@@ -70,11 +70,12 @@ export default {
     "greeting greeting greeting greeting greeting greeting"
     "menu menu menu menu menu menu"
     "dish dish dish dish dish dish"
-    "user user user user user user";
+    "admin admin admin admin admin admin";
   gap: 40px;
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
+  padding-bottom: 60px;
 }
 
 .header {
@@ -112,7 +113,7 @@ export default {
 }
 
 .add-user {
-  grid-area: user;
+  grid-area: admin;
 }
 
 @media only screen and (min-width: 800px) {
@@ -122,7 +123,7 @@ export default {
       "header header header header header header"
       "greeting greeting greeting greeting greeting greeting"
       "menu menu menu menu menu menu"
-      "dish dish dish user user user";
+      "dish dish e e admin admin";
   }
 }
 </style>
