@@ -19,7 +19,9 @@
           <button @click="login">Logg inn</button>
           <button class="create-user">Lag bruker</button>
         </form>
-        <section class="feedback"></section>
+        <section class="feedback" @change="showError">
+          <p>{{errorMsg}}</p>
+        </section>
       </section>
     </section>
     <TheFooter></TheFooter>
@@ -39,56 +41,69 @@ export default {
   data() {
     return {
       name: "",
-      pass: ""
+      pass: "",
+      id: undefined,
+      errorMsg: undefined
     };
   },
   created() {
-    if (sessionStorage.getItem("user") != null) {
-      let id = JSON.parse(sessionStorage.getItem("user")).id;
-      this.$router.push({
-        name: "Admin",
-        params: { id }
-      });
+    if (document.cookie) {
+      let cookies = document.cookie.split(";");
+      if (cookies.length > 1) {
+        return "";
+      } else {
+        let loginCookie = cookies[0].split("=");
+        if (loginCookie[0] == "login") {
+          loginCookie = loginCookie[1];
+          this.$router.push(`admin`);
+        } else {
+          return "";
+        }
+      }
     }
   },
   methods: {
+    showError() {
+      let form = document.querySelector(".content");
+      let errorDiv = document.querySelector(".feedback");
+      form.classList.add("error");
+      errorDiv.classList.add("error");
+      setTimeout(() => {
+        form.classList.remove("error");
+        errorDiv.classList.remove("error");
+      }, 7000);
+    },
     login(e) {
       e.preventDefault();
-      let user = { username: this.name, password: this.pass };
-      let userDB = "https://localhost:5001/api/users/username/" + user.username;
+      let adminDb = `https://localhost:5001/api/admins/user/${this.name}`;
       axios
-        .get(userDB)
+        .get(adminDb)
         .then(response => {
           if (response.status == 200) {
             if (
-              response.data.username == user.username &&
-              response.data.password == user.password
+              response.data.username == this.name &&
+              response.data.password == this.pass
             ) {
-              let id = response.data.id;
-              let user = {
-                id: response.data.id,
-                username: response.data.username,
-                firstName: response.data.firstName
-              };
-              sessionStorage.setItem("user", JSON.stringify(user));
-              this.$router.push({
-                name: "Admin",
-                params: { id }
-              });
+              let name = "login";
+              let expires;
+              let date = new Date();
+              date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
+              expires = "; expires=" + date.toGMTString();
+              document.cookie = name + "=" + response.data.id + expires;
+              this.$router.push(`admin`);
+            } else {
+              this.showError();
+              this.errorMsg = "Feil brukernavn eller passord";
             }
+          } else if (response.status == 204) {
+            this.showError();
+            this.errorMsg = "Bruker finnes ikke";
           }
         })
         .catch(error => {
           if (error.response.status == 404) {
-            let form = document.querySelector(".content");
-            let errorDiv = document.querySelector(".feedback");
-            form.classList.add("error");
-            errorDiv.classList.add("error");
-            errorDiv.innerHTML = "<p>User not found</p>";
-            setTimeout(() => {
-              form.classList.remove("error");
-              errorDiv.classList.remove("error");
-            }, 7000);
+            this.showError();
+            this.errorMsg = "Ingen brukernavn funnet";
           }
         });
     }

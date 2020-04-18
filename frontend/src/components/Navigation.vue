@@ -14,8 +14,8 @@ export default {
   name: "Navigation",
   methods: {
     logout() {
-      sessionStorage.removeItem("user");
-      this.$router.push({ name: "Homepage" });
+      document.cookie = "login" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      this.$router.push("/");
     }
   }
 };

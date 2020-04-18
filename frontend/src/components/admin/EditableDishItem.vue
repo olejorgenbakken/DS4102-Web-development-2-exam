@@ -81,10 +81,11 @@ export default {
         input.files[0] != undefined &&
         input.files[0].name == this.dish.photo
       ) {
+        console.log(true);
         this.dish.photo = input.files[0].name;
       } else if (
         input.files[0] != undefined &&
-        input.files[0].name == this.dish.photo
+        input.files[0].name != this.dish.photo
       ) {
         let imageData = new FormData();
         imageData.append("file", input.files[0]);
@@ -123,12 +124,12 @@ export default {
   gap: 20px;
   border-radius: 20px;
   background: #ffffff;
-  box-shadow: 8px 8px 20px #f2f2f2, -8px -8px 20px #ffffff;
+  box-shadow: 9px 9px 18px #ebebeb, -9px -9px 18px #ffffff;
   transition: 0.2s ease-in-out;
 }
 
 .dish:hover {
-  box-shadow: 8px 8px 20px #ebebeb, -8px -8px 20px #ffffff;
+  box-shadow: 9px 9px 18px #d6d6d6, -9px -9px 18px #ffffff;
 }
 
 section {
@@ -159,15 +160,18 @@ section {
 
 input,
 select,
-textarea {
+textarea,
+.input-highlighted label {
   border: 1px solid black;
+  background: #ffffff;
   border-radius: 5px;
   padding: 5px;
 }
 
 input[type="text"],
 select,
-textarea {
+textarea,
+.input-highlighted label {
   height: 35px;
 }
 
@@ -211,11 +215,14 @@ input[type="file"] {
 
 .input-highlighted {
   grid-template-columns: repeat(2, auto);
+  gap: 20px;
 }
 
 .input-highlighted label {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  font-size: 0.8em;
 }
 
 .input-highlighted label p {
@@ -242,9 +249,13 @@ input[type="file"] {
 @media only screen and (min-width: 1100px) {
   .dish {
     grid-template-rows: 80px;
-    grid-template-columns: 80px 200px auto 90px 90px 120px 100px;
+    grid-template-columns: 80px 200px auto 90px 90px 140px 100px;
     align-items: center;
     grid-template-areas: "pic name desc price type high del";
+  }
+
+  .input-highlighted {
+    gap: 10px;
   }
 }
 </style>

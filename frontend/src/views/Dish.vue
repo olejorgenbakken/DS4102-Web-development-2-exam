@@ -51,7 +51,6 @@ export default {
       .then(() => {
         let typeUrl = `https://localhost:5001/api/dishes/type/${this.theDish.type}`;
         axios.get(typeUrl).then(response => {
-          console.log(response.data);
           this.relatedDishes = response.data;
         });
       });

@@ -1,24 +1,24 @@
 <template>
-  <article :id="id" class="detailed" :dish="id">
+  <article :id="theDish.id" class="detailed">
     <figure class="photo">
-      <img :src="`https://localhost:5001/images/${photo}`" />
+      <img :src="`https://localhost:5001/images/${theDish.photo}`" />
     </figure>
     <section class="info">
       <section class="title">
         <label>Navn</label>
-        <h2>{{name}}</h2>
+        <h2>{{theDish.name}}</h2>
       </section>
       <section class="price">
         <label>Pris</label>
-        <h3>{{price}} kr</h3>
+        <h3>{{theDish.price}} kr</h3>
       </section>
       <section>
         <label>Beskrivelse</label>
-        <p>{{description}}</p>
+        <p>{{theDish.description}}</p>
       </section>
       <section>
         <label>Ingredienser</label>
-        <p v-for="ingredient in ingredients" :key="ingredient">{{ingredient}}</p>
+        <p v-for="ingredient in theDish.ingredients" :key="ingredient">{{ingredient}}</p>
       </section>
       <button class="buy-button" @click="addToCart">Kjøp</button>
     </section>
@@ -34,18 +34,15 @@ export default {
       theDish: {}
     };
   },
-  props: {
-    name: String,
-    id: Number,
-    description: String,
-    photo: String,
-    price: Number,
-    ingredients: String
+  created() {
+    let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.dishId}`;
+    axios.get(webAPIUrl).then(response => {
+      this.theDish = response.data;
+    });
   },
   methods: {
     addToCart() {
-      let id = this.$el.getAttribute("dish");
-      let webAPIUrl = `https://localhost:5001/api/dishes/${id}`;
+      let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.dishId}`;
 
       axios.get(webAPIUrl).then(response => {
         if (localStorage.getItem("order") == null) {

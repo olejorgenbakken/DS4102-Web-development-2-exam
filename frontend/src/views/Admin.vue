@@ -20,6 +20,7 @@ import Greeting from "../components/admin/Greeting.vue";
 import EditableDishList from "../components/admin/EditableDishList.vue";
 import AddNewDish from "../components/admin/AddNewDish.vue";
 import AddAdmin from "../components/admin/AddAdmin.vue";
+import axios from "axios";
 
 export default {
   name: "AdminHome",
@@ -32,12 +33,28 @@ export default {
   },
   data() {
     return {
-      user: JSON.parse(sessionStorage.getItem("user"))
+      user: {}
     };
   },
   created() {
-    if (sessionStorage.getItem("user") == null) {
-      this.$router.push({ name: "Login" });
+    if (document.cookie) {
+      let cookies = document.cookie.split(";");
+      if (cookies.length > 1) {
+        return "";
+      } else {
+        let loginCookie = cookies[0].split("=");
+        if (loginCookie[0] == "login") {
+          this.user.id = loginCookie[1];
+          let adminDb = `https://localhost:5001/api/admins/id/${this.user.id}`;
+          axios.get(adminDb).then(response => {
+            this.user = response.data;
+          });
+        } else {
+          this.$router.push("/login");
+        }
+      }
+    } else {
+      this.$router.push("/login");
     }
   }
 };
@@ -106,14 +123,6 @@ export default {
       "greeting greeting greeting greeting greeting greeting"
       "menu menu menu menu menu menu"
       "dish dish dish user user user";
-  }
-
-  .menu {
-    box-shadow: inset 5px 5px 48px #f5f5f5, inset -5px -5px 48px #ffffff;
-  }
-
-  .menu {
-    padding: 40px;
   }
 }
 </style>

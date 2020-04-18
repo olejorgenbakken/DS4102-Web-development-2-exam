@@ -1,14 +1,6 @@
 <template>
   <section class="dish-list">
-    <DishItem
-      v-for="dish in dishes"
-      :key="dish.id"
-      :id="dish.id"
-      :name="dish.name"
-      :price="dish.price"
-      :description="dish.description"
-      :photo="dish.photo"
-    ></DishItem>
+    <DishItem v-for="dish in dishes" :key="dish.id" :dishId="dish.id"></DishItem>
   </section>
 </template>
 
