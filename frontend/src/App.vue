@@ -11,13 +11,12 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900|Montserrat:400,700|Roboto:400&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700,900|Roboto:400&display=swap");
 :root {
   --black: #111;
-  --heading: "Cinzel Decorative", cursive;
-  --subheading: "Montserrat", sans-serif;
+  --heading: "Montserrat", sans-serif;
   --paragraph: "Roboto", sans-serif;
-  --color: rgb(255, 241, 212);
+  --color: #133e66;
   --button: rgb(255, 255, 255);
 }
 * {
@@ -37,19 +36,25 @@ a {
 }
 
 h1,
-h2 {
+h2,
+h3,
+h4,
+h5,
+button {
   font-family: var(--heading);
 }
 
 p {
   font-family: var(--paragraph);
-  font-size: 0.95em;
-  line-height: 1.4em;
 }
 
 label {
-  font-family: var(--subheading);
-  font-weight: 700;
+  font-family: var(--heading);
+  font-weight: 500;
   font-size: 0.8em;
+}
+
+.padding {
+  padding: 0 20px;
 }
 </style>

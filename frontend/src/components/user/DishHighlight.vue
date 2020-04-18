@@ -1,23 +1,23 @@
 <template>
   <section
     class="dish-hero"
-    :style="'background-image: url(https:localhost:5001/images/' + photo + ')'"
-    :dish="id"
+    :style="'background-image: url(https:localhost:5001/images/' + dish.photo + ')'"
+    :dish="dish.id"
   >
     <section class="overlay">
       <section class="content">
         <h2 class="title">
-          {{name}}
-          <small>fra {{price}} kr</small>
+          {{dish.name}}
+          <small>fra {{dish.price}}kr</small>
         </h2>
 
-        <p>{{description}}</p>
+        <p>{{dish.description}}</p>
 
         <section class="links">
-          <router-link :to="'dish/' + id" class="more-button">
-            <button>Les mer</button>
+          <router-link :to="{ name: 'Dish', params: {dishId: dish.id}}">
+            <button class="more-button">Les mer</button>
           </router-link>
-          <button @click="addToCart">Kjøp</button>
+          <button @click="addToCart" class="buy-button">Kjøp</button>
         </section>
       </section>
     </section>
@@ -29,30 +29,31 @@ import axios from "axios";
 
 export default {
   name: "DishHighlight",
-  props: {
-    id: Number,
-    photo: String,
-    name: String,
-    price: Number,
-    description: String
+  data() {
+    return {
+      dish: {}
+    };
+  },
+  created() {
+    let highlightedDish = "https://localhost:5001/api/dishes/highlighted/true";
+    axios.get(highlightedDish).then(response => {
+      this.dish = response.data;
+    });
   },
   methods: {
     addToCart() {
-      let webAPIUrl = "https://localhost:5001/api/dishes/";
+      let id = this.$el.getAttribute("dish");
+      let webAPIUrl = `https://localhost:5001/api/dishes/${id}`;
 
       axios.get(webAPIUrl).then(response => {
-        response.data.forEach(dish => {
-          if (dish.id == this.$el.getAttribute("dish")) {
-            if (localStorage.getItem("order") == null) {
-              let order = [dish];
-              localStorage.setItem("order", JSON.stringify(order));
-            } else {
-              let order = JSON.parse(localStorage.getItem("order"));
-              order.push(dish);
-              localStorage.setItem("order", JSON.stringify(order));
-            }
-          }
-        });
+        if (localStorage.getItem("order") == null) {
+          let order = [response.data];
+          localStorage.setItem("order", JSON.stringify(order));
+        } else {
+          let order = JSON.parse(localStorage.getItem("order"));
+          order.push(response.data);
+          localStorage.setItem("order", JSON.stringify(order));
+        }
       });
     }
   }
@@ -61,11 +62,10 @@ export default {
 
 <style scoped>
 .dish-hero {
-  height: 80vh;
-  min-height: 400px;
+  height: 100%;
   width: 100%;
-  max-width: 1250px;
-  margin: 0 auto 20px auto;
+  max-width: 1200px;
+  margin: 0 auto;
   background-size: cover;
   background-position: center center;
   display: flex;
@@ -81,14 +81,14 @@ export default {
 }
 
 .content {
-  color: var(--black);
+  color: white;
   display: grid;
   gap: 10px;
 }
 
 .content h2,
 .content button {
-  font-family: var(--subheading);
+  font-family: var(--heading);
 }
 
 .content h2 {
@@ -98,7 +98,7 @@ export default {
 
 .content h2 small {
   font-weight: 400;
-  font-size: 0.8em;
+  font-size: 0.7em;
   margin-left: 5px;
 }
 
@@ -108,20 +108,35 @@ export default {
   gap: 15px;
 }
 
-.content button {
-  background: #fff;
-  color: var(--black);
+button {
   width: 100%;
   max-width: 150px;
   padding: 10px 30px;
   font-weight: 700;
   border-radius: 30px;
+  transition: 0.2s ease-in-out;
+}
+
+.buy-button {
+  background: white;
+  color: var(--color);
+}
+
+.more-button {
+  background: transparent;
+  color: white;
+  border: 3px solid white;
+}
+
+.more-button:hover {
+  background: white;
+  color: var(--color);
+  border: 3px solid white;
 }
 
 @media only screen and (min-width: 700px) {
   .dish-hero {
-    height: 75vh;
-    min-height: 500px;
+    overflow: hidden;
   }
   .overlay {
     position: relative;
@@ -133,12 +148,20 @@ export default {
     align-items: center;
   }
 
-  .title {
-    width: 95%;
+  .content {
+    padding-right: 20px;
   }
 
   .content button {
     margin-top: 20px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .dish-hero {
+    width: 95%;
+
+    border-radius: 20px;
   }
 }
 </style>

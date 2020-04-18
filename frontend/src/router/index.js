@@ -1,21 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import UserHome from "../views/User.vue"
+import Homepage from "../views/Homepage.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '*',
-    name: 'Frontpage',
-    component: UserHome,
-    children: [
-      {
-        path: 'dish/:id',
-        name: 'Dish',
-        component: () => import(/* webpackChunkName: 'Dish' */ '../components/user/Dish.vue')
-      }
-    ]
+    path: '/',
+    name: 'Homepage',
+    component: Homepage,
+  },
+  {
+    path: "/dish/:dishId",
+    name: "Dish",
+    component: () => import(/* webpackChunkName: 'Dish' */ '../views/Dish.vue')
   },
   {
     path: '/login',
@@ -23,8 +21,8 @@ const routes = [
     component: () => import(/* webpackChunkName: 'Login' */ '../views/Login.vue')
   },
   {
-    path: '/admin/:id',
-    name: 'admin',
+    path: '/admin',
+    name: 'Admin',
     component: () => import(/* webpackChunkName: 'AdminHome' */ '../views/Admin.vue')
   }
 ]

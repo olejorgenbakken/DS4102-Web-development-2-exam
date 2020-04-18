@@ -29,10 +29,17 @@ namespace RestaurantAPI.Controllers
             return AdminList;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<Admin> Get(int id)
         {
             Admin thisAdmin = await _context.Admin.FirstOrDefaultAsync(admin => admin.Id == id);
+            return thisAdmin;
+        }
+
+        [HttpGet("user/{username}")]
+        public async Task<Admin> Get(string username)
+        {
+            Admin thisAdmin = await _context.Admin.FirstOrDefaultAsync(admin => admin.Username == username);
             return thisAdmin;
         }
     }

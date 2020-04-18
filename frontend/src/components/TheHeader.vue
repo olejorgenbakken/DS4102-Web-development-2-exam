@@ -1,11 +1,9 @@
 <template>
   <header class="header">
-    <section class="content">
-      <router-link to="/">
-        <h1 class="frontpage-title">SUSHI Restaurant</h1>
-      </router-link>
-      <Navigation :direction="'row'"></Navigation>
-    </section>
+    <router-link to="/">
+      <h1 class="frontpage-title">Sushi restaurant</h1>
+    </router-link>
+    <Navigation></Navigation>
   </header>
 </template>
 
@@ -13,7 +11,7 @@
 import Navigation from "./Navigation.vue";
 
 export default {
-  name: "Introduction",
+  name: "Header",
   components: {
     Navigation
   }
@@ -22,35 +20,23 @@ export default {
 
 <style scoped>
 .header {
-  width: 100%;
-  padding: 0 0px;
-}
-
-.content {
-  display: grid;
-  grid-template-columns: 1fr;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin: 0 auto;
   width: 100%;
-  max-width: 1000px;
-  padding: 20px 10px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.frontpage-title {
-  font-size: 1.5em;
+h1 {
   font-weight: 900;
-  color: var(--black);
+  font-size: 1.3em;
 }
 
-@media only screen and (min-width: 600px) {
-  .content {
-    padding: 20px 30px;
-    height: 15vh;
-    text-align: left;
-    grid-template-columns: 1fr auto;
-    align-items: center;
+@media only screen and (min-width: 700px) {
+  h1 {
+    font-size: 1.5em;
   }
 }
 </style>
