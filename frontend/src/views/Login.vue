@@ -46,7 +46,7 @@ export default {
       errorMsg: undefined
     };
   },
-  created() {
+  beforeMount() {
     if (document.cookie) {
       let cookies = document.cookie.split(";");
       if (cookies.length > 1) {

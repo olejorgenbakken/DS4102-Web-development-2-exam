@@ -9,15 +9,14 @@
       <header>
         <h3>Andre retter</h3>
       </header>
-      <section class="dishes">
-        <DishList></DishList>
-      </section>
+      <DishList :dishes="dishes"></DishList>
     </section>
     <TheFooter></TheFooter>
   </section>
 </template>
 
 <script>
+import axios from "axios";
 import TheHeader from "../components/TheHeader.vue";
 import DetailedDish from "../components/user/DetailedDish";
 import DishList from "../components/user/DishList";
@@ -29,6 +28,17 @@ export default {
     TheFooter,
     DishList,
     DetailedDish
+  },
+  data() {
+    return {
+      dishes: []
+    };
+  },
+  created() {
+    const webAPIUrl = `https://localhost:5001/api/dishes`;
+    axios.get(webAPIUrl).then(response => {
+      this.dishes = response.data;
+    });
   }
 };
 </script>
@@ -45,11 +55,11 @@ export default {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding-bottom: 20px;
+  padding: 0 20px 60px 20px;
 }
 
 .related header {
-  padding: 40px 20px 10px 20px;
+  padding: 40px 0 10px 0;
 }
 
 @media only screen and (min-width: 800px) {

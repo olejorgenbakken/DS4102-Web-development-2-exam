@@ -2,7 +2,7 @@
   <section class="search">
     <input
       type="search"
-      placeholder="placeholder"
+      placeholder="Søk"
       :value="searchTerm"
       @input="$emit('input', $event.target.value)"
     />

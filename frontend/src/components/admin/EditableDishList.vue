@@ -1,5 +1,5 @@
 <template>
-  <section class="dishes">
+  <section class="dish-list">
     <DishItem v-for="dish in dishes" :key="dish.id" :id="dish.id"></DishItem>
   </section>
 </template>
@@ -19,6 +19,13 @@ export default {
     };
   },
   created() {
+    let webAPIUrl = "https://localhost:5001/api/dishes/";
+
+    axios.get(webAPIUrl).then(response => {
+      this.dishes = response.data;
+    });
+  },
+  updated() {
     let webAPIUrl = "https://localhost:5001/api/dishes/";
 
     axios.get(webAPIUrl).then(response => {

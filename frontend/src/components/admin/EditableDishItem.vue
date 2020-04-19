@@ -1,5 +1,5 @@
 <template>
-  <article class="dish card" @change="sendData">
+  <article class="dish card">
     <section class="photo">
       <figure class="figure">
         <input type="file" name="upload-img" id="uploaded-pic" />
@@ -69,39 +69,35 @@ export default {
     deleteDish() {
       let dishesURL = `https://localhost:5001/api/dishes/${this.dish.id}`;
       axios.delete(dishesURL);
-    },
-    // Update method being called whenever a change is made on the dish
-    sendData() {
-      this.dish.price = parseInt(this.dish.price);
-      let input = this.$el.querySelector("#uploaded-pic");
+    }
+  },
+  updated() {
+    this.dish.price = parseInt(this.dish.price);
+    let input = this.$el.querySelector("#uploaded-pic");
 
-      let dishUploadURL = `https://localhost:5001/api/dishes/upload`;
+    let dishUploadURL = `https://localhost:5001/api/dishes/upload`;
 
-      if (
-        input.files[0] != undefined &&
-        input.files[0].name == this.dish.photo
-      ) {
-        console.log(true);
-        this.dish.photo = input.files[0].name;
-      } else if (
-        input.files[0] != undefined &&
-        input.files[0].name != this.dish.photo
-      ) {
-        let imageData = new FormData();
-        imageData.append("file", input.files[0]);
-        axios
-          .post(dishUploadURL, imageData, {
-            headers: { "Content-type": "multiplart/form-data" }
-          })
-          .then(() => {
-            this.dish.photo = input.files[0].name;
-            let dishURL = `https://localhost:5001/api/dishes/`;
-            axios.put(dishURL, this.dish);
-          });
-      } else {
-        let dishURL = `https://localhost:5001/api/dishes/`;
-        axios.put(dishURL, this.dish);
-      }
+    if (input.files[0] != undefined && input.files[0].name == this.dish.photo) {
+      console.log(true);
+      this.dish.photo = input.files[0].name;
+    } else if (
+      input.files[0] != undefined &&
+      input.files[0].name != this.dish.photo
+    ) {
+      let imageData = new FormData();
+      imageData.append("file", input.files[0]);
+      axios
+        .post(dishUploadURL, imageData, {
+          headers: { "Content-type": "multiplart/form-data" }
+        })
+        .then(() => {
+          this.dish.photo = input.files[0].name;
+          let dishURL = `https://localhost:5001/api/dishes/`;
+          axios.put(dishURL, this.dish);
+        });
+    } else {
+      let dishURL = `https://localhost:5001/api/dishes/`;
+      axios.put(dishURL, this.dish);
     }
   }
 };

@@ -38,18 +38,11 @@ export default {
 </script>
 
 <style scoped>
-.menu-item {
-  transition: 0.05s ease-in-out;
-}
-
-.menu-item:hover {
-  transform: scale3d(1.01, 1.01, 1.01);
-}
-
 .item-photo {
   border-radius: 10px;
   overflow: hidden;
   height: 200px;
+  position: relative;
 }
 
 .item-photo img {
