@@ -18,7 +18,7 @@
       </section>
       <section>
         <label>Ingredienser</label>
-        <p v-for="ingredient in theDish.ingredients" :key="ingredient">{{ingredient}}</p>
+        <p v-for="ingredient in JSON.parse(theDish.ingredients)" :key="ingredient">{{ingredient}}</p>
       </section>
       <BuyButton :id="theDish.id"></BuyButton>
     </section>
@@ -46,7 +46,7 @@ export default {
       });
     }
   },
-  created() {
+  mounted() {
     let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.id}`;
     axios.get(webAPIUrl).then(response => {
       this.theDish = response.data;

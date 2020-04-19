@@ -21,11 +21,11 @@ export default {
 <style scoped>
 .search {
   font-family: var(--heading);
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   position: relative;
-  background: #ffffff;
 }
 
 .search::after {
@@ -34,7 +34,7 @@ export default {
   left: 0;
   content: "";
   width: 100%;
-  height: 1px;
+  height: 2px;
   background: black;
 }
 

@@ -134,11 +134,13 @@ export default {
   grid-area: menu;
   background: #ffffff;
   padding-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 .menu header {
   text-align: center;
-  padding-bottom: 20px;
 }
 
 .add-dish {
