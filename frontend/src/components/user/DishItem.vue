@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Dish",
   props: {
@@ -22,17 +21,6 @@ export default {
     name: String,
     photo: String,
     price: Number
-  },
-  data() {
-    return {
-      theDish: {}
-    };
-  },
-  created() {
-    let webAPIUrl = `https://localhost:5001/api/dishes/${this.id}`;
-    axios.get(webAPIUrl).then(response => {
-      this.theDish = response.data;
-    });
   }
 };
 </script>

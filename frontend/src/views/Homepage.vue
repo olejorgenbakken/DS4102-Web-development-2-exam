@@ -37,7 +37,7 @@ export default {
       dishes: []
     };
   },
-  created() {
+  beforeMount() {
     const webAPIUrl = `https://localhost:5001/api/dishes`;
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;

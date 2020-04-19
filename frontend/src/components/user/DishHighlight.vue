@@ -39,9 +39,16 @@ export default {
       color: ""
     };
   },
-  created() {
+  beforeMount() {
     let highlightedDish = "https://localhost:5001/api/dishes/highlighted/true";
     axios.get(highlightedDish).then(response => {
+      if (response.status != 200) {
+        let randomDish = "https://localhost:5001/api/dishes";
+        axios.get(randomDish).then(response => {
+          let rnd = Math.floor(Math.random() * response.data.length);
+          this.dish = response.data[rnd];
+        });
+      }
       this.dish = response.data;
     });
 
