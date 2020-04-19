@@ -5,32 +5,15 @@
 </template>
 
 <script>
-import axios from "axios";
 import DishItem from "./EditableDishItem";
 
 export default {
-  name: "DishTable",
+  name: "EditableDishList",
   components: {
     DishItem
   },
-  data() {
-    return {
-      dishes: []
-    };
-  },
-  created() {
-    let webAPIUrl = "https://localhost:5001/api/dishes/";
-
-    axios.get(webAPIUrl).then(response => {
-      this.dishes = response.data;
-    });
-  },
-  updated() {
-    let webAPIUrl = "https://localhost:5001/api/dishes/";
-
-    axios.get(webAPIUrl).then(response => {
-      this.dishes = response.data;
-    });
+  props: {
+    dishes: Array
   }
 };
 </script>

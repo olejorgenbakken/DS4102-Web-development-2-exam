@@ -7,7 +7,7 @@
         <h3>Meny</h3>
       </header>
       <Search v-model="searchTerm" @input="search"></Search>
-      <EditableDishList></EditableDishList>
+      <EditableDishList :dishes="dishes"></EditableDishList>
     </section>
 
     <AddNewDish class="add-dish"></AddNewDish>
@@ -37,7 +37,8 @@ export default {
   data() {
     return {
       searchTerm: undefined,
-      user: {}
+      user: {},
+      dishes: []
     };
   },
   beforeMount() {
@@ -60,6 +61,12 @@ export default {
     } else {
       this.$router.push("/login");
     }
+  },
+  created() {
+    const webAPIUrl = `https://localhost:5001/api/dishes/`;
+    axios.get(webAPIUrl).then(response => {
+      this.dishes = response.data;
+    });
   },
   methods: {
     search() {
