@@ -160,9 +160,6 @@ export default {
   height: 100%;
   width: 100%;
   object-fit: cover;
-}
-
-.figure img::before {
   height: 100%;
   width: 100%;
   padding: 20px;
@@ -173,6 +170,7 @@ export default {
   z-index: 2;
   color: black;
   background: whitesmoke;
+  cursor: pointer;
 }
 
 #new-pic {
@@ -187,15 +185,7 @@ export default {
   font-family: var(--heading);
   border-radius: 10px;
   padding: 10px 20px;
-  background: var(--color);
-  box-shadow: inset 10px 10px 100px var(--color),
-    inset -10px -10px 100px var(--color);
+  background: black;
   color: white;
-  transition: 0.2s ease-in-out;
-}
-
-.submit-btn:hover {
-  box-shadow: inset 10px 10px 100px var(--color),
-    inset -10px -10px 100px var(--color);
 }
 </style>

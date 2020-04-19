@@ -14,7 +14,7 @@ export default {
 
 <style scoped>
 .footer {
-  background: var(--color);
+  background: black;
   color: white;
   display: flex;
   justify-content: center;

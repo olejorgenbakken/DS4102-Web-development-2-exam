@@ -1,10 +1,11 @@
 <template>
   <section class="admin padding">
-    <TheHeader class="header"></TheHeader>
+    <TheHeader class="header padding"></TheHeader>
+    <ColorPicker class="color-picker"></ColorPicker>
     <Greeting class="greeting" :firstName="user.firstName"></Greeting>
     <section class="menu">
       <header>
-        <h3>Meny</h3>
+        <h2>Meny</h2>
       </header>
       <Search v-model="searchTerm" @input="search"></Search>
       <EditableDishList :dishes="dishes"></EditableDishList>
@@ -18,6 +19,7 @@
 <script>
 import axios from "axios";
 import TheHeader from "../components/TheHeader.vue";
+import ColorPicker from "../components/admin/ColorPicker.vue";
 import Greeting from "../components/admin/Greeting.vue";
 import Search from "../components/Search";
 import EditableDishList from "../components/admin/EditableDishList.vue";
@@ -29,6 +31,7 @@ export default {
   components: {
     TheHeader,
     Greeting,
+    ColorPicker,
     Search,
     EditableDishList,
     AddNewDish,
@@ -96,14 +99,15 @@ export default {
 <style scoped>
 .admin {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 70px repeat(4, auto);
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 70px repeat(5, auto);
   grid-template-areas:
-    "header header header header header header"
-    "greeting greeting greeting greeting greeting greeting"
-    "menu menu menu menu menu menu"
-    "dish dish dish dish dish dish"
-    "admin admin admin admin admin admin";
+    "header header header header header header header header header header header header"
+    "greeting greeting greeting greeting greeting greeting greeting greeting greeting greeting greeting greeting"
+    "color color color color color color color color color color color color"
+    "menu menu menu menu menu menu menu menu menu menu menu menu"
+    "dish dish dish dish dish dish dish dish dish dish dish dish"
+    "admin admin admin admin admin admin admin admin admin admin admin admin";
   gap: 40px;
   width: 100%;
   max-width: 1300px;
@@ -123,6 +127,10 @@ export default {
   border-radius: 20px;
 }
 
+.color-picker {
+  grid-area: color;
+}
+
 .greeting {
   margin: 0 auto;
   width: 100%;
@@ -132,8 +140,6 @@ export default {
 
 .menu {
   grid-area: menu;
-  background: #ffffff;
-  padding-top: 40px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
@@ -151,14 +157,45 @@ export default {
   grid-area: admin;
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 600px) {
   .admin {
     grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:
-      "header header header header header header"
-      "greeting greeting greeting greeting greeting greeting"
-      "menu menu menu menu menu menu"
-      "dish dish e e admin admin";
+      "header header header header header header header header header header header header"
+      "greeting greeting greeting greeting greeting color color color color e e e"
+      "menu menu menu menu menu menu menu menu menu menu menu menu"
+      "dish dish dish dish dish dish admin admin admin admin admin admin";
+    gap: 60px 40px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .admin {
+    grid-template-rows: 100px repeat(3, auto);
+    grid-template-areas:
+      "header header header header header header header header header header header header"
+      "greeting greeting greeting greeting color color color e e e e e"
+      "menu menu menu menu menu menu menu menu menu menu menu menu"
+      "dish dish dish dish dish dish admin admin admin admin admin admin";
+    gap: 60px 40px;
+  }
+
+  .menu {
+    padding: 60px 40px;
+    background: #ffffff;
+    box-shadow: inset 10px 10px 20px #e3e3e3, inset -10px -10px 20px #ffffff;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .admin {
+    grid-template-rows: 100px repeat(3, auto);
+    grid-template-areas:
+      "header header header header header header header header header header header header"
+      "greeting greeting greeting color color e e e e e e e"
+      "menu menu menu menu menu menu menu menu menu menu menu menu"
+      "dish dish dish dish dish dish admin admin admin admin admin admin";
+    gap: 60px 40px;
   }
 }
 </style>

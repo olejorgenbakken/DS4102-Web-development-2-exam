@@ -1,5 +1,5 @@
 <template>
-  <button class="buy-button" @click="addToCart" :id="id">Kjøp</button>
+  <button class="buy-button" @click="addToCart" :id="id" :style="`background: ${color}`">Kjøp</button>
 </template>
 
 <script>
@@ -7,7 +7,8 @@ import axios from "axios";
 export default {
   name: "BuyButton",
   props: {
-    id: Number
+    id: Number,
+    color: String
   },
   methods: {
     addToCart() {
@@ -30,7 +31,6 @@ export default {
 
 <style scoped>
 .buy-button {
-  background: var(--color);
   color: white;
   width: 100%;
   max-width: 150px;

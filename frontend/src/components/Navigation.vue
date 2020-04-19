@@ -25,8 +25,8 @@ export default {
 button,
 a {
   background: white;
-  border: 3px solid var(--color);
-  color: var(--color);
+  border: 3px solid black;
+  color: black;
   padding: 5px 10px;
   border-radius: 5px;
   font-family: var(--heading);
@@ -38,7 +38,7 @@ a {
 
 button:hover,
 a:hover {
-  background: var(--color);
+  background: black;
   color: white;
 }
 

@@ -20,7 +20,7 @@
         <label>Ingredienser</label>
         <p v-for="ingredient in JSON.parse(theDish.ingredients)" :key="ingredient">{{ingredient}}</p>
       </section>
-      <BuyButton :id="theDish.id"></BuyButton>
+      <BuyButton :id="theDish.id" :color="color"></BuyButton>
     </section>
   </article>
 </template>
@@ -30,6 +30,9 @@ import axios from "axios";
 import BuyButton from "./BuyButton";
 export default {
   name: "DetailedDish",
+  props: {
+    color: String
+  },
   components: {
     BuyButton
   },
@@ -92,7 +95,6 @@ export default {
 }
 
 .buy-button {
-  background: var(--color);
   color: white;
   width: 100%;
   max-width: 150px;

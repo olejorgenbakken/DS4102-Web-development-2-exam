@@ -4,7 +4,7 @@
     :style="'background-image: url(https:localhost:5001/images/' + dish.photo + ')'"
     :dish="dish.id"
   >
-    <section class="overlay">
+    <section class="overlay" :style="`background: ${color}`">
       <section class="content">
         <h2 class="title">
           {{dish.name}}
@@ -35,13 +35,19 @@ export default {
   },
   data() {
     return {
-      dish: {}
+      dish: {},
+      color: ""
     };
   },
   created() {
     let highlightedDish = "https://localhost:5001/api/dishes/highlighted/true";
     axios.get(highlightedDish).then(response => {
       this.dish = response.data;
+    });
+
+    const settings = `https://localhost:5001/settings/1`;
+    axios.get(settings).then(response => {
+      this.color = response.data.color;
     });
   }
 };
@@ -64,7 +70,6 @@ export default {
   width: 100%;
   clip-path: polygon(0 0, 100% 10%, 100% 100%, 0% 100%);
   padding: 30px;
-  background: var(--color);
 }
 
 .content {
@@ -81,12 +86,6 @@ export default {
 .content h2 {
   font-size: 2em;
   font-weight: 700;
-}
-
-.content h2 small {
-  font-weight: 400;
-  font-size: 0.7em;
-  margin-left: 5px;
 }
 
 .links {
@@ -106,7 +105,7 @@ button {
 
 .buy-button {
   background: white;
-  color: var(--color);
+  color: black;
 }
 
 .more-button {
@@ -117,7 +116,7 @@ button {
 
 .more-button:hover {
   background: white;
-  color: var(--color);
+  color: black;
   border: 3px solid white;
 }
 

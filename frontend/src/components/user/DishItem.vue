@@ -74,7 +74,7 @@ export default {
 
 .more-button {
   font-family: var(--paragraph);
-  color: var(--color);
+  color: black;
   font-weight: 600;
   grid-area: more;
   width: max-content;

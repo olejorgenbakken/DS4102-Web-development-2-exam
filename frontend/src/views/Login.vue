@@ -161,7 +161,7 @@ form section {
 }
 
 form input {
-  border: 2px solid var(--color);
+  border: 2px solid black;
   border-radius: 5px;
   padding: 5px;
   font-family: var(--paragraph);
@@ -172,7 +172,7 @@ form label {
 }
 
 form button {
-  background: var(--color);
+  background: black;
   padding: 9px;
   color: white;
   font-family: var(--heading);
@@ -207,7 +207,7 @@ form button {
 
 .create-user {
   background: transparent;
-  color: var(--color);
+  color: black;
   padding: 0;
 }
 

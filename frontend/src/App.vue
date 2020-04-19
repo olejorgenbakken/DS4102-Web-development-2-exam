@@ -35,6 +35,12 @@ a {
   color: inherit;
 }
 
+.label {
+  font-family: var(--heading);
+  font-size: 0.6em;
+  font-weight: 400;
+}
+
 h1,
 h2,
 h3,
@@ -59,6 +65,7 @@ label {
 }
 
 .card {
+  padding: 20px;
   background: #ffffff;
   box-shadow: 9px 9px 18px #ebebeb, -9px -9px 18px #ffffff;
   transition: 0.2s ease-in-out;
