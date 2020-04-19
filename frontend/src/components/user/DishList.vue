@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper">
     <section class="search" v-if="!this.$route.params.id">
-      <input type="search" placeholder="Søk" v-model="searchTerm" autofocus @keypress="search" />
+      <input type="search" placeholder="Søk" v-model="searchTerm" autofocus @input="search" />
     </section>
 
     <section class="dish-list">
