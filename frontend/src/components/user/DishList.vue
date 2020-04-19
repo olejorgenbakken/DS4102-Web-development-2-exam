@@ -44,7 +44,13 @@ export default {
       axios.get(webAPIUrl).then(response => {
         let dishes = [];
         response.data.forEach(dish => {
-          if (dish.name.toLowerCase().includes(this.searchTerm)) {
+          if (
+            dish.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            dish.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            dish.description
+              .toLowerCase()
+              .includes(this.searchTerm.toLowerCase())
+          ) {
             dishes.push(dish);
             this.dishes = dishes;
           } else {
