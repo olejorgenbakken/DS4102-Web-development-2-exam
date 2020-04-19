@@ -1,8 +1,6 @@
 <template>
   <section class="wrapper">
-    <section class="search" v-if="!this.$route.params.id">
-      <input type="search" placeholder="Søk" v-model="searchTerm" autofocus @input="search" />
-    </section>
+    <Search :placeholder="placeholder" v-model="searchTerm" @input="search"></Search>
 
     <section class="dish-list">
       <DishItem
@@ -19,17 +17,20 @@
 
 <script>
 import axios from "axios";
+import Search from "../Search";
 import DishItem from "./DishItem";
 
 export default {
   name: "DishList",
   components: {
-    DishItem
+    DishItem,
+    Search
   },
   data() {
     return {
-      dishes: Array,
-      searchTerm: undefined
+      dishes: [],
+      placeholder: "Søk",
+      searchTerm: ""
     };
   },
   created() {
@@ -72,30 +73,6 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
-}
-
-.search {
-  font-family: var(--heading);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  background: #ffffff;
-}
-
-.search::after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  content: "";
-  width: 100%;
-  height: 1px;
-  background: black;
-}
-
-.search input {
-  width: 100%;
-  padding: 15px;
 }
 
 .dish-list {
