@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper">
     <section class="search" v-if="!this.$route.params.id">
-      <input type="search" placeholder="Søk" v-model="search" autofocus />
+      <input type="search" placeholder="Søk" v-model="searchTerm" autofocus @keypress="search" />
     </section>
 
     <section class="dish-list">
@@ -28,8 +28,8 @@ export default {
   },
   data() {
     return {
-      search: undefined,
-      dishes: Array
+      dishes: Array,
+      searchTerm: undefined
     };
   },
   created() {
@@ -37,6 +37,22 @@ export default {
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;
     });
+  },
+  methods: {
+    search() {
+      const webAPIUrl = `https://localhost:5001/api/dishes/`;
+      axios.get(webAPIUrl).then(response => {
+        let dishes = [];
+        response.data.forEach(dish => {
+          if (dish.name.toLowerCase().includes(this.searchTerm)) {
+            dishes.push(dish);
+            this.dishes = dishes;
+          } else {
+            this.dishes = dishes;
+          }
+        });
+      });
+    }
   }
 };
 </script>
