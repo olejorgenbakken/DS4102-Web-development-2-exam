@@ -15,6 +15,20 @@
       <label>Beskrivelse</label>
       <textarea placeholder="Beskrivelse" autocomplete="off" v-model="dish.description"></textarea>
     </section>
+    <section class="ingredients">
+      <label>Ingredienser</label>
+      <select multiple v-model="dish.ingredients">
+        <option
+          v-for="ingredient in ingredientList"
+          :key="ingredient"
+          :value="ingredient"
+        >{{ingredient}}</option>
+      </select>
+    </section>
+    <section class="selected-ingredients" v-if="dish.ingredients.length > 0">
+      <label>Valgte ingredienser:</label>
+      <p class="ingredient" v-for="n in dish.ingredients" :key="n" @click="removeIng">{{n}}</p>
+    </section>
     <section class="type">
       <label>Type</label>
       <select v-model="dish.type">
@@ -38,7 +52,7 @@
     <section class="photo">
       <label>Bilde</label>
       <figure class="figure">
-        <input type="file" name="upload-img" id="new-pic" @change="showPicture" />
+        <input type="file" name="upload-img" id="new-pic" @input="showPicture" />
         <img :src="dish.photo" alt="Last opp et bilde" />
       </figure>
     </section>
@@ -54,10 +68,24 @@ export default {
   data() {
     return {
       dishTypes: ["Forrett", "Maki", "Sashimi", "Nigiri", "Vegetar", "Drikke"],
-      dish: {}
+      multiple: "true",
+      ingredientList: ["Agurk", "Chili", "Maki"],
+      dish: {
+        ingredients: []
+      }
     };
   },
   methods: {
+    removeIng(e) {
+      this.dish.ingredients.forEach(ingredient => {
+        if (ingredient == e.target.innerText) {
+          const index = this.dish.ingredients.indexOf(ingredient);
+          if (index > -1) {
+            this.dish.ingredients.splice(index, 1);
+          }
+        }
+      });
+    },
     showPicture() {
       let input = this.$el.querySelector("#new-pic");
       if (input.files && input.files[0]) {
@@ -76,6 +104,7 @@ export default {
       imageData.append("file", input.files[0]);
       this.dish.price = parseInt(this.dish.price);
       this.dish.photo = input.files[0].name;
+      this.dish.ingredients = JSON.stringify(this.dish.ingredients);
       axios.post(dishesURL, this.dish).then(() => {
         axios({
           method: "post",
@@ -83,6 +112,7 @@ export default {
           data: imageData,
           config: { headers: { "Content-type": "multiplart/form-data" } }
         });
+        this.dish.ingredients = JSON.parse(this.dish.ingredients);
       });
     }
   }
@@ -147,6 +177,23 @@ export default {
   margin-left: 10px;
 }
 
+.selected-ingredients {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.selected-ingredients label {
+  grid-column: 1 / span 3;
+}
+
+.ingredient {
+  padding: 5px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  background: #fafafa;
+}
+
 .figure {
   position: relative;
   height: 30vh;
@@ -162,7 +209,6 @@ export default {
   object-fit: cover;
   height: 100%;
   width: 100%;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -170,7 +216,6 @@ export default {
   z-index: 2;
   color: black;
   background: whitesmoke;
-  cursor: pointer;
 }
 
 #new-pic {
@@ -179,6 +224,7 @@ export default {
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  padding: 20px;
 }
 
 .submit-btn {

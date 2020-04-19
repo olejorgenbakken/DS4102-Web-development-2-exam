@@ -100,6 +100,7 @@ export default {
 .menu {
   width: 100%;
   max-width: 1000px;
+  min-height: 50vh;
   margin: 0 auto;
   padding: 0 20px 60px 20px;
   display: grid;

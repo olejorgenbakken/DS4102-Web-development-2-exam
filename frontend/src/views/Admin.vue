@@ -103,8 +103,8 @@ export default {
   grid-template-rows: 70px repeat(5, auto);
   grid-template-areas:
     "header header header header header header header header header header header header"
-    "greeting greeting greeting greeting greeting greeting greeting greeting greeting greeting greeting greeting"
-    "color color color color color color color color color color color color"
+    "greeting greeting greeting greeting greeting greeting greeting a a a a a"
+    "color color color color color color e e e e e e"
     "menu menu menu menu menu menu menu menu menu menu menu menu"
     "dish dish dish dish dish dish dish dish dish dish dish dish"
     "admin admin admin admin admin admin admin admin admin admin admin admin";
@@ -162,7 +162,7 @@ export default {
     grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:
       "header header header header header header header header header header header header"
-      "greeting greeting greeting greeting greeting color color color color e e e"
+      "greeting greeting greeting greeting greeting color color color color color e e"
       "menu menu menu menu menu menu menu menu menu menu menu menu"
       "dish dish dish dish dish dish admin admin admin admin admin admin";
     gap: 60px 40px;
@@ -187,7 +187,7 @@ export default {
   }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 1200px) {
   .admin {
     grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:

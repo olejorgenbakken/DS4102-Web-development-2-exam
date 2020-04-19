@@ -26,6 +26,7 @@ export default {
   display: flex;
   flex-direction: column;
   position: relative;
+  height: max-content;
 }
 
 .search::after {
