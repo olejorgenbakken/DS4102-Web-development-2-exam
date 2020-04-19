@@ -6,7 +6,8 @@
       <header>
         <h3>Meny</h3>
       </header>
-      <EditableDishList></EditableDishList>
+      <Search v-model="searchTerm" @input="search"></Search>
+      <EditableDishList :dishes="dishes"></EditableDishList>
     </section>
 
     <AddNewDish class="add-dish"></AddNewDish>
@@ -15,28 +16,32 @@
 </template>
 
 <script>
+import axios from "axios";
 import TheHeader from "../components/TheHeader.vue";
 import Greeting from "../components/admin/Greeting.vue";
+import Search from "../components/Search";
 import EditableDishList from "../components/admin/EditableDishList.vue";
 import AddNewDish from "../components/admin/AddNewDish.vue";
 import AddAdmin from "../components/admin/AddAdmin.vue";
-import axios from "axios";
 
 export default {
   name: "AdminHome",
   components: {
     TheHeader,
     Greeting,
+    Search,
     EditableDishList,
     AddNewDish,
     AddAdmin
   },
   data() {
     return {
-      user: {}
+      searchTerm: undefined,
+      user: {},
+      dishes: []
     };
   },
-  created() {
+  beforeMount() {
     if (document.cookie) {
       let cookies = document.cookie.split(";");
       if (cookies.length > 1) {
@@ -55,6 +60,34 @@ export default {
       }
     } else {
       this.$router.push("/login");
+    }
+  },
+  created() {
+    const webAPIUrl = `https://localhost:5001/api/dishes/`;
+    axios.get(webAPIUrl).then(response => {
+      this.dishes = response.data;
+    });
+  },
+  methods: {
+    search() {
+      const webAPIUrl = `https://localhost:5001/api/dishes/`;
+      axios.get(webAPIUrl).then(response => {
+        let dishes = [];
+        response.data.forEach(dish => {
+          if (
+            dish.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            dish.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            dish.description
+              .toLowerCase()
+              .includes(this.searchTerm.toLowerCase())
+          ) {
+            dishes.push(dish);
+            this.dishes = dishes;
+          } else {
+            this.dishes = dishes;
+          }
+        });
+      });
     }
   }
 };
@@ -101,11 +134,13 @@ export default {
   grid-area: menu;
   background: #ffffff;
   padding-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 .menu header {
   text-align: center;
-  padding-bottom: 20px;
 }
 
 .add-dish {

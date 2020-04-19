@@ -1,29 +1,19 @@
 <template>
   <section class="dishes">
-    <DishItem v-for="dish in dishes" :key="dish.id" :dishId="dish.id"></DishItem>
+    <DishItem v-for="dish in dishes" :key="dish.id" :id="dish.id"></DishItem>
   </section>
 </template>
 
 <script>
-import axios from "axios";
 import DishItem from "./EditableDishItem";
 
 export default {
-  name: "DishTable",
+  name: "EditableDishList",
   components: {
     DishItem
   },
-  data() {
-    return {
-      dishes: []
-    };
-  },
-  created() {
-    let webAPIUrl = "https://localhost:5001/api/dishes/";
-
-    axios.get(webAPIUrl).then(response => {
-      this.dishes = response.data;
-    });
+  props: {
+    dishes: Array
   }
 };
 </script>

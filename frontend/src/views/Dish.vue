@@ -1,21 +1,15 @@
 <template>
   <section class="dish">
     <TheHeader class="padding"></TheHeader>
-    <DetailedDish
-      :id="theDish.id"
-      :name="theDish.name"
-      :price="theDish.price"
-      :description="theDish.description"
-      :photo="theDish.photo"
-      :ingredients="theDish.ingredients"
-    ></DetailedDish>
+    <router-view>
+      <DetailedDish></DetailedDish>
+    </router-view>
+
     <section class="related">
       <header>
         <h3>Andre retter</h3>
       </header>
-      <section class="dishes">
-        <DishList :dishes="relatedDishes"></DishList>
-      </section>
+      <DishList :dishes="dishes"></DishList>
     </section>
     <TheFooter></TheFooter>
   </section>
@@ -37,23 +31,14 @@ export default {
   },
   data() {
     return {
-      theDish: {},
-      relatedDishes: []
+      dishes: []
     };
   },
   created() {
-    const webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.dishId}`;
-    axios
-      .get(webAPIUrl)
-      .then(response => {
-        this.theDish = response.data;
-      })
-      .then(() => {
-        let typeUrl = `https://localhost:5001/api/dishes/type/${this.theDish.type}`;
-        axios.get(typeUrl).then(response => {
-          this.relatedDishes = response.data;
-        });
-      });
+    const webAPIUrl = `https://localhost:5001/api/dishes`;
+    axios.get(webAPIUrl).then(response => {
+      this.dishes = response.data;
+    });
   }
 };
 </script>
@@ -70,11 +55,11 @@ export default {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding-bottom: 20px;
+  padding: 0 20px 60px 20px;
 }
 
 .related header {
-  padding: 40px 20px 10px 20px;
+  padding: 40px 0 10px 0;
 }
 
 @media only screen and (min-width: 800px) {

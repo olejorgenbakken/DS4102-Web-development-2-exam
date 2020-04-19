@@ -1,13 +1,13 @@
 <template>
-  <router-link :to="{ name: 'Dish', params: {dishId: theDish.id}}">
+  <router-link :to="{ name: 'Details', params: {id: id}}">
     <article class="menu-item">
       <figure class="item-photo">
-        <img :src="`https:/localhost:5001/images/${theDish.photo}`" />
+        <img :src="`https:/localhost:5001/images/${photo}`" />
       </figure>
 
       <h3 class="item-title">
-        {{theDish.name}}
-        <small class="item-price">{{theDish.price}}kr</small>
+        {{name}}
+        <small class="item-price">{{price}}kr</small>
       </h3>
     </article>
   </router-link>
@@ -18,7 +18,10 @@ import axios from "axios";
 export default {
   name: "Dish",
   props: {
-    dishId: Number
+    id: Number,
+    name: String,
+    photo: String,
+    price: Number
   },
   data() {
     return {
@@ -26,7 +29,7 @@ export default {
     };
   },
   created() {
-    let webAPIUrl = `https://localhost:5001/api/dishes/${this.dishId}`;
+    let webAPIUrl = `https://localhost:5001/api/dishes/${this.id}`;
     axios.get(webAPIUrl).then(response => {
       this.theDish = response.data;
     });
@@ -35,18 +38,11 @@ export default {
 </script>
 
 <style scoped>
-.menu-item {
-  transition: 0.05s ease-in-out;
-}
-
-.menu-item:hover {
-  transform: scale3d(1.01, 1.01, 1.01);
-}
-
 .item-photo {
   border-radius: 10px;
   overflow: hidden;
   height: 200px;
+  position: relative;
 }
 
 .item-photo img {

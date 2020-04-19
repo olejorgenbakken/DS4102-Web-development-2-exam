@@ -18,43 +18,39 @@
       </section>
       <section>
         <label>Ingredienser</label>
-        <p v-for="ingredient in theDish.ingredients" :key="ingredient">{{ingredient}}</p>
+        <p v-for="ingredient in JSON.parse(theDish.ingredients)" :key="ingredient">{{ingredient}}</p>
       </section>
-      <button class="buy-button" @click="addToCart">Kjøp</button>
+      <BuyButton :id="theDish.id"></BuyButton>
     </section>
   </article>
 </template>
 
 <script>
 import axios from "axios";
+import BuyButton from "./BuyButton";
 export default {
   name: "DetailedDish",
+  components: {
+    BuyButton
+  },
   data() {
     return {
       theDish: {}
     };
   },
-  created() {
-    let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.dishId}`;
+  watch: {
+    $route() {
+      let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.id}`;
+      axios.get(webAPIUrl).then(response => {
+        this.theDish = response.data;
+      });
+    }
+  },
+  mounted() {
+    let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.id}`;
     axios.get(webAPIUrl).then(response => {
       this.theDish = response.data;
     });
-  },
-  methods: {
-    addToCart() {
-      let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.dishId}`;
-
-      axios.get(webAPIUrl).then(response => {
-        if (localStorage.getItem("order") == null) {
-          let order = [response.data];
-          localStorage.setItem("order", JSON.stringify(order));
-        } else {
-          let order = JSON.parse(localStorage.getItem("order"));
-          order.push(response.data);
-          localStorage.setItem("order", JSON.stringify(order));
-        }
-      });
-    }
   }
 };
 </script>

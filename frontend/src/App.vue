@@ -57,4 +57,14 @@ label {
 .padding {
   padding: 0 20px;
 }
+
+.card {
+  background: #ffffff;
+  box-shadow: 9px 9px 18px #ebebeb, -9px -9px 18px #ffffff;
+  transition: 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 9px 9px 18px #d6d6d6, -9px -9px 18px #ffffff;
+}
 </style>

@@ -1,6 +1,13 @@
 <template>
   <section class="dish-list">
-    <DishItem v-for="dish in dishes" :key="dish.id" :dishId="dish.id"></DishItem>
+    <DishItem
+      v-for="dish in dishes"
+      :key="dish.id"
+      :id="dish.id"
+      :name="dish.name"
+      :photo="dish.photo"
+      :price="dish.price"
+    ></DishItem>
   </section>
 </template>
 
@@ -20,13 +27,9 @@ export default {
 
 <style scoped>
 .dish-list {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   gap: 50px;
-  padding: 0 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 5px 20px;
