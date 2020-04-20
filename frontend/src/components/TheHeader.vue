@@ -1,19 +1,31 @@
 <template>
   <header class="header">
     <router-link to="/">
-      <h1 class="frontpage-title">Sushi restaurant</h1>
+      <h1 class="frontpage-title" :style="`color: ${settings.color}`">Sushi restaurant</h1>
     </router-link>
-    <Navigation></Navigation>
+    <Navigation :color="settings.color" :text="settings.text"></Navigation>
   </header>
 </template>
 
 <script>
+import axios from "axios";
 import Navigation from "./Navigation.vue";
 
 export default {
   name: "Header",
   components: {
     Navigation
+  },
+  data() {
+    return {
+      settings: {}
+    };
+  },
+  beforeCreate() {
+    const settings = `https://localhost:5001/settings/1`;
+    axios.get(settings).then(response => {
+      this.settings = response.data;
+    });
   }
 };
 </script>

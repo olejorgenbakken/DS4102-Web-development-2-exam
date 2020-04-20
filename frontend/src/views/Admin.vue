@@ -1,7 +1,7 @@
 <template>
   <section class="admin padding">
     <TheHeader class="header padding"></TheHeader>
-    <ColorPicker class="color-picker"></ColorPicker>
+    <Settings class="settings"></Settings>
     <Greeting class="greeting" :firstName="user.firstName"></Greeting>
     <section class="menu">
       <header>
@@ -19,7 +19,7 @@
 <script>
 import axios from "axios";
 import TheHeader from "../components/TheHeader.vue";
-import ColorPicker from "../components/admin/ColorPicker.vue";
+import Settings from "../components/admin/Settings.vue";
 import Greeting from "../components/admin/Greeting.vue";
 import Search from "../components/Search";
 import EditableDishList from "../components/admin/EditableDishList.vue";
@@ -31,7 +31,7 @@ export default {
   components: {
     TheHeader,
     Greeting,
-    ColorPicker,
+    Settings,
     Search,
     EditableDishList,
     AddNewDish,
@@ -104,7 +104,7 @@ export default {
   grid-template-areas:
     "header header header header header header header header header header header header"
     "greeting greeting greeting greeting greeting greeting greeting a a a a a"
-    "color color color color color color e e e e e e"
+    "set set set set set set set set set set set set"
     "menu menu menu menu menu menu menu menu menu menu menu menu"
     "dish dish dish dish dish dish dish dish dish dish dish dish"
     "admin admin admin admin admin admin admin admin admin admin admin admin";
@@ -127,8 +127,8 @@ export default {
   border-radius: 20px;
 }
 
-.color-picker {
-  grid-area: color;
+.settings {
+  grid-area: set;
 }
 
 .greeting {
@@ -162,7 +162,7 @@ export default {
     grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:
       "header header header header header header header header header header header header"
-      "greeting greeting greeting greeting greeting color color color color color e e"
+      "greeting greeting greeting greeting greeting set set set set set set e"
       "menu menu menu menu menu menu menu menu menu menu menu menu"
       "dish dish dish dish dish dish admin admin admin admin admin admin";
     gap: 60px 40px;
@@ -174,7 +174,7 @@ export default {
     grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:
       "header header header header header header header header header header header header"
-      "greeting greeting greeting greeting color color color e e e e e"
+      "greeting greeting greeting greeting set set set set set set e e"
       "menu menu menu menu menu menu menu menu menu menu menu menu"
       "dish dish dish dish dish dish admin admin admin admin admin admin";
     gap: 60px 40px;
@@ -187,12 +187,12 @@ export default {
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .admin {
     grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:
       "header header header header header header header header header header header header"
-      "greeting greeting greeting color color e e e e e e e"
+      "greeting greeting greeting set set set set set set e e e e e"
       "menu menu menu menu menu menu menu menu menu menu menu menu"
       "dish dish dish dish dish dish admin admin admin admin admin admin";
     gap: 60px 40px;

@@ -4,7 +4,7 @@
     :style="'background-image: url(https:localhost:5001/images/' + dish.photo + ')'"
     :dish="dish.id"
   >
-    <section class="overlay" :style="`background: ${color}`">
+    <section class="overlay" :style="`background: ${settings.color}; color: ${settings.text}`">
       <section class="content">
         <h2 class="title">
           {{dish.name}}
@@ -15,9 +15,15 @@
 
         <section class="links">
           <router-link :to="{ name: 'Details', params: {id: dish.id}}">
-            <button class="more-button">Les mer</button>
+            <button
+              class="more-button"
+              :style="`border: 3px solid ${settings.text}; color: ${settings.text}`"
+            >Les mer</button>
           </router-link>
-          <BuyButton :id="dish.id"></BuyButton>
+          <BuyButton
+            :id="dish.id"
+            :style="`background: ${settings.text}; color: ${settings.color}`"
+          ></BuyButton>
         </section>
       </section>
     </section>
@@ -36,7 +42,7 @@ export default {
   data() {
     return {
       dish: {},
-      color: ""
+      settings: {}
     };
   },
   beforeMount() {
@@ -54,7 +60,7 @@ export default {
 
     const settings = `https://localhost:5001/settings/1`;
     axios.get(settings).then(response => {
-      this.color = response.data.color;
+      this.settings = response.data;
     });
   }
 };
@@ -80,7 +86,6 @@ export default {
 }
 
 .content {
-  color: white;
   display: grid;
   gap: 10px;
 }
@@ -117,14 +122,6 @@ button {
 
 .more-button {
   background: transparent;
-  color: white;
-  border: 3px solid white;
-}
-
-.more-button:hover {
-  background: white;
-  color: black;
-  border: 3px solid white;
 }
 
 @media only screen and (min-width: 700px) {

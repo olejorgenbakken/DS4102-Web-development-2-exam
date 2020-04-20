@@ -22,6 +22,13 @@ namespace RestaurantAPI.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<Settings>> Get()
+        {
+            List<Settings> allSettings = await _context.Settings.ToListAsync();
+            return allSettings;
+        }
+
         [HttpGet("{id}")]
         public async Task<Settings> Get(int id)
         {
