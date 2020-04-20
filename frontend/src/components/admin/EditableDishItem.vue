@@ -140,6 +140,24 @@ section {
   overflow: hidden;
   position: relative;
 }
+.figure::before {
+  position: absolute;
+  content: "Endre";
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+}
+
+.figure:focus-within::before {
+  opacity: 1;
+}
 
 .figure img {
   height: 100%;
