@@ -1,10 +1,10 @@
 <template>
   <nav class="global-navigation">
     <section class="admin-nav" v-if="$route.name == 'Admin'">
-      <button @click="logout">Logg ut</button>
+      <button @click="logout" :style="`color: ${color}`">Logg ut</button>
     </section>
     <section class="user-nav nav" v-else>
-      <router-link :to="{ name: 'Login'}">Logg inn</router-link>
+      <router-link :to="{ name: 'Login'}" :style="`color: ${color}`">Logg inn</router-link>
     </section>
   </nav>
 </template>

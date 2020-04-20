@@ -75,14 +75,15 @@ export default {
     },
     login(e) {
       e.preventDefault();
-      let adminDb = `https://localhost:5001/api/admins/user/${this.name}`;
+      let adminDb = `https://localhost:5001/api/users/user/${this.name}`;
       axios
         .get(adminDb)
         .then(response => {
           if (response.status == 200) {
             if (
               response.data.username == this.name &&
-              response.data.password == this.pass
+              response.data.password == this.pass &&
+              response.data.admin
             ) {
               let name = "login";
               let expires;

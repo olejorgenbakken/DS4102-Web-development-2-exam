@@ -12,19 +12,24 @@
       :text="'Tekstfarge'"
       :value="settings.text"
     ></ColorPicker>
+    <DishTypes :text="'Lag ny kategori'" v-model="settings.dishTypes" :value="newType"></DishTypes>
   </section>
 </template>
 
 <script>
 import axios from "axios";
-import ColorPicker from "./ColorPicker";
+import ColorPicker from "./SettingsAssets/ColorPicker";
+import DishTypes from "./SettingsAssets/DishTypes";
+
 export default {
   name: "Settings",
   components: {
-    ColorPicker
+    ColorPicker,
+    DishTypes
   },
   data() {
     return {
+      newType: "",
       settings: {}
     };
   },
@@ -32,13 +37,14 @@ export default {
     const settingsURL = `https://localhost:5001/settings/1`;
     axios.get(settingsURL).then(response => {
       this.settings = response.data;
-      console.log(response.data);
     });
   },
   updated() {
     const settingsURL = `https://localhost:5001/settings`;
+    axios.get(settingsURL).then(response => {
+      console.log(response.data);
+    });
     axios.put(settingsURL, this.settings);
-    console.log(true);
   }
 };
 </script>

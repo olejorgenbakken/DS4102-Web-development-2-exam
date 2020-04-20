@@ -1,7 +1,7 @@
 <template>
-  <footer class="footer" :style="`background: ${color}`">
+  <footer class="footer" :style="`background: ${settings.color}`">
     <section class="content">
-      <h2 class="footer-title">Sushi restaurant</h2>
+      <h2 class="footer-title" :style="`color: ${settings.text}`">Sushi restaurant</h2>
     </section>
   </footer>
 </template>
@@ -12,13 +12,13 @@ export default {
   name: "Footer",
   data() {
     return {
-      color: "#ffffff"
+      settings: {}
     };
   },
   created() {
     const settings = `https://localhost:5001/settings/1`;
     axios.get(settings).then(response => {
-      this.color = response.data.color;
+      this.settings = response.data;
     });
   }
 };

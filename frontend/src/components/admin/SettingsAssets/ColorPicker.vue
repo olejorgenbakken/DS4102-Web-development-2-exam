@@ -34,8 +34,13 @@ export default {
 input {
   height: 30px;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
+  border: none;
+}
+
+input::-webkit-color-swatch {
+  border: none;
 }
 </style>

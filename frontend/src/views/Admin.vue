@@ -53,7 +53,7 @@ export default {
         let loginCookie = cookies[0].split("=");
         if (loginCookie[0] == "login") {
           this.user.id = loginCookie[1];
-          let adminDb = `https://localhost:5001/api/admins/id/${this.user.id}`;
+          let adminDb = `https://localhost:5001/api/users/${this.user.id}`;
           axios.get(adminDb).then(response => {
             this.user = response.data;
           });

@@ -14,7 +14,6 @@
     <section class="type">
       <label>Type</label>
       <select v-model="dish.type">
-        <option disabled hidden selected>Velg type</option>
         <option v-for="type in dishTypes" :value="type" :key="type">{{ type }}</option>
       </select>
     </section>
@@ -67,7 +66,7 @@ export default {
   name: "AddNewDish",
   data() {
     return {
-      dishTypes: ["Forrett", "Maki", "Sashimi", "Nigiri", "Vegetar", "Drikke"],
+      dishTypes: [],
       multiple: "true",
       ingredientList: ["Agurk", "Chili", "Maki", "Wasabi", "idk"],
       dish: {
@@ -78,6 +77,11 @@ export default {
   created() {
     this.ingredientList.sort((a, b) => {
       return a.localeCompare(b);
+    });
+
+    let settings = `https://localhost:5001/settings/1`;
+    axios.get(settings).then(response => {
+      this.dishTypes = JSON.parse(response.data.dishTypes);
     });
   },
   methods: {

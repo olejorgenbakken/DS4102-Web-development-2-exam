@@ -17,15 +17,14 @@ export default {
     Navigation
   },
   data() {
-    return {
-      settings: {}
-    };
-  },
-  beforeCreate() {
     const settings = `https://localhost:5001/settings/1`;
     axios.get(settings).then(response => {
       this.settings = response.data;
     });
+
+    return {
+      settings: {}
+    };
   }
 };
 </script>
