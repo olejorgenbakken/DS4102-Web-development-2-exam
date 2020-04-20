@@ -46,10 +46,10 @@ export default {
     };
   },
   beforeMount() {
-    let highlightedDish = "https://localhost:5001/api/dishes/highlighted/true";
+    let highlightedDish = "https://localhost:5001/dishes/highlighted/true";
     axios.get(highlightedDish).then(response => {
       if (response.status != 200) {
-        let randomDish = "https://localhost:5001/api/dishes";
+        let randomDish = "https://localhost:5001/dishes";
         axios.get(randomDish).then(response => {
           let rnd = Math.floor(Math.random() * response.data.length);
           this.dish = response.data[rnd];

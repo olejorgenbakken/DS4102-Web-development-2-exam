@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     addToCart() {
-      let webAPIUrl = `https://localhost:5001/api/dishes/${this.id}`;
+      let webAPIUrl = `https://localhost:5001/dishes/${this.id}`;
 
       axios.get(webAPIUrl).then(response => {
         if (localStorage.getItem("order") == null) {

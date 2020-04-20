@@ -43,14 +43,14 @@ export default {
   },
   watch: {
     $route() {
-      let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.id}`;
+      let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
       axios.get(webAPIUrl).then(response => {
         this.theDish = response.data;
       });
     }
   },
   mounted() {
-    let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.id}`;
+    let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
     axios.get(webAPIUrl).then(response => {
       this.theDish = response.data;
     });

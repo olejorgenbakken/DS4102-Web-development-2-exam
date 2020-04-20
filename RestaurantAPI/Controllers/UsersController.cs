@@ -8,7 +8,7 @@ namespace RestaurantAPI.Controllers
 {
 
     [ApiController]
-    [Route("api/users")]
+    [Route("users")]
 
     public class UsersController : ControllerBase
     {

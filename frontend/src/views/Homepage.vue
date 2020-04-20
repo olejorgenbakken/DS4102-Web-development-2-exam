@@ -38,14 +38,14 @@ export default {
     };
   },
   beforeMount() {
-    const webAPIUrl = `https://localhost:5001/api/dishes`;
+    const webAPIUrl = `https://localhost:5001/dishes`;
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;
     });
   },
   methods: {
     search() {
-      const webAPIUrl = `https://localhost:5001/api/dishes/`;
+      const webAPIUrl = `https://localhost:5001/dishes/`;
       axios.get(webAPIUrl).then(response => {
         let dishes = [];
         response.data.forEach(dish => {

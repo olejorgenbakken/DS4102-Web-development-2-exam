@@ -53,7 +53,7 @@ export default {
         let loginCookie = cookies[0].split("=");
         if (loginCookie[0] == "login") {
           this.user.id = loginCookie[1];
-          let adminDb = `https://localhost:5001/api/users/${this.user.id}`;
+          let adminDb = `https://localhost:5001/users/${this.user.id}`;
           axios.get(adminDb).then(response => {
             this.user = response.data;
           });
@@ -66,14 +66,14 @@ export default {
     }
   },
   created() {
-    const webAPIUrl = `https://localhost:5001/api/dishes/`;
+    const webAPIUrl = `https://localhost:5001/dishes/`;
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;
     });
   },
   methods: {
     search() {
-      const webAPIUrl = `https://localhost:5001/api/dishes/`;
+      const webAPIUrl = `https://localhost:5001/dishes/`;
       axios.get(webAPIUrl).then(response => {
         let dishes = [];
         response.data.forEach(dish => {

@@ -59,7 +59,7 @@ export default {
     id: Number
   },
   created() {
-    let dish = `https://localhost:5001/api/dishes/${this.id}`;
+    let dish = `https://localhost:5001/dishes/${this.id}`;
     axios.get(dish).then(response => {
       this.dish = response.data;
     });
@@ -67,7 +67,7 @@ export default {
   methods: {
     // Deletes a dish from the database using the div's "dish" value.
     deleteDish() {
-      let dishesURL = `https://localhost:5001/api/dishes/${this.dish.id}`;
+      let dishesURL = `https://localhost:5001/dishes/${this.dish.id}`;
       axios.delete(dishesURL);
     }
   },
@@ -75,7 +75,7 @@ export default {
     this.dish.price = parseInt(this.dish.price);
     let input = this.$el.querySelector("#uploaded-pic");
 
-    let dishUploadURL = `https://localhost:5001/api/dishes/upload`;
+    let dishUploadURL = `https://localhost:5001/dishes/upload`;
 
     if (input.files[0] != undefined && input.files[0].name == this.dish.photo) {
       console.log(true);
@@ -92,11 +92,11 @@ export default {
         })
         .then(() => {
           this.dish.photo = input.files[0].name;
-          let dishURL = `https://localhost:5001/api/dishes/`;
+          let dishURL = `https://localhost:5001/dishes/`;
           axios.put(dishURL, this.dish);
         });
     } else {
-      let dishURL = `https://localhost:5001/api/dishes/`;
+      let dishURL = `https://localhost:5001/dishes/`;
       axios.put(dishURL, this.dish);
     }
   }

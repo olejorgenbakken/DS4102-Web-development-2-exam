@@ -11,7 +11,7 @@ namespace RestaurantAPI.Controllers
 {
 
     [ApiController]
-    [Route("api/dishes")]
+    [Route("dishes")]
 
     public class DishesController : ControllerBase
     {
@@ -69,14 +69,14 @@ namespace RestaurantAPI.Controllers
             return thisDish;
         }
 
-        [HttpGet("highlighted/{highlighted}")]
+        [HttpGet("{highlighted}")]
         public async Task<Dish> Get(bool highlighted)
         {
             Dish highlightedDish = await _context.Dish.FirstOrDefaultAsync(dish => dish.Highlighted == highlighted);
             return highlightedDish;
         }
 
-        [HttpGet("type/{type}")]
+        [HttpGet("{type}")]
         public async Task<IEnumerable<Dish>> Get(string type)
         {
             List<Dish> dishesOfType = await _context.Dish.ToListAsync();
