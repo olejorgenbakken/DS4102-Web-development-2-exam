@@ -13,8 +13,16 @@
 import axios from "axios";
 export default {
   name: "ColorPicker",
-  props: {
-    color: String
+  data() {
+    return {
+      color: "#ffffff"
+    };
+  },
+  created() {
+    const settings = `https://localhost:5001/settings/1`;
+    axios.get(settings).then(response => {
+      this.color = response.data.color;
+    });
   },
   methods: {
     sendData() {
