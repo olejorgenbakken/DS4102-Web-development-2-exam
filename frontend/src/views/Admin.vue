@@ -1,6 +1,5 @@
 <template>
   <section class="admin padding">
-    <TheHeader class="header padding"></TheHeader>
     <Settings class="settings"></Settings>
     <Greeting class="greeting" :firstName="user.firstName"></Greeting>
     <section class="menu">
@@ -18,7 +17,6 @@
 
 <script>
 import axios from "axios";
-import TheHeader from "../components/TheHeader.vue";
 import Settings from "../components/admin/Settings.vue";
 import Greeting from "../components/admin/Greeting.vue";
 import Search from "../components/Search";
@@ -29,7 +27,6 @@ import AddAdmin from "../components/admin/AddAdmin.vue";
 export default {
   name: "AdminHome",
   components: {
-    TheHeader,
     Greeting,
     Settings,
     Search,
@@ -100,9 +97,8 @@ export default {
 .admin {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 70px repeat(5, auto);
+  grid-template-rows: repeat(5, auto);
   grid-template-areas:
-    "header header header header header header header header header header header header"
     "greeting greeting greeting greeting greeting greeting greeting a a a a a"
     "set set set set set set set set set set set set"
     "menu menu menu menu menu menu menu menu menu menu menu menu"
@@ -112,11 +108,7 @@ export default {
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
-  padding-bottom: 60px;
-}
-
-.header {
-  grid-area: header;
+  padding: 60px 0;
 }
 
 .greeting,
@@ -159,7 +151,7 @@ export default {
 
 @media only screen and (min-width: 600px) {
   .admin {
-    grid-template-rows: 100px repeat(3, auto);
+    grid-template-rows: repeat(3, auto);
     grid-template-areas:
       "header header header header header header header header header header header header"
       "greeting greeting greeting greeting greeting set set set set set set e"
@@ -171,13 +163,10 @@ export default {
 
 @media only screen and (min-width: 900px) {
   .admin {
-    grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:
-      "header header header header header header header header header header header header"
       "greeting greeting greeting greeting set set set set set set e e"
       "menu menu menu menu menu menu menu menu menu menu menu menu"
       "dish dish dish dish dish dish admin admin admin admin admin admin";
-    gap: 60px 40px;
   }
 
   .menu {
@@ -189,13 +178,11 @@ export default {
 
 @media only screen and (min-width: 1100px) {
   .admin {
-    grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:
       "header header header header header header header header header header header header"
       "greeting greeting greeting set set set set set set e e e e e"
       "menu menu menu menu menu menu menu menu menu menu menu menu"
       "dish dish dish dish dish dish admin admin admin admin admin admin";
-    gap: 60px 40px;
   }
 }
 </style>

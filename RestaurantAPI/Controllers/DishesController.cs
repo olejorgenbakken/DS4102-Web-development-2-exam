@@ -77,9 +77,9 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpGet("type/{type}")]
-        public async Task<IEnumerable<Dish>> Get(string type)
+        public async Task<Dish> Get(string type)
         {
-            List<Dish> dishesOfType = await _context.Dish.ToListAsync();
+            Dish dishesOfType = await _context.Dish.FirstOrDefaultAsync(dish => dish.Type == type);
             return dishesOfType;
         }
 

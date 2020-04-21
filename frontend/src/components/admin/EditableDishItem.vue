@@ -78,7 +78,6 @@ export default {
     let dishUploadURL = `https://localhost:5001/dishes/upload`;
 
     if (input.files[0] != undefined && input.files[0].name == this.dish.photo) {
-      console.log(true);
       this.dish.photo = input.files[0].name;
     } else if (
       input.files[0] != undefined &&

@@ -1,43 +1,34 @@
 <template>
-  <section class="login">
-    <TheHeader class="padding"></TheHeader>
-    <section class="wrapper">
-      <section class="content card">
-        <header class="login-header">
-          <h2>Login</h2>
-        </header>
-        <form>
-          <section>
-            <label>Username</label>
-            <input type="text" v-model="name" />
-          </section>
-          <section>
-            <label>Password</label>
-            <input type="password" v-model="pass" />
-          </section>
-
-          <button @click="login">Logg inn</button>
-          <button class="create-user">Lag bruker</button>
-        </form>
-        <section class="feedback" @change="showError">
-          <p>{{errorMsg}}</p>
+  <section class="wrapper">
+    <section class="content card">
+      <header class="login-header">
+        <h2>Login</h2>
+      </header>
+      <form>
+        <section>
+          <label>Username</label>
+          <input type="text" v-model="name" />
         </section>
+        <section>
+          <label>Password</label>
+          <input type="password" v-model="pass" />
+        </section>
+
+        <button @click="login">Logg inn</button>
+        <button class="create-user">Lag bruker</button>
+      </form>
+      <section class="feedback" @change="showError">
+        <p>{{errorMsg}}</p>
       </section>
     </section>
-    <TheFooter></TheFooter>
   </section>
 </template>
 
 <script>
 import axios from "axios";
-import TheHeader from "../components/TheHeader.vue";
-import TheFooter from "../components/TheFooter.vue";
+
 export default {
   name: "Login",
-  components: {
-    TheHeader,
-    TheFooter
-  },
   data() {
     return {
       name: "",
@@ -75,7 +66,7 @@ export default {
     },
     login(e) {
       e.preventDefault();
-      let adminDb = `https://localhost:5001/api/users/user/${this.name}`;
+      let adminDb = `https://localhost:5001/users/user/${this.name}`;
       axios
         .get(adminDb)
         .then(response => {
@@ -113,16 +104,9 @@ export default {
 </script>
 
 <style scoped>
-.login {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 70px calc(100vh - 70px) auto;
-  width: 100%;
-}
-
 .wrapper {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -218,6 +202,7 @@ form button {
   }
 
   .wrapper {
+    height: calc(100vh - 100px);
     padding-bottom: 50px;
   }
 }

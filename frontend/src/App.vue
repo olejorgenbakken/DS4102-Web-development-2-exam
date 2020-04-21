@@ -1,12 +1,21 @@
 <template>
   <main>
+    <TheHeader></TheHeader>
     <router-view></router-view>
+    <TheFooter></TheFooter>
   </main>
 </template>
 
 <script>
+import TheHeader from "./components/TheHeader";
+import TheFooter from "./components/TheFooter";
+
 export default {
-  name: "App"
+  name: "App",
+  components: {
+    TheHeader,
+    TheFooter
+  }
 };
 </script>
 

@@ -35,6 +35,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  height: 70px;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
@@ -46,6 +47,10 @@ h1 {
 }
 
 @media only screen and (min-width: 700px) {
+  .header {
+    height: 100px;
+  }
+
   h1 {
     font-size: 1.5em;
   }

@@ -5,7 +5,7 @@
     </figure>
     <section class="info">
       <section class="title">
-        <label>Navn</label>
+        <p>{{theDish.type}}</p>
         <h2>{{theDish.name}}</h2>
       </section>
       <section class="price">

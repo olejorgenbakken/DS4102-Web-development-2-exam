@@ -7,8 +7,17 @@ import axios from "axios";
 export default {
   name: "BuyButton",
   props: {
-    id: Number,
-    color: String
+    id: Number
+  },
+  data() {
+    const settings = `https://localhost:5001/settings/1`;
+    axios.get(settings).then(response => {
+      this.color = response.data.color;
+    });
+
+    return {
+      color: {}
+    };
   },
   methods: {
     addToCart() {

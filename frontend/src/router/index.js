@@ -9,6 +9,13 @@ const routes = [
     path: '/',
     name: 'Homepage',
     component: Homepage,
+    children: [
+      {
+        path: "/",
+        query: "?=dishTerm?=dishType",
+        component: () => import(/* webpackChunkName: 'DishList' */ '../components/user/DishList.vue')
+      }
+    ]
   },
   {
     path: "/dish",
