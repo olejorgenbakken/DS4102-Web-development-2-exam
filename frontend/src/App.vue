@@ -59,8 +59,22 @@ button {
   font-family: var(--heading);
 }
 
-p {
+p,
+input,
+select,
+textarea {
   font-family: var(--paragraph);
+}
+
+input,
+select,
+button {
+  border: none;
+  outline: none;
+}
+
+select {
+  cursor: pointer;
 }
 
 label {
@@ -74,13 +88,9 @@ label {
 }
 
 .card {
+  border-radius: 20px;
   padding: 20px;
   background: #ffffff;
-  box-shadow: 9px 9px 18px #ebebeb, -9px -9px 18px #ffffff;
-  transition: 0.2s ease-in-out;
-}
-
-.card:hover {
-  box-shadow: 9px 9px 18px #d6d6d6, -9px -9px 18px #ffffff;
+  border: 1px solid black;
 }
 </style>

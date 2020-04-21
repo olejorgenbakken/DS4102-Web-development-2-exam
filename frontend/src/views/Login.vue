@@ -116,7 +116,6 @@ export default {
 .content {
   width: 80%;
   max-width: 400px;
-  border-radius: 20px;
   padding: 20px 20px 25px 20px;
   display: grid;
   grid-template-columns: 1fr;

@@ -1,5 +1,5 @@
 <template>
-  <form class="upload card" @click="expand">
+  <form class="upload card">
     <header>
       <h3>Legg til rett</h3>
     </header>
@@ -85,10 +85,6 @@ export default {
     });
   },
   methods: {
-    expand() {
-      window.scroll(0, document.querySelector("body").clientHeight);
-      this.$el.classList.add("open");
-    },
     removeIng(e) {
       this.dish.ingredients.forEach(ingredient => {
         if (ingredient == e.target.innerText) {
@@ -149,15 +145,9 @@ export default {
     "pic pic"
     "btn btn";
   gap: 20px;
-  height: 90px;
   font-family: var(--paragraph);
   overflow: hidden;
   transition: 0.2s ease-in-out;
-}
-
-.upload.open {
-  overflow: auto;
-  height: 300px;
 }
 
 input,
@@ -175,29 +165,6 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-}
-
-header::after {
-  content: "Vis mer";
-  padding: 10px;
-  width: 100px;
-  overflow: hidden;
-  text-align: center;
-  font-family: var(--heading);
-  font-weight: 700;
-  border: 2px solid black;
-  border-radius: 10px;
-  transition: 0.2s ease-in-out;
-  opacity: 1;
-}
-
-.upload:hover:not(.open) header::after {
-  background: black;
-  color: white;
-}
-
-.upload.open header::after {
-  opacity: 0;
 }
 
 .name {

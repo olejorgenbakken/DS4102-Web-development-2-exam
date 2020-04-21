@@ -1,7 +1,7 @@
 <template>
   <section class="admin padding">
-    <Settings class="settings"></Settings>
     <Greeting class="greeting" :firstName="user.firstName"></Greeting>
+    <Settings class="settings"></Settings>
     <section class="menu">
       <header>
         <h2>Meny</h2>
@@ -96,93 +96,10 @@ export default {
 <style scoped>
 .admin {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(5, auto);
-  grid-template-areas:
-    "greeting greeting greeting greeting greeting greeting greeting a a a a a"
-    "set set set set set set set set set set set set"
-    "menu menu menu menu menu menu menu menu menu menu menu menu"
-    "dish dish dish dish dish dish dish dish dish dish dish dish"
-    "admin admin admin admin admin admin admin admin admin admin admin admin";
   gap: 40px;
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
-  padding: 60px 0;
-}
-
-.greeting,
-.add-dish,
-.menu {
-  width: 100%;
-  margin: 0 auto;
-  border-radius: 20px;
-}
-
-.settings {
-  grid-area: set;
-}
-
-.greeting {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 800px;
-  grid-area: greeting;
-}
-
-.menu {
-  grid-area: menu;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.menu header {
-  text-align: center;
-}
-
-.add-dish {
-  grid-area: dish;
-}
-
-.add-user {
-  grid-area: admin;
-}
-
-@media only screen and (min-width: 600px) {
-  .admin {
-    grid-template-rows: repeat(3, auto);
-    grid-template-areas:
-      "header header header header header header header header header header header header"
-      "greeting greeting greeting greeting greeting set set set set set set e"
-      "menu menu menu menu menu menu menu menu menu menu menu menu"
-      "dish dish dish dish dish dish admin admin admin admin admin admin";
-    gap: 60px 40px;
-  }
-}
-
-@media only screen and (min-width: 900px) {
-  .admin {
-    grid-template-areas:
-      "greeting greeting greeting greeting set set set set set set e e"
-      "menu menu menu menu menu menu menu menu menu menu menu menu"
-      "dish dish dish dish dish dish admin admin admin admin admin admin";
-  }
-
-  .menu {
-    padding: 60px 40px;
-    background: #ffffff;
-    box-shadow: inset 10px 10px 20px #e3e3e3, inset -10px -10px 20px #ffffff;
-  }
-}
-
-@media only screen and (min-width: 1100px) {
-  .admin {
-    grid-template-areas:
-      "header header header header header header header header header header header header"
-      "greeting greeting greeting set set set set set set e e e e e"
-      "menu menu menu menu menu menu menu menu menu menu menu menu"
-      "dish dish dish dish dish dish admin admin admin admin admin admin";
-  }
+  padding: 60px 20px;
 }
 </style>

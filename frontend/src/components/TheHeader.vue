@@ -38,6 +38,7 @@ export default {
   height: 70px;
   width: 100%;
   max-width: 800px;
+  padding: 0 20px;
   margin: 0 auto;
 }
 

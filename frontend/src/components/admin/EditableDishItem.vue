@@ -1,5 +1,5 @@
 <template>
-  <article class="dish card">
+  <article class="dish">
     <section class="photo">
       <figure class="figure">
         <input type="file" name="upload-img" id="uploaded-pic" />
@@ -117,7 +117,6 @@ export default {
     "high high high high high high high"
     "del del del del del del del";
   gap: 20px;
-  border-radius: 20px;
 }
 
 section {

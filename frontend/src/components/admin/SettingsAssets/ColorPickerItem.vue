@@ -3,12 +3,7 @@
     <h2 class="color-picker">
       <label class="label">
         {{text}}
-        <input
-          type="color"
-          :id="text"
-          :value="value"
-          @input="$emit('input', $event.target.value)"
-        />
+        <input type="color" :value="value" @input="$emit('input', $event.target.value)" />
       </label>
     </h2>
   </article>

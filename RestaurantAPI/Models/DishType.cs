@@ -3,12 +3,11 @@ using System.ComponentModel.DataAnnotations;
 namespace RestaurantAPI.Models
 {
 
-    public class Settings
+    public class DishType
     {
         [Key]
         public int Id { get; set; }
-        public string Color { get; set; }
-        public string Text { get; set; }
+        public string Name { get; set; }
     }
 
 }

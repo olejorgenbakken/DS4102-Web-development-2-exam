@@ -47,14 +47,7 @@ export default {
   grid-template-columns: 1fr 100px;
   gap: 10px;
   height: max-content;
-}
-
-select,
-input {
-  color: black;
-  border: 1px solid black;
-  border-radius: 10px;
-  appearance: unset;
+  border-bottom: 1px solid black;
 }
 
 input {

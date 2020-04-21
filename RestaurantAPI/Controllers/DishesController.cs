@@ -15,8 +15,6 @@ namespace RestaurantAPI.Controllers
 
     public class DishesController : ControllerBase
     {
-
-
         private readonly RestaurantsContext _context;
         private readonly IWebHostEnvironment _hosting;
 
