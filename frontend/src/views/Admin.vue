@@ -4,7 +4,7 @@
     <Settings class="settings"></Settings>
     <AddAdmin class="user"></AddAdmin>
     <AddNewDish class="dish"></AddNewDish>
-    <section class="menu card">
+    <section class="menu">
       <header>
         <h2>Meny</h2>
       </header>
@@ -74,6 +74,7 @@ export default {
   margin: 0 auto;
   padding: 60px 20px;
   grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, auto);
   grid-template-areas:
     "greet greet greet greet greet greet"
     "settings settings settings settings settings settings"
@@ -115,21 +116,14 @@ export default {
   }
 }
 
-@media only screen and (min-width: 700px) {
-  .admin {
-    grid-template-areas:
-      "greet greet greet settings settings settings"
-      "user user user dish dish dish"
-      "menu menu menu menu menu menu";
-  }
-}
-
 @media only screen and (min-width: 900px) {
   .admin {
+    grid-template-rows: 100px 220px auto repeat(3, auto);
     grid-template-areas:
       "greet greet dish dish dish dish"
       "settings settings dish dish dish dish"
       "user user dish dish dish dish"
+      "e e dish dish dish dish"
       "menu menu menu menu menu menu";
   }
 }

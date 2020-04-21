@@ -29,11 +29,12 @@ export default {
 button,
 a {
   padding: 5px 10px;
-  border-radius: 5px;
   font-family: var(--heading);
   font-weight: 900;
   font-size: 1em;
   letter-spacing: 1px;
   transition: 0.2s ease-in-out;
+  cursor: pointer;
+  background: transparent;
 }
 </style>

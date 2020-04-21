@@ -117,9 +117,13 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: url(https://images.unsplash.com/photo-1587082455459-397465b31608?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2003&q=80);
+  background-size: cover;
+  background-position: center center;
 }
 
 .content {
+  background: #fff;
   width: 80%;
   max-width: 400px;
   padding: 20px 20px 25px 20px;
@@ -152,7 +156,7 @@ form section {
 
 form input {
   border: 2px solid black;
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 5px;
   font-family: var(--paragraph);
 }
@@ -168,7 +172,7 @@ form button {
   font-family: var(--heading);
   font-weight: 700;
   font-size: 0.9em;
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 .feedback {

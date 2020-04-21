@@ -40,6 +40,8 @@ export default {
   max-width: 800px;
   padding: 0 20px;
   margin: 0 auto;
+  position: relative;
+  z-index: 3;
 }
 
 h1 {

@@ -22,8 +22,8 @@ export default {
   },
   data() {
     return {
-      dishesToShow: Array,
-      allDishes: Array
+      dishesToShow: [],
+      allDishes: []
     };
   },
   beforeCreate() {

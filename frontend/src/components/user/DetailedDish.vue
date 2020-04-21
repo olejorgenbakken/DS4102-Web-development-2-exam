@@ -1,5 +1,5 @@
 <template>
-  <article :id="theDish.id" class="detailed">
+  <article :id="theDish.id" class="detailed card card-photo">
     <figure class="photo">
       <img :src="`https://localhost:5001/images/${theDish.photo}`" />
     </figure>
@@ -18,7 +18,7 @@
       </section>
       <section>
         <label>Ingredienser</label>
-        <p v-for="ingredient in JSON.parse(theDish.ingredients)" :key="ingredient">{{ingredient}}</p>
+        <p v-for="ingredient in theDish.ingredients" :key="ingredient">{{ingredient}}</p>
       </section>
       <BuyButton :id="theDish.id" :color="color"></BuyButton>
     </section>
@@ -46,6 +46,7 @@ export default {
       let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
       axios.get(webAPIUrl).then(response => {
         this.theDish = response.data;
+        this.theDish.ingredients = JSON.parse(this.theDish.ingredients);
       });
     }
   },
@@ -53,6 +54,7 @@ export default {
     let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
     axios.get(webAPIUrl).then(response => {
       this.theDish = response.data;
+      this.theDish.ingredients = JSON.parse(this.theDish.ingredients);
     });
   }
 };
@@ -101,19 +103,15 @@ export default {
   padding: 10px;
   font-family: var(--heading);
   font-weight: 700;
-  border-radius: 30px;
+  border-radius: 2px;
   transition: 0.3s ease-in-out;
 }
 
 @media only screen and (min-width: 800px) {
-  .photo {
-    border-radius: 20px;
-  }
   .detailed {
     grid-template-areas:
       "picture info"
       "picture info";
-    padding: 0 20px;
     gap: 0 10px;
   }
 

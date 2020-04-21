@@ -1,14 +1,15 @@
 <template>
   <router-link :to="{ name: 'Details', params: {id: id}}">
-    <article class="menu-item">
+    <article class="menu-item card card-photo">
       <figure class="item-photo">
         <img :src="`https:/localhost:5001/images/${photo}`" />
       </figure>
-
-      <h3 class="item-title">
-        {{name}}
-        <small class="item-price">{{price}}kr</small>
-      </h3>
+      <section>
+        <h3 class="item-title">
+          {{name}}
+          <small class="item-price">{{price}}kr</small>
+        </h3>
+      </section>
     </article>
   </router-link>
 </template>
@@ -27,7 +28,6 @@ export default {
 
 <style scoped>
 .item-photo {
-  border-radius: 10px;
   overflow: hidden;
   height: 200px;
   position: relative;
@@ -41,7 +41,7 @@ export default {
 
 .item-title {
   width: 100%;
-  padding: 5px;
+  padding: 10px 10px 20px 10px;
   font-weight: 700;
   grid-area: title;
 }

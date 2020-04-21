@@ -1,33 +1,30 @@
 <template>
-  <section
-    class="dish-hero"
-    :style="'background-image: url(https:localhost:5001/images/' + dish.photo + ')'"
-    :dish="dish.id"
-  >
-    <section class="overlay" :style="`background: ${settings.color}; color: ${settings.text}`">
-      <section class="content">
+  <article class="highlighted">
+    <section
+      class="photo"
+      :style="'background-image: url(https:localhost:5001/images/' + dish.photo + ')'"
+    ></section>
+    <section class="info" :style="`background: ${color}; color: ${text}`">
+      <section class="text">
         <h2 class="title">
           {{dish.name}}
           <small>fra {{dish.price}}kr</small>
         </h2>
-
         <p>{{dish.description}}</p>
+      </section>
 
-        <section class="links">
-          <router-link :to="{ name: 'Details', params: {id: dish.id}}">
-            <button
-              class="more-button"
-              :style="`border: 3px solid ${settings.text}; color: ${settings.text}`"
-            >Les mer</button>
-          </router-link>
-          <BuyButton
-            :id="dish.id"
-            :style="`background: ${settings.text}; color: ${settings.color}`"
-          ></BuyButton>
-        </section>
+      <section class="links">
+        <router-link :to="{ name: 'Details', params: {id: dish.id}}">
+          <button class="more-button" :style="`border: 3px solid ${text}; color: ${text}`">Les mer</button>
+        </router-link>
+        <BuyButton
+          :id="dish.id"
+          :style="`background: ${text}; color: ${color}`"
+          class="buy-button card card-photo"
+        ></BuyButton>
       </section>
     </section>
-  </section>
+  </article>
 </template>
 
 <script>
@@ -38,6 +35,10 @@ export default {
   name: "DishHighlight",
   components: {
     BuyButton
+  },
+  props: {
+    color: String,
+    text: String
   },
   data() {
     return {
@@ -57,101 +58,82 @@ export default {
       }
       this.dish = response.data;
     });
-
-    const settings = `https://localhost:5001/settings/1`;
-    axios.get(settings).then(response => {
-      this.settings = response.data;
-    });
   }
 };
 </script>
 
 <style scoped>
-.dish-hero {
-  height: 100%;
+.highlighted {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "pic"
+    "info";
   width: 100%;
-  max-width: 1200px;
+  height: 100%;
+  max-width: 1300px;
   margin: 0 auto;
+}
+
+.photo {
+  grid-area: pic;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center center;
-  display: flex;
-  align-items: flex-end;
-  position: relative;
 }
 
-.overlay {
+.info {
+  grid-area: info;
+  padding: 20px 20px 30px 20px;
+}
+
+.text {
   width: 100%;
-  clip-path: polygon(0 0, 100% 10%, 100% 100%, 0% 100%);
-  padding: 30px;
-}
-
-.content {
-  display: grid;
-  gap: 10px;
-}
-
-.content h2,
-.content button {
-  font-family: var(--heading);
-}
-
-.content h2 {
-  font-size: 2em;
-  font-weight: 700;
+  max-width: 400px;
+  padding-bottom: 20px;
 }
 
 .links {
-  display: grid;
-  grid-template-columns: max-content 100px;
-  gap: 15px;
-}
-
-button {
   width: 100%;
-  max-width: 150px;
-  padding: 10px 30px;
-  font-weight: 700;
-  border-radius: 30px;
-  transition: 0.2s ease-in-out;
-}
-
-.buy-button {
-  background: white;
-  color: black;
+  max-width: 400px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 120px 1fr;
 }
 
 .more-button {
   background: transparent;
+  width: 100%;
+  height: 100%;
+}
+
+.buy-button::after {
+  background: transparent;
 }
 
 @media only screen and (min-width: 700px) {
-  .dish-hero {
-    overflow: hidden;
+  .highlighted {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: "info info info info info pic pic pic";
   }
-  .overlay {
-    position: relative;
-    width: 60%;
+
+  .info {
     height: 100%;
-    clip-path: polygon(0 0, 90% 0, 100% 100%, 0% 100%);
+    grid-area: info;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
-  .content {
-    padding-right: 20px;
-  }
-
-  .content button {
-    margin-top: 20px;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .dish-hero {
-    width: 95%;
-
-    border-radius: 20px;
+  .links {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 120px 1fr;
+    justify-content: flex-start;
   }
 }
 </style>

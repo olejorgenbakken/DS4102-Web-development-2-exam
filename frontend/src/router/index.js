@@ -8,6 +8,7 @@ const routes = [
   {
     path: '/',
     component: Homepage,
+    props: { default: true, sidebar: false },
     children: [
       {
         name: "Homepage",

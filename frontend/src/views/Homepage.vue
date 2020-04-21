@@ -1,6 +1,6 @@
 <template>
   <main class="mainpage">
-    <DishHighlight></DishHighlight>
+    <DishHighlight :color="color" :text="text"></DishHighlight>
     <header class="dish-list-header">
       <h2 class="dish-list-heading">Meny</h2>
     </header>
@@ -26,13 +26,15 @@ export default {
   },
   data() {
     return {
-      dishes: []
+      text: "",
+      color: ""
     };
   },
   beforeMount() {
-    const webAPIUrl = `https://localhost:5001/dishes`;
-    axios.get(webAPIUrl).then(response => {
-      this.dishes = response.data;
+    const settings = `https://localhost:5001/settings/1`;
+    axios.get(settings).then(response => {
+      this.color = response.data.color;
+      this.text = response.data.text;
     });
   }
 };

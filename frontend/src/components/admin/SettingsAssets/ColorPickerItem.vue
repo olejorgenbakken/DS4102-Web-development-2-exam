@@ -21,7 +21,6 @@ export default {
 
 <style scoped>
 .color-picker {
-  border-radius: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -29,10 +28,10 @@ export default {
 input {
   height: 30px;
   width: 100%;
-  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
   border: none;
+  background: transparent;
 }
 
 input::-webkit-color-swatch {

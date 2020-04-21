@@ -64,4 +64,10 @@ export default {
     grid-template-rows: 400px auto;
   }
 }
+
+@media only screen and (min-width: 1100px) {
+  .related {
+    padding: 0 0 60px 0;
+  }
+}
 </style>

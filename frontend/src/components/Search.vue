@@ -32,8 +32,7 @@ export default {
       this.$router.push({
         query: { dish: this.term, type: this.selected }
       });
-    } else if (this.selected != "" || this.selected != "Alle") {
-      console.log(this.selected);
+    } else if (this.selected != "") {
       this.$router.push({
         query: { type: this.selected }
       });

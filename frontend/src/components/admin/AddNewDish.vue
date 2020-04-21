@@ -7,7 +7,7 @@
       <section class="photo">
         <label>Bilde</label>
         <figure class="figure">
-          <input type="file" name="upload-img" id="new-pic" @change="showPicture" />
+          <input type="file" name="upload-img" id="new-pic" @input="showPicture" />
           <img :src="dish.photo" alt="Last opp et bilde" />
         </figure>
       </section>
@@ -46,7 +46,7 @@
         <label>Ingredienser</label>
         <select multiple v-model="dish.ingredients">
           <option
-            v-for="ingredient in ingredientList"
+            v-for="ingredient in ingredients"
             :key="ingredient"
             :value="ingredient"
           >{{ingredient}}</option>
@@ -54,7 +54,9 @@
       </section>
       <section class="selected-ingredients" v-if="dish.ingredients.length > 0">
         <label>Valgte ingredienser:</label>
-        <p class="ingredient" v-for="n in dish.ingredients" :key="n" @click="removeIng">{{n}}</p>
+        <section class="list">
+          <p class="ingredient" v-for="n in dish.ingredients" :key="n" @click="removeIng">{{n}}</p>
+        </section>
       </section>
       <button @click="addNewDish" class="submit-btn">Last opp ny rett</button>
     </section>
@@ -69,16 +71,22 @@ export default {
   data() {
     return {
       dishTypes: [],
-      multiple: "true",
-      ingredientList: ["Agurk", "Chili", "Wasabi", "idk"],
+      ingredients: [],
       dish: {
         ingredients: []
       }
     };
   },
   created() {
-    this.ingredientList.sort((a, b) => {
-      return a.localeCompare(b);
+    let ingredientsURL = `https://localhost:5001/ingredients`;
+    axios.get(ingredientsURL).then(response => {
+      response.data.forEach(ingredient => {
+        this.ingredients.push(ingredient.name);
+      });
+
+      this.ingredient.sort((a, b) => {
+        return a.localeCompare(b);
+      });
     });
 
     let dishListURL = `https://localhost:5001/dishtypes`;
@@ -97,6 +105,7 @@ export default {
         }
       });
     },
+
     showPicture() {
       let input = this.$el.querySelector("#new-pic");
       if (input.files && input.files[0]) {
@@ -163,39 +172,44 @@ textarea,
 select {
   border: 1px solid black;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 5px;
-}
-
-.upload section {
-  display: grid;
-  gap: 3px 10px;
 }
 
 .name {
   grid-area: name;
+  display: grid;
+  gap: 3px 10px;
 }
 
 .price {
+  display: grid;
+  gap: 3px 10px;
   grid-area: price;
 }
 
 .type {
+  display: grid;
+  gap: 3px 10px;
   grid-area: type;
 }
 
 .desc {
+  display: grid;
+  gap: 3px 10px;
   grid-area: desc;
 }
 
 .desc textarea {
   resize: vertical;
   min-height: 40px;
-  height: 50px;
+  height: 100%;
   max-height: 130px;
 }
 
 .ingredients {
+  display: grid;
+  gap: 3px 10px;
   grid-area: ing;
 }
 
@@ -214,23 +228,32 @@ select option {
   grid-area: sel-ing;
 }
 
-.selected-ingredients label {
-  grid-area: header;
+.list {
+  margin: -5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .ingredient {
-  padding: 5px 10px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
-  background: #fafafa;
+  padding: 7px 15px;
+  margin: 5px 5px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
   cursor: pointer;
+  height: max-content;
 }
 
 .highlighted {
+  display: grid;
+  gap: 3px 10px;
   grid-area: high;
 }
 
 .input-highlighted {
+  display: grid;
+  gap: 3px 10px;
   grid-template-columns: repeat(2, auto);
 }
 
@@ -241,7 +264,7 @@ select option {
   font-size: 0.8em;
   border: 1px solid black;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 5px;
 }
 
@@ -259,7 +282,6 @@ select option {
   position: relative;
   height: 100%;
   overflow: hidden;
-  border-radius: 10px;
 }
 
 .photo figure img {
@@ -274,7 +296,7 @@ select option {
   align-items: center;
   z-index: 2;
   color: black;
-  background: whitesmoke;
+  background: #c0c0c0;
 }
 
 #new-pic {
@@ -289,7 +311,7 @@ select option {
 .submit-btn {
   grid-area: btn;
   font-family: var(--heading);
-  border-radius: 10px;
+  border-radius: 2px;
   padding: 10px 20px;
   background: black;
   color: white;
@@ -297,29 +319,25 @@ select option {
 
 @media only screen and (min-width: 900px) {
   .upload {
+    grid-template-columns: 300px repeat(2, 1fr);
+    grid-template-rows: repeat(2, 50px) 100px 50px repeat(3, auto);
     grid-template-areas:
-      "pic name"
-      "pic name"
-      "pic price"
-      "pic type"
-      "pic desc"
-      "pic high"
-      "ing ing"
-      "sel-ing sel-ing"
-      "btn btn";
+      "pic name name"
+      "pic price type"
+      "pic desc desc"
+      "pic high high"
+      "ing ing ing"
+      "sel-ing sel-ing sel-ing"
+      "btn btn btn";
   }
 
   .photo {
-    height: auto;
+    height: 94%;
   }
 
-  .selected-ingredients {
-    grid-area: sel-ing;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-areas:
-      "header header header header header header header"
-      "info info info info info info info";
+  .desc textarea {
+    resize: none;
+    height: 86px;
   }
 
   .ingredients select {

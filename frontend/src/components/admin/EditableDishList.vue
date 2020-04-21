@@ -1,6 +1,17 @@
 <template>
   <section class="dishes">
-    <DishItem v-for="dish in dishesToShow" :key="dish.id" :id="dish.id"></DishItem>
+    <DishItem
+      v-for="dish in dishesToShow"
+      :key="dish.id"
+      :id="dish.id"
+      :name="dish.name"
+      :price="dish.price"
+      :photo="dish.photo"
+      :description="dish.description"
+      :highlighted="dish.highlighted"
+      :type="dish.type"
+      :ingredients="JSON.parse(dish.ingredients)"
+    ></DishItem>
   </section>
 </template>
 

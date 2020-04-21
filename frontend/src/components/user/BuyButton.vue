@@ -46,7 +46,7 @@ export default {
   padding: 10px;
   font-family: var(--heading);
   font-weight: 700;
-  border-radius: 30px;
+  border-radius: 2px;
   transition: 0.3s ease-in-out;
 }
 </style>
