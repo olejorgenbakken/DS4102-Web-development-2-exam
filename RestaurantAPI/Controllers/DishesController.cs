@@ -11,12 +11,10 @@ namespace RestaurantAPI.Controllers
 {
 
     [ApiController]
-    [Route("api/dishes")]
+    [Route("dishes")]
 
     public class DishesController : ControllerBase
     {
-
-
         private readonly RestaurantsContext _context;
         private readonly IWebHostEnvironment _hosting;
 
@@ -77,9 +75,9 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpGet("type/{type}")]
-        public async Task<IEnumerable<Dish>> Get(string type)
+        public async Task<Dish> Get(string type)
         {
-            List<Dish> dishesOfType = await _context.Dish.ToListAsync();
+            Dish dishesOfType = await _context.Dish.FirstOrDefaultAsync(dish => dish.Type == type);
             return dishesOfType;
         }
 

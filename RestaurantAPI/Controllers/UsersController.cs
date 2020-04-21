@@ -8,7 +8,7 @@ namespace RestaurantAPI.Controllers
 {
 
     [ApiController]
-    [Route("api/users")]
+    [Route("users")]
 
     public class UsersController : ControllerBase
     {
@@ -28,20 +28,18 @@ namespace RestaurantAPI.Controllers
             return UserList;
         }
 
-        [HttpGet("userId/{id}")]
+        [HttpGet("{id}")]
         public async Task<User> Get(int id)
         {
             User thisUser = await _context.User.FirstOrDefaultAsync(user => user.Id == id);
             return thisUser;
         }
 
-        [HttpGet("username/{username}")]
-        public async Task<User> Get(string username)
+        [HttpGet("user/{name}")]
+        public async Task<User> Get(string name)
         {
-            User thisUser = await _context.User.FirstOrDefaultAsync(user => user.Username == username);
+            User thisUser = await _context.User.FirstOrDefaultAsync(user => user.Username == name);
             return thisUser;
         }
     }
-
-
 }

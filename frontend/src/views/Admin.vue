@@ -1,23 +1,24 @@
 <template>
   <section class="admin padding">
-    <TheHeader class="header"></TheHeader>
-    <Greeting class="greeting" :firstName="user.firstName"></Greeting>
+    <Greeting class="greet" :firstName="user.firstName"></Greeting>
+    <Settings class="settings"></Settings>
+    <AddAdmin class="user"></AddAdmin>
+    <AddNewDish class="dish"></AddNewDish>
     <section class="menu">
       <header>
-        <h3>Meny</h3>
+        <h2>Meny</h2>
       </header>
-      <Search v-model="searchTerm" @input="search"></Search>
-      <EditableDishList :dishes="dishes"></EditableDishList>
+      <Search></Search>
+      <router-view>
+        <EditableDishList :dishes="dishes"></EditableDishList>
+      </router-view>
     </section>
-
-    <AddNewDish class="add-dish"></AddNewDish>
-    <AddAdmin class="add-admin"></AddAdmin>
   </section>
 </template>
 
 <script>
 import axios from "axios";
-import TheHeader from "../components/TheHeader.vue";
+import Settings from "../components/admin/Settings.vue";
 import Greeting from "../components/admin/Greeting.vue";
 import Search from "../components/Search";
 import EditableDishList from "../components/admin/EditableDishList.vue";
@@ -27,8 +28,8 @@ import AddAdmin from "../components/admin/AddAdmin.vue";
 export default {
   name: "AdminHome",
   components: {
-    TheHeader,
     Greeting,
+    Settings,
     Search,
     EditableDishList,
     AddNewDish,
@@ -36,7 +37,6 @@ export default {
   },
   data() {
     return {
-      searchTerm: undefined,
       user: {},
       dishes: []
     };
@@ -50,8 +50,8 @@ export default {
         let loginCookie = cookies[0].split("=");
         if (loginCookie[0] == "login") {
           this.user.id = loginCookie[1];
-          let adminDb = `https://localhost:5001/api/admins/id/${this.user.id}`;
-          axios.get(adminDb).then(response => {
+          let userDB = `https://localhost:5001/users/${this.user.id}`;
+          axios.get(userDB).then(response => {
             this.user = response.data;
           });
         } else {
@@ -61,34 +61,6 @@ export default {
     } else {
       this.$router.push("/login");
     }
-  },
-  created() {
-    const webAPIUrl = `https://localhost:5001/api/dishes/`;
-    axios.get(webAPIUrl).then(response => {
-      this.dishes = response.data;
-    });
-  },
-  methods: {
-    search() {
-      const webAPIUrl = `https://localhost:5001/api/dishes/`;
-      axios.get(webAPIUrl).then(response => {
-        let dishes = [];
-        response.data.forEach(dish => {
-          if (
-            dish.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-            dish.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-            dish.description
-              .toLowerCase()
-              .includes(this.searchTerm.toLowerCase())
-          ) {
-            dishes.push(dish);
-            this.dishes = dishes;
-          } else {
-            this.dishes = dishes;
-          }
-        });
-      });
-    }
   }
 };
 </script>
@@ -96,69 +68,63 @@ export default {
 <style scoped>
 .admin {
   display: grid;
+  gap: 30px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 70px repeat(4, auto);
+  grid-template-rows: repeat(5, auto);
   grid-template-areas:
-    "header header header header header header"
-    "greeting greeting greeting greeting greeting greeting"
-    "menu menu menu menu menu menu"
+    "greet greet greet greet greet greet"
+    "settings settings settings settings settings settings"
+    "user user user user user user"
     "dish dish dish dish dish dish"
-    "admin admin admin admin admin admin";
-  gap: 40px;
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding-bottom: 60px;
+    "menu menu menu menu menu menu";
 }
 
-.header {
-  grid-area: header;
+.greet {
+  grid-area: greet;
 }
 
-.greeting,
-.add-dish,
-.menu {
-  width: 100%;
-  margin: 0 auto;
-  border-radius: 20px;
+.settings {
+  grid-area: settings;
 }
 
-.greeting {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 800px;
-  grid-area: greeting;
+.dish {
+  grid-area: dish;
+}
+
+.user {
+  grid-area: user;
 }
 
 .menu {
   grid-area: menu;
-  background: #ffffff;
-  padding-top: 40px;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+  grid-template-rows: repeat(3, auto);
+  gap: 30px;
 }
 
-.menu header {
-  text-align: center;
-}
-
-.add-dish {
-  grid-area: dish;
-}
-
-.add-user {
-  grid-area: admin;
-}
-
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 500px) {
   .admin {
-    grid-template-rows: 100px repeat(3, auto);
     grid-template-areas:
-      "header header header header header header"
-      "greeting greeting greeting greeting greeting greeting"
-      "menu menu menu menu menu menu"
-      "dish dish e e admin admin";
+      "greet greet greet settings settings settings"
+      "user user user user user user"
+      "dish dish dish dish dish dish"
+      "menu menu menu menu menu menu";
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .admin {
+    grid-template-rows: 100px 220px auto repeat(3, auto);
+    grid-template-areas:
+      "greet greet dish dish dish dish"
+      "settings settings dish dish dish dish"
+      "user user dish dish dish dish"
+      "e e dish dish dish dish"
+      "menu menu menu menu menu menu";
   }
 }
 </style>

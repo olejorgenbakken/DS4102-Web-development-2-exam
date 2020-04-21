@@ -1,11 +1,11 @@
 <template>
-  <article :id="theDish.id" class="detailed">
+  <article :id="theDish.id" class="detailed card card-photo">
     <figure class="photo">
       <img :src="`https://localhost:5001/images/${theDish.photo}`" />
     </figure>
     <section class="info">
       <section class="title">
-        <label>Navn</label>
+        <p>{{theDish.type}}</p>
         <h2>{{theDish.name}}</h2>
       </section>
       <section class="price">
@@ -18,9 +18,9 @@
       </section>
       <section>
         <label>Ingredienser</label>
-        <p v-for="ingredient in JSON.parse(theDish.ingredients)" :key="ingredient">{{ingredient}}</p>
+        <p v-for="ingredient in theDish.ingredients" :key="ingredient">{{ingredient}}</p>
       </section>
-      <BuyButton :id="theDish.id"></BuyButton>
+      <BuyButton :id="theDish.id" :color="color"></BuyButton>
     </section>
   </article>
 </template>
@@ -30,6 +30,9 @@ import axios from "axios";
 import BuyButton from "./BuyButton";
 export default {
   name: "DetailedDish",
+  props: {
+    color: String
+  },
   components: {
     BuyButton
   },
@@ -40,16 +43,18 @@ export default {
   },
   watch: {
     $route() {
-      let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.id}`;
+      let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
       axios.get(webAPIUrl).then(response => {
         this.theDish = response.data;
+        this.theDish.ingredients = JSON.parse(this.theDish.ingredients);
       });
     }
   },
   mounted() {
-    let webAPIUrl = `https://localhost:5001/api/dishes/${this.$route.params.id}`;
+    let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
     axios.get(webAPIUrl).then(response => {
       this.theDish = response.data;
+      this.theDish.ingredients = JSON.parse(this.theDish.ingredients);
     });
   }
 };
@@ -92,26 +97,21 @@ export default {
 }
 
 .buy-button {
-  background: var(--color);
   color: white;
   width: 100%;
   max-width: 150px;
   padding: 10px;
   font-family: var(--heading);
   font-weight: 700;
-  border-radius: 30px;
+  border-radius: 2px;
   transition: 0.3s ease-in-out;
 }
 
 @media only screen and (min-width: 800px) {
-  .photo {
-    border-radius: 20px;
-  }
   .detailed {
     grid-template-areas:
       "picture info"
       "picture info";
-    padding: 0 20px;
     gap: 0 10px;
   }
 

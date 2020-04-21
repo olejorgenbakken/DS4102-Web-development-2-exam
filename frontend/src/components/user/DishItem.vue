@@ -1,20 +1,20 @@
 <template>
   <router-link :to="{ name: 'Details', params: {id: id}}">
-    <article class="menu-item">
+    <article class="menu-item card card-photo">
       <figure class="item-photo">
         <img :src="`https:/localhost:5001/images/${photo}`" />
       </figure>
-
-      <h3 class="item-title">
-        {{name}}
-        <small class="item-price">{{price}}kr</small>
-      </h3>
+      <section>
+        <h3 class="item-title">
+          {{name}}
+          <small class="item-price">{{price}}kr</small>
+        </h3>
+      </section>
     </article>
   </router-link>
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Dish",
   props: {
@@ -22,24 +22,12 @@ export default {
     name: String,
     photo: String,
     price: Number
-  },
-  data() {
-    return {
-      theDish: {}
-    };
-  },
-  created() {
-    let webAPIUrl = `https://localhost:5001/api/dishes/${this.id}`;
-    axios.get(webAPIUrl).then(response => {
-      this.theDish = response.data;
-    });
   }
 };
 </script>
 
 <style scoped>
 .item-photo {
-  border-radius: 10px;
   overflow: hidden;
   height: 200px;
   position: relative;
@@ -53,7 +41,7 @@ export default {
 
 .item-title {
   width: 100%;
-  padding: 5px;
+  padding: 10px 10px 20px 10px;
   font-weight: 700;
   grid-area: title;
 }
@@ -74,7 +62,7 @@ export default {
 
 .more-button {
   font-family: var(--paragraph);
-  color: var(--color);
+  color: black;
   font-weight: 600;
   grid-area: more;
   width: max-content;

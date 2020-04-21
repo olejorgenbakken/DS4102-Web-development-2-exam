@@ -1,7 +1,7 @@
 <template>
   <section class="dish-list">
     <DishItem
-      v-for="dish in dishes"
+      v-for="dish in dishesToShow"
       :key="dish.id"
       :id="dish.id"
       :name="dish.name"
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import DishItem from "./DishItem";
 
 export default {
@@ -19,8 +20,71 @@ export default {
   components: {
     DishItem
   },
-  props: {
-    dishes: Array
+  data() {
+    return {
+      dishesToShow: [],
+      allDishes: []
+    };
+  },
+  beforeCreate() {
+    let webAPIUrl = `https://localhost:5001/dishes/`;
+    axios.get(webAPIUrl).then(response => {
+      this.dishesToShow = response.data;
+      this.allDishes = this.dishesToShow;
+    });
+  },
+  watch: {
+    $route() {
+      let matchingDishes = [];
+      if (
+        this.$route.query.dish != undefined &&
+        this.$route.query.type != undefined
+      ) {
+        this.allDishes.forEach(dish => {
+          if (
+            (dish.name
+              .toLowerCase()
+              .includes(this.$route.query.dish.toLowerCase()) ||
+              dish.description
+                .toLowerCase()
+                .includes(this.$route.query.dish.toLowerCase())) &&
+            dish.type
+              .toLowerCase()
+              .includes(this.$route.query.type.toLowerCase())
+          ) {
+            matchingDishes.push(dish);
+          }
+        });
+        this.dishesToShow = matchingDishes;
+      } else if (this.$route.query.dish != undefined) {
+        this.allDishes.forEach(dish => {
+          if (
+            dish.name
+              .toLowerCase()
+              .includes(this.$route.query.dish.toLowerCase()) ||
+            dish.description
+              .toLowerCase()
+              .includes(this.$route.query.dish.toLowerCase())
+          ) {
+            matchingDishes.push(dish);
+          }
+        });
+        this.dishesToShow = matchingDishes;
+      } else if (this.$route.query.type != undefined) {
+        this.allDishes.forEach(dish => {
+          if (
+            dish.type
+              .toLowerCase()
+              .includes(this.$route.query.type.toLowerCase())
+          ) {
+            matchingDishes.push(dish);
+          }
+        });
+        this.dishesToShow = matchingDishes;
+      } else {
+        this.dishesToShow = this.allDishes;
+      }
+    }
   }
 };
 </script>

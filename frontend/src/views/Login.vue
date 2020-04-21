@@ -1,43 +1,34 @@
 <template>
-  <section class="login">
-    <TheHeader class="padding"></TheHeader>
-    <section class="wrapper">
-      <section class="content card">
-        <header class="login-header">
-          <h2>Login</h2>
-        </header>
-        <form>
-          <section>
-            <label>Username</label>
-            <input type="text" v-model="name" />
-          </section>
-          <section>
-            <label>Password</label>
-            <input type="password" v-model="pass" />
-          </section>
-
-          <button @click="login">Logg inn</button>
-          <button class="create-user">Lag bruker</button>
-        </form>
-        <section class="feedback" @change="showError">
-          <p>{{errorMsg}}</p>
+  <section class="wrapper">
+    <section class="content card">
+      <header class="login-header">
+        <h2>Login</h2>
+      </header>
+      <form>
+        <section>
+          <label>Username</label>
+          <input type="text" v-model="name" />
         </section>
+        <section>
+          <label>Password</label>
+          <input type="password" v-model="pass" />
+        </section>
+
+        <button @click="login">Logg inn</button>
+        <button class="create-user">Lag bruker</button>
+      </form>
+      <section class="feedback" @change="showError">
+        <p>{{errorMsg}}</p>
       </section>
     </section>
-    <TheFooter></TheFooter>
   </section>
 </template>
 
 <script>
 import axios from "axios";
-import TheHeader from "../components/TheHeader.vue";
-import TheFooter from "../components/TheFooter.vue";
+
 export default {
   name: "Login",
-  components: {
-    TheHeader,
-    TheFooter
-  },
   data() {
     return {
       name: "",
@@ -75,14 +66,15 @@ export default {
     },
     login(e) {
       e.preventDefault();
-      let adminDb = `https://localhost:5001/api/admins/user/${this.name}`;
+      let adminDb = `https://localhost:5001/users/user/${this.name}`;
       axios
         .get(adminDb)
         .then(response => {
           if (response.status == 200) {
             if (
               response.data.username == this.name &&
-              response.data.password == this.pass
+              response.data.password == this.pass &&
+              response.data.admin
             ) {
               let name = "login";
               let expires;
@@ -91,6 +83,12 @@ export default {
               expires = "; expires=" + date.toGMTString();
               document.cookie = name + "=" + response.data.id + expires;
               this.$router.push(`admin`);
+            } else if (
+              response.data.username == this.name &&
+              response.data.password == this.pass &&
+              !response.data.admin
+            ) {
+              console.log("bye");
             } else {
               this.showError();
               this.errorMsg = "Feil brukernavn eller passord";
@@ -112,26 +110,22 @@ export default {
 </script>
 
 <style scoped>
-.login {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 70px calc(100vh - 70px) auto;
-  width: 100%;
-}
-
 .wrapper {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: url(https://images.unsplash.com/photo-1587082455459-397465b31608?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2003&q=80);
+  background-size: cover;
+  background-position: center center;
 }
 
 .content {
+  background: #fff;
   width: 80%;
   max-width: 400px;
-  border-radius: 20px;
   padding: 20px 20px 25px 20px;
   display: grid;
   grid-template-columns: 1fr;
@@ -161,8 +155,8 @@ form section {
 }
 
 form input {
-  border: 2px solid var(--color);
-  border-radius: 5px;
+  border: 2px solid black;
+  border-radius: 2px;
   padding: 5px;
   font-family: var(--paragraph);
 }
@@ -172,13 +166,13 @@ form label {
 }
 
 form button {
-  background: var(--color);
+  background: black;
   padding: 9px;
   color: white;
   font-family: var(--heading);
   font-weight: 700;
   font-size: 0.9em;
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 .feedback {
@@ -207,7 +201,7 @@ form button {
 
 .create-user {
   background: transparent;
-  color: var(--color);
+  color: black;
   padding: 0;
 }
 
@@ -217,6 +211,7 @@ form button {
   }
 
   .wrapper {
+    height: calc(100vh - 100px);
     padding-bottom: 50px;
   }
 }

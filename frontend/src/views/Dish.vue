@@ -1,6 +1,5 @@
 <template>
   <section class="dish">
-    <TheHeader class="padding"></TheHeader>
     <router-view>
       <DetailedDish></DetailedDish>
     </router-view>
@@ -11,31 +10,28 @@
       </header>
       <DishList :dishes="dishes"></DishList>
     </section>
-    <TheFooter></TheFooter>
   </section>
 </template>
 
 <script>
 import axios from "axios";
-import TheHeader from "../components/TheHeader.vue";
 import DetailedDish from "../components/user/DetailedDish";
 import DishList from "../components/user/DishList";
-import TheFooter from "../components/TheFooter.vue";
+
 export default {
   name: "Dish",
   components: {
-    TheHeader,
-    TheFooter,
     DishList,
     DetailedDish
   },
   data() {
     return {
+      theDish: {},
       dishes: []
     };
   },
   created() {
-    const webAPIUrl = `https://localhost:5001/api/dishes`;
+    const webAPIUrl = `https://localhost:5001/dishes/type/drikke`;
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;
     });
@@ -47,8 +43,9 @@ export default {
 .dish {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 70px repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
   width: 100%;
+  gap: 20px;
 }
 
 .related {
@@ -64,8 +61,13 @@ export default {
 
 @media only screen and (min-width: 800px) {
   .dish {
-    grid-template-rows: 100px 400px auto;
-    gap: 20px;
+    grid-template-rows: 400px auto;
+  }
+}
+
+@media only screen and (min-width: 1100px) {
+  .related {
+    padding: 0 0 60px 0;
   }
 }
 </style>

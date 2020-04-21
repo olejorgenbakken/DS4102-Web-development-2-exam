@@ -1,7 +1,7 @@
 <template>
-  <article class="greeting">
+  <article class="greeting card">
     <h2 class="greeting-text">
-      <small>Logget inn som</small>
+      <label class="label">Logget inn som</label>
       {{firstName}}
     </h2>
   </article>
@@ -20,13 +20,7 @@ export default {
 .greeting-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: center;
-}
-
-.greeting-text small {
-  font-size: 0.6em;
-  margin-bottom: 3px;
-  font-weight: 500;
 }
 </style>

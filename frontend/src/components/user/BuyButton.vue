@@ -1,5 +1,5 @@
 <template>
-  <button class="buy-button" @click="addToCart" :id="id">Kjøp</button>
+  <button class="buy-button" @click="addToCart" :id="id" :style="`background: ${color}`">Kjøp</button>
 </template>
 
 <script>
@@ -9,9 +9,19 @@ export default {
   props: {
     id: Number
   },
+  data() {
+    const settings = `https://localhost:5001/settings/1`;
+    axios.get(settings).then(response => {
+      this.color = response.data.color;
+    });
+
+    return {
+      color: {}
+    };
+  },
   methods: {
     addToCart() {
-      let webAPIUrl = `https://localhost:5001/api/dishes/${this.id}`;
+      let webAPIUrl = `https://localhost:5001/dishes/${this.id}`;
 
       axios.get(webAPIUrl).then(response => {
         if (localStorage.getItem("order") == null) {
@@ -30,14 +40,13 @@ export default {
 
 <style scoped>
 .buy-button {
-  background: var(--color);
   color: white;
   width: 100%;
   max-width: 150px;
   padding: 10px;
   font-family: var(--heading);
   font-weight: 700;
-  border-radius: 30px;
+  border-radius: 2px;
   transition: 0.3s ease-in-out;
 }
 </style>
