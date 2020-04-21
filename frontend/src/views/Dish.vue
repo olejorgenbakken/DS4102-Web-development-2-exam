@@ -31,7 +31,7 @@ export default {
     };
   },
   created() {
-    const webAPIUrl = `https://localhost:5001/dishes/`;
+    const webAPIUrl = `https://localhost:5001/dishes/type/drikke`;
     axios.get(webAPIUrl).then(response => {
       this.dishes = response.data;
     });

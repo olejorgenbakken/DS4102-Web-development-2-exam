@@ -7,7 +7,7 @@
       <section class="photo">
         <label>Bilde</label>
         <figure class="figure">
-          <input type="file" name="upload-img" id="new-pic" @input="showPicture" />
+          <input type="file" name="upload-img" id="new-pic" @change="showPicture" />
           <img :src="dish.photo" alt="Last opp et bilde" />
         </figure>
       </section>
@@ -22,7 +22,7 @@
       <section class="type">
         <label>Type</label>
         <select v-model="dish.type">
-          <option v-for="type in dishTypes" :value="type.name" :key="type">{{ type.name }}</option>
+          <option v-for="type in dishTypes" :value="type.name" :key="type.id">{{ type.name }}</option>
         </select>
       </section>
       <section class="desc">
@@ -81,8 +81,8 @@ export default {
       return a.localeCompare(b);
     });
 
-    let settings = `https://localhost:5001/dishtypes`;
-    axios.get(settings).then(response => {
+    let dishListURL = `https://localhost:5001/dishtypes`;
+    axios.get(dishListURL).then(response => {
       this.dishTypes = response.data;
     });
   },
@@ -109,7 +109,7 @@ export default {
     },
     addNewDish(e) {
       e.preventDefault();
-      let dishesURL = "https://localhost:5001/api/dishes";
+      let dishesURL = "https://localhost:5001/dishes";
       let imageData = new FormData();
       let input = this.$el.querySelector("#new-pic");
       imageData.append("file", input.files[0]);
@@ -119,11 +119,12 @@ export default {
       axios.post(dishesURL, this.dish).then(() => {
         axios({
           method: "post",
-          url: "https://localhost:5001/api/dishes/upload",
+          url: "https://localhost:5001/dishes/upload",
           data: imageData,
           config: { headers: { "Content-type": "multiplart/form-data" } }
+        }).then(() => {
+          this.dish = { ingredients: [] };
         });
-        this.dish = { ingredients: [] };
       });
     }
   }

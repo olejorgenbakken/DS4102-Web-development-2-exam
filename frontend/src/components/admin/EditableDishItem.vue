@@ -2,7 +2,7 @@
   <article class="dish">
     <section class="photo">
       <figure class="figure">
-        <input type="file" name="upload-img" id="uploaded-pic" />
+        <input type="file" name="upload-img" id="uploaded-pic" @change="previewPic" />
         <img :src="`https:/localhost:5001/images/${dish.photo}`" />
       </figure>
     </section>
@@ -22,7 +22,7 @@
     <section class="type">
       <label>Type</label>
       <select v-model="dish.type">
-        <option v-for="type in dishTypes" :value="type.name" :key="type">{{type.name}}</option>
+        <option v-for="type in dishTypes" :value="type.name" :key="type.id">{{type.name}}</option>
       </select>
     </section>
     <section class="highlighted">
@@ -73,9 +73,13 @@ export default {
     deleteDish() {
       let dishesURL = `https://localhost:5001/dishes/${this.dish.id}`;
       axios.delete(dishesURL);
+    },
+    previewPic() {
+      let input = this.$el.querySelector("#uploaded-pic");
+      this.dish.photo = input.files[0].name;
     }
   },
-  updated() {
+  beforeUpdate() {
     this.dish.price = parseInt(this.dish.price);
     let input = this.$el.querySelector("#uploaded-pic");
 
@@ -153,10 +157,11 @@ section {
   background: rgba(0, 0, 0, 0.8);
   color: white;
   opacity: 0;
+  cursor: pointer;
   transition: 0.2s ease-in-out;
 }
 
-.figure:focus-within::before {
+.figure:hover::before {
   opacity: 1;
 }
 
