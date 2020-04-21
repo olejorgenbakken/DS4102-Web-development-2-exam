@@ -82,7 +82,7 @@ export default {
         });
         this.dishesToShow = matchingDishes;
       } else {
-        this.dishesToShow = matchingDishes;
+        this.dishesToShow = this.allDishes;
       }
     }
   }

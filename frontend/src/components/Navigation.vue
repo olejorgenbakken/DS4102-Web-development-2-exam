@@ -32,15 +32,8 @@ a {
   border-radius: 5px;
   font-family: var(--heading);
   font-weight: 900;
+  font-size: 1em;
   letter-spacing: 1px;
-  font-size: 0.8em;
   transition: 0.2s ease-in-out;
-}
-
-@media only screen and (min-width: 700px) {
-  button,
-  a {
-    font-size: 0.93em;
-  }
 }
 </style>

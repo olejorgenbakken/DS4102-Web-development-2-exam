@@ -1,18 +1,18 @@
 <template>
-  <section class="settings">
+  <section class="settings card">
+    <header>
+      <h2>Innstillinger</h2>
+    </header>
     <ColorPickerList></ColorPickerList>
-    <DishTypes></DishTypes>
   </section>
 </template>
 
 <script>
 import ColorPickerList from "./SettingsAssets/ColorPickerList";
-import DishTypes from "./SettingsAssets/DishTypes";
 export default {
   name: "Settings",
   components: {
-    ColorPickerList,
-    DishTypes
+    ColorPickerList
   }
 };
 </script>
@@ -20,6 +20,7 @@ export default {
 <style scoped>
 .settings {
   display: grid;
-  gap: 20px;
+  grid-template-columns: 1fr;
+  gap: 15px;
 }
 </style>

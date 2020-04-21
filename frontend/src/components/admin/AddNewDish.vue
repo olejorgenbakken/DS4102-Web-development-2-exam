@@ -1,61 +1,63 @@
 <template>
-  <form class="upload card">
+  <form class="new-dish card">
     <header>
-      <h3>Legg til rett</h3>
+      <h2>Legg til rett</h2>
     </header>
-    <section class="name">
-      <label>Navn</label>
-      <input type="text" placeholder="Navn" autocomplete="off" v-model="dish.name" />
-    </section>
-    <section class="price">
-      <label>Pris</label>
-      <input type="number" placeholder="99" autocomplete="off" v-model="dish.price" />
-    </section>
-    <section class="type">
-      <label>Type</label>
-      <select v-model="dish.type">
-        <option v-for="type in dishTypes" :value="type" :key="type">{{ type }}</option>
-      </select>
-    </section>
-    <section class="desc">
-      <label>Beskrivelse</label>
-      <textarea placeholder="Beskrivelse" autocomplete="off" v-model="dish.description"></textarea>
-    </section>
-    <section class="highlighted">
-      <label>Skal den fremheves?</label>
-      <section class="input-highlighted">
-        <label>
-          <input type="radio" v-model="dish.highlighted" :value="true" />
-          <p>Ja</p>
-        </label>
-        <label>
-          <input type="radio" v-model="dish.highlighted" :value="false" />
-          <p>Nei</p>
-        </label>
+    <section class="upload">
+      <section class="photo">
+        <label>Bilde</label>
+        <figure class="figure">
+          <input type="file" name="upload-img" id="new-pic" @input="showPicture" />
+          <img :src="dish.photo" alt="Last opp et bilde" />
+        </figure>
       </section>
+      <section class="name">
+        <label>Navn</label>
+        <input type="text" placeholder="Navn" autocomplete="off" v-model="dish.name" />
+      </section>
+      <section class="price">
+        <label>Pris</label>
+        <input type="number" placeholder="99" autocomplete="off" v-model="dish.price" />
+      </section>
+      <section class="type">
+        <label>Type</label>
+        <select v-model="dish.type">
+          <option v-for="type in dishTypes" :value="type.name" :key="type">{{ type.name }}</option>
+        </select>
+      </section>
+      <section class="desc">
+        <label>Beskrivelse</label>
+        <textarea placeholder="Beskrivelse" autocomplete="off" v-model="dish.description"></textarea>
+      </section>
+      <section class="highlighted">
+        <label>Skal den fremheves?</label>
+        <section class="input-highlighted">
+          <label>
+            <input type="radio" v-model="dish.highlighted" :value="true" />
+            <p>Ja</p>
+          </label>
+          <label>
+            <input type="radio" v-model="dish.highlighted" :value="false" />
+            <p>Nei</p>
+          </label>
+        </section>
+      </section>
+      <section class="ingredients">
+        <label>Ingredienser</label>
+        <select multiple v-model="dish.ingredients">
+          <option
+            v-for="ingredient in ingredientList"
+            :key="ingredient"
+            :value="ingredient"
+          >{{ingredient}}</option>
+        </select>
+      </section>
+      <section class="selected-ingredients" v-if="dish.ingredients.length > 0">
+        <label>Valgte ingredienser:</label>
+        <p class="ingredient" v-for="n in dish.ingredients" :key="n" @click="removeIng">{{n}}</p>
+      </section>
+      <button @click="addNewDish" class="submit-btn">Last opp ny rett</button>
     </section>
-    <section class="ingredients">
-      <label>Ingredienser</label>
-      <select multiple v-model="dish.ingredients">
-        <option
-          v-for="ingredient in ingredientList"
-          :key="ingredient"
-          :value="ingredient"
-        >{{ingredient}}</option>
-      </select>
-    </section>
-    <section class="selected-ingredients" v-if="dish.ingredients.length > 0">
-      <label>Valgte ingredienser:</label>
-      <p class="ingredient" v-for="n in dish.ingredients" :key="n" @click="removeIng">{{n}}</p>
-    </section>
-    <section class="photo">
-      <label>Bilde</label>
-      <figure class="figure">
-        <input type="file" name="upload-img" id="new-pic" @input="showPicture" />
-        <img :src="dish.photo" alt="Last opp et bilde" />
-      </figure>
-    </section>
-    <button @click="addNewDish" class="submit-btn">Last opp ny rett</button>
   </form>
 </template>
 
@@ -68,7 +70,7 @@ export default {
     return {
       dishTypes: [],
       multiple: "true",
-      ingredientList: ["Agurk", "Chili", "Maki", "Wasabi", "idk"],
+      ingredientList: ["Agurk", "Chili", "Wasabi", "idk"],
       dish: {
         ingredients: []
       }
@@ -79,9 +81,9 @@ export default {
       return a.localeCompare(b);
     });
 
-    let settings = `https://localhost:5001/settings/1`;
+    let settings = `https://localhost:5001/dishtypes`;
     axios.get(settings).then(response => {
-      this.dishTypes = JSON.parse(response.data.dishTypes);
+      this.dishTypes = response.data;
     });
   },
   methods: {
@@ -129,12 +131,18 @@ export default {
 </script>
 
 <style scoped>
+.new-dish {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
 .upload {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 50px repeat(8, auto);
+  grid-template-rows: repeat(8, auto);
   grid-template-areas:
-    "header header"
+    "pic pic"
     "name name"
     "price price"
     "type type"
@@ -142,9 +150,8 @@ export default {
     "high high"
     "ing ing"
     "sel-ing sel-ing"
-    "pic pic"
     "btn btn";
-  gap: 20px;
+  gap: 15px;
   font-family: var(--paragraph);
   overflow: hidden;
   transition: 0.2s ease-in-out;
@@ -159,35 +166,24 @@ select {
   padding: 5px;
 }
 
-header {
-  grid-area: header;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+.upload section {
+  display: grid;
+  gap: 3px 10px;
 }
 
 .name {
-  display: grid;
-  gap: 2px;
   grid-area: name;
 }
 
 .price {
-  display: grid;
-  gap: 2px;
   grid-area: price;
 }
 
 .type {
-  display: grid;
-  gap: 2px;
   grid-area: type;
 }
 
 .desc {
-  display: grid;
-  gap: 2px;
   grid-area: desc;
 }
 
@@ -199,8 +195,6 @@ header {
 }
 
 .ingredients {
-  display: grid;
-  gap: 2px;
   grid-area: ing;
 }
 
@@ -211,14 +205,12 @@ header {
   transition: 0.2s ease-in-out;
 }
 
+select option {
+  padding: 3px;
+}
+
 .selected-ingredients {
   grid-area: sel-ing;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas:
-    "header header header"
-    "info info info";
-  gap: 10px;
 }
 
 .selected-ingredients label {
@@ -234,15 +226,11 @@ header {
 }
 
 .highlighted {
-  display: grid;
-  gap: 2px;
   grid-area: high;
 }
 
 .input-highlighted {
-  display: grid;
   grid-template-columns: repeat(2, auto);
-  gap: 20px;
 }
 
 .input-highlighted label {
@@ -261,16 +249,14 @@ header {
 }
 
 .photo {
-  display: grid;
-  gap: 2px;
   grid-area: pic;
+  grid-template-rows: 15px 1fr;
+  height: 30vh;
 }
 
 .photo figure {
   position: relative;
-  height: 30vh;
-  min-height: 100px;
-  max-height: 200px;
+  height: 100%;
   overflow: hidden;
   border-radius: 10px;
 }
@@ -306,17 +292,33 @@ header {
   padding: 10px 20px;
   background: black;
   color: white;
-  margin-bottom: 20px;
 }
 
-@media only screen and (min-width: 1100px) {
+@media only screen and (min-width: 900px) {
+  .upload {
+    grid-template-areas:
+      "pic name"
+      "pic name"
+      "pic price"
+      "pic type"
+      "pic desc"
+      "pic high"
+      "ing ing"
+      "sel-ing sel-ing"
+      "btn btn";
+  }
+
+  .photo {
+    height: auto;
+  }
+
   .selected-ingredients {
     grid-area: sel-ing;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-template-areas:
-      "header header header header header"
-      "info info info info info";
+      "header header header header header header header"
+      "info info info info info info info";
   }
 
   .ingredients select {

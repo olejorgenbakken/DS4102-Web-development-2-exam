@@ -41,7 +41,7 @@ export default {
 <style scoped>
 .search {
   font-family: var(--heading);
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 100px;

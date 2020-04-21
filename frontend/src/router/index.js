@@ -7,10 +7,10 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Homepage',
     component: Homepage,
     children: [
       {
+        name: "Homepage",
         path: "/",
         query: "?=dishTerm?=dishType",
         component: () => import(/* webpackChunkName: 'DishList' */ '../components/user/DishList.vue')
@@ -36,8 +36,15 @@ const routes = [
   },
   {
     path: '/admin',
-    name: 'Admin',
-    component: () => import(/* webpackChunkName: 'AdminHome' */ '../views/Admin.vue')
+    component: () => import(/* webpackChunkName: 'Admin' */ '../views/Admin.vue'),
+    children: [
+      {
+        name: "Admin",
+        path: "/",
+        query: "?=dishTerm?=dishType",
+        component: () => import(/* webpackChunkName: 'EditableDishList' */ '../components/admin/EditableDishList.vue')
+      }
+    ]
   }
 ]
 

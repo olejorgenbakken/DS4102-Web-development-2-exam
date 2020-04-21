@@ -83,6 +83,12 @@ export default {
               expires = "; expires=" + date.toGMTString();
               document.cookie = name + "=" + response.data.id + expires;
               this.$router.push(`admin`);
+            } else if (
+              response.data.username == this.name &&
+              response.data.password == this.pass &&
+              !response.data.admin
+            ) {
+              console.log("bye");
             } else {
               this.showError();
               this.errorMsg = "Feil brukernavn eller passord";

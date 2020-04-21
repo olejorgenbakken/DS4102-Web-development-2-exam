@@ -22,7 +22,7 @@
     <section class="type">
       <label>Type</label>
       <select v-model="dish.type">
-        <option v-for="type in dishTypes" :key="type">{{type}}</option>
+        <option v-for="type in dishTypes" :value="type.name" :key="type">{{type.name}}</option>
       </select>
     </section>
     <section class="highlighted">
@@ -51,7 +51,7 @@ export default {
   name: "DishItem",
   data() {
     return {
-      dishTypes: ["Forrett", "Maki", "Sashimi", "Nigiri", "Vegetar", "Drikke"],
+      dishTypes: [],
       dish: {}
     };
   },
@@ -62,6 +62,10 @@ export default {
     let dish = `https://localhost:5001/dishes/${this.id}`;
     axios.get(dish).then(response => {
       this.dish = response.data;
+    });
+    let dishTypes = `https://localhost:5001/dishtypes`;
+    axios.get(dishTypes).then(response => {
+      this.dishTypes = response.data;
     });
   },
   methods: {
@@ -104,7 +108,6 @@ export default {
 
 <style scoped>
 .dish {
-  padding: 20px;
   display: grid;
   grid-template-rows: 200px repeat(6, auto);
   grid-template-columns: repeat(7, 1fr);
@@ -254,7 +257,7 @@ input[type="file"] {
 @media only screen and (min-width: 1100px) {
   .dish {
     grid-template-rows: 80px;
-    grid-template-columns: 80px 200px auto 90px 90px 140px 100px;
+    grid-template-columns: 80px repeat(4, 1fr) 130px 70px;
     align-items: center;
     grid-template-areas: "pic name desc price type high del";
   }

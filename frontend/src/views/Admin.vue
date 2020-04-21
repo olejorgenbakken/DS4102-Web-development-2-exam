@@ -1,17 +1,18 @@
 <template>
   <section class="admin padding">
-    <Greeting class="greeting" :firstName="user.firstName"></Greeting>
+    <Greeting class="greet" :firstName="user.firstName"></Greeting>
     <Settings class="settings"></Settings>
-    <section class="menu">
+    <AddAdmin class="user"></AddAdmin>
+    <AddNewDish class="dish"></AddNewDish>
+    <section class="menu card">
       <header>
         <h2>Meny</h2>
       </header>
-      <Search v-model="searchTerm" @input="search"></Search>
-      <EditableDishList :dishes="dishes"></EditableDishList>
+      <Search></Search>
+      <router-view>
+        <EditableDishList :dishes="dishes"></EditableDishList>
+      </router-view>
     </section>
-
-    <AddNewDish class="add-dish"></AddNewDish>
-    <AddAdmin class="add-admin"></AddAdmin>
   </section>
 </template>
 
@@ -36,7 +37,6 @@ export default {
   },
   data() {
     return {
-      searchTerm: undefined,
       user: {},
       dishes: []
     };
@@ -61,34 +61,6 @@ export default {
     } else {
       this.$router.push("/login");
     }
-  },
-  created() {
-    const webAPIUrl = `https://localhost:5001/dishes/`;
-    axios.get(webAPIUrl).then(response => {
-      this.dishes = response.data;
-    });
-  },
-  methods: {
-    search() {
-      const webAPIUrl = `https://localhost:5001/dishes/`;
-      axios.get(webAPIUrl).then(response => {
-        let dishes = [];
-        response.data.forEach(dish => {
-          if (
-            dish.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-            dish.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-            dish.description
-              .toLowerCase()
-              .includes(this.searchTerm.toLowerCase())
-          ) {
-            dishes.push(dish);
-            this.dishes = dishes;
-          } else {
-            this.dishes = dishes;
-          }
-        });
-      });
-    }
   }
 };
 </script>
@@ -96,10 +68,69 @@ export default {
 <style scoped>
 .admin {
   display: grid;
-  gap: 40px;
+  gap: 30px;
   width: 100%;
-  max-width: 1300px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 60px 20px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas:
+    "greet greet greet greet greet greet"
+    "settings settings settings settings settings settings"
+    "user user user user user user"
+    "dish dish dish dish dish dish"
+    "menu menu menu menu menu menu";
+}
+
+.greet {
+  grid-area: greet;
+}
+
+.settings {
+  grid-area: settings;
+}
+
+.dish {
+  grid-area: dish;
+}
+
+.user {
+  grid-area: user;
+}
+
+.menu {
+  grid-area: menu;
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  gap: 30px;
+}
+
+@media only screen and (min-width: 500px) {
+  .admin {
+    grid-template-areas:
+      "greet greet greet settings settings settings"
+      "user user user user user user"
+      "dish dish dish dish dish dish"
+      "menu menu menu menu menu menu";
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .admin {
+    grid-template-areas:
+      "greet greet greet settings settings settings"
+      "user user user dish dish dish"
+      "menu menu menu menu menu menu";
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .admin {
+    grid-template-areas:
+      "greet greet dish dish dish dish"
+      "settings settings dish dish dish dish"
+      "user user dish dish dish dish"
+      "menu menu menu menu menu menu";
+  }
 }
 </style>

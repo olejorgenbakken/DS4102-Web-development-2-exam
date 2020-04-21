@@ -1,5 +1,5 @@
 <template>
-  <article class="color-picker card">
+  <article class="color-picker">
     <h2 class="color-picker">
       <label class="label">
         {{text}}

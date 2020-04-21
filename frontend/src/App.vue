@@ -71,6 +71,7 @@ select,
 button {
   border: none;
   outline: none;
+  background: #fff;
 }
 
 select {
@@ -88,9 +89,9 @@ label {
 }
 
 .card {
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 20px;
   background: #ffffff;
-  border: 1px solid black;
+  box-shadow: 5px 5px 30px #e0e0e0, -5px -5px 30px #ffffff;
 }
 </style>

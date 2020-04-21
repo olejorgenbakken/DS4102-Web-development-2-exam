@@ -1,17 +1,12 @@
 <template>
-  <section class="settings">
+  <section class="color-pickers">
     <ColorPicker
       v-model="settings.color"
-      class="color card"
+      class="color"
       :text="'Fremhevet farge'"
       :value="settings.color"
     ></ColorPicker>
-    <ColorPicker
-      v-model="settings.text"
-      class="text card"
-      :text="'Tekstfarge'"
-      :value="settings.text"
-    ></ColorPicker>
+    <ColorPicker v-model="settings.text" class="text" :text="'Tekstfarge'" :value="settings.text"></ColorPicker>
   </section>
 </template>
 
@@ -43,9 +38,9 @@ export default {
 </script>
 
 <style scoped>
-.settings {
+.color-pickers {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 </style>
