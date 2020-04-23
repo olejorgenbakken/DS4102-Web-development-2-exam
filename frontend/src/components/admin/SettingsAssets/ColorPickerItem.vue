@@ -20,21 +20,4 @@ export default {
 </script>
 
 <style scoped>
-.color-picker {
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  height: 30px;
-  width: 100%;
-  overflow: hidden;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-}
-
-input::-webkit-color-swatch {
-  border: none;
-}
 </style>

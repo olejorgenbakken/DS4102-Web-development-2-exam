@@ -1,16 +1,15 @@
 <template>
-  <router-link :to="{ name: 'Details', params: {id: id}}">
-    <article class="menu-item card card-photo">
-      <figure class="item-photo">
-        <img :src="`https:/localhost:5001/images/${photo}`" />
-      </figure>
-      <section>
-        <h3 class="item-title">
-          {{name}}
-          <small class="item-price">{{price}}kr</small>
-        </h3>
-      </section>
-    </article>
+  <router-link v-if="list == type" class="dish card" :to="{ name: 'Dish', params: {id: id}}">
+    <figure class="photo">
+      <img :src="`https:/localhost:5001/images/${photo}`" />
+    </figure>
+    <section class="info">
+      <h4 class="title">
+        {{name}}
+        <small class="price">{{price}}kr</small>
+      </h4>
+      <p class="desc">{{description}}</p>
+    </section>
   </router-link>
 </template>
 
@@ -21,51 +20,24 @@ export default {
     id: Number,
     name: String,
     photo: String,
-    price: Number
+    price: Number,
+    description: String,
+    type: String,
+    list: String
   }
 };
 </script>
 
 <style scoped>
-.item-photo {
-  overflow: hidden;
+.photo {
   height: 200px;
-  position: relative;
 }
 
-.item-photo img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+.info {
+  padding: 10px 15px 20px 15px;
 }
 
-.item-title {
-  width: 100%;
-  padding: 10px 10px 20px 10px;
-  font-weight: 700;
-  grid-area: title;
-}
-
-.item-price {
-  font-weight: 500;
-}
-
-.item-description {
-  grid-area: description;
-}
-
-.buy-button {
-  margin: 0 auto;
-  padding: 10px 30px;
-  grid-area: buy;
-}
-
-.more-button {
-  font-family: var(--paragraph);
-  color: black;
-  font-weight: 600;
-  grid-area: more;
-  width: max-content;
-  padding: 5px 5px 5px 2px;
+.desc {
+  margin-top: 3px;
 }
 </style>

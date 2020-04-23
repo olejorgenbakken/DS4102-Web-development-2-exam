@@ -1,9 +1,8 @@
 <template>
   <section class="search">
-    <input type="search" placeholder="Søk" v-model="term" />
+    <input class="search-box" type="search" placeholder="Søk" v-model="term" />
     <select v-model="selected">
-      <option disabled selected>Velg type</option>
-      <option value="Alle">Alle</option>
+      <option :value="null" selected="selected">Alle</option>
       <option v-for="type in dishTypes" :key="type.name">{{type.name}}</option>
     </select>
   </section>
@@ -18,7 +17,7 @@ export default {
     return {
       term: "",
       dishTypes: ["Alle"],
-      selected: ""
+      selected: null
     };
   },
   created() {
@@ -49,18 +48,18 @@ export default {
 
 <style scoped>
 .search {
-  font-family: var(--heading);
-  width: 100%;
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 100px;
-  gap: 10px;
-  height: max-content;
-  border-bottom: 1px solid black;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
 }
 
-input {
-  width: 100%;
-  padding: 15px;
+.search-box {
+  padding: 10px;
+}
+
+@media only screen and (min-width: 800px) {
+  .search-box {
+    padding: 15px 10px;
+  }
 }
 </style>

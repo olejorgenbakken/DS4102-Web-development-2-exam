@@ -1,5 +1,5 @@
 <template>
-  <article class="dish card card-photo">
+  <article class="dish card">
     <section class="photo">
       <figure class="figure">
         <input type="file" name="upload-img" id="uploaded-pic" @change="previewPic" />
@@ -9,10 +9,10 @@
     <section class="info">
       <section class="name">
         <label>Navn</label>
-        <input v-model="name" />
+        <input v-model="name" type="text" class="title" placeholder="Tittel" />
       </section>
       <section class="price">
-        <label>Pris</label>
+        <label>Pris (kr)</label>
         <input type="number" v-model="price" />
       </section>
       <section class="type">
@@ -47,11 +47,11 @@
       <section class="highlighted">
         <label>Fremhevet</label>
         <section class="input-highlighted">
-          <label>
+          <label class="input">
             <input type="radio" v-model="highlighted" :value="true" />
             <p>Ja</p>
           </label>
-          <label>
+          <label class="input">
             <input type="radio" v-model="highlighted" :value="false" />
             <p>Nei</p>
           </label>
@@ -170,221 +170,4 @@ export default {
 </script>
 
 <style scoped>
-.dish {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 200px 1fr max-content;
-  grid-template-areas:
-    "pic"
-    "info"
-    "del";
-}
-
-section {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3px;
-  font-family: var(--paragraph);
-}
-
-.photo {
-  grid-area: pic;
-  text-align: center;
-}
-
-.figure {
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-.figure::before {
-  position: absolute;
-  content: "Endre";
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  opacity: 0;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-}
-
-.figure:hover::before {
-  opacity: 1;
-}
-
-.figure img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-input,
-select,
-textarea,
-.input-highlighted label {
-  border: 1px solid black;
-  background: #ffffff;
-  border-radius: 2px;
-  padding: 5px;
-}
-
-input[type="text"],
-select,
-textarea,
-.input-highlighted label {
-  height: 35px;
-}
-
-textarea {
-  resize: none;
-}
-
-input[type="number"] {
-  width: 100%;
-}
-
-input[type="file"] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  opacity: 0;
-}
-
-.info {
-  grid-area: info;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "name"
-    "price"
-    "type"
-    "ing"
-    "high"
-    "desc";
-  padding: 20px;
-  gap: 20px;
-}
-
-.name {
-  grid-template-rows: repeat(2, max-content);
-  align-items: flex-start;
-  grid-area: name;
-}
-
-.desc {
-  grid-template-rows: max-content 1fr;
-  align-items: flex-start;
-  grid-area: desc;
-}
-
-.price {
-  grid-template-rows: repeat(2, max-content);
-  align-items: flex-start;
-  grid-area: price;
-}
-
-.type {
-  grid-template-rows: repeat(2, max-content);
-  align-items: flex-start;
-  grid-area: type;
-}
-
-.ingredients {
-  grid-area: ing;
-  gap: 10px;
-}
-
-.list {
-  margin: -5px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.all-ingredients select {
-  height: 80px;
-  padding: 0;
-}
-
-.selected-ingredients p {
-  padding: 7px 15px;
-  margin: 5px 5px;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  cursor: pointer;
-  height: max-content;
-}
-
-.highlighted {
-  grid-template-rows: repeat(2, max-content);
-  align-items: flex-start;
-  grid-area: high;
-}
-
-.input-highlighted {
-  grid-template-columns: repeat(2, auto);
-  gap: 20px;
-}
-
-.input-highlighted label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 0.8em;
-}
-
-.input-highlighted label p {
-  margin-left: 10px;
-}
-
-.del {
-  grid-area: del;
-}
-
-.del-btn {
-  cursor: pointer;
-  padding: 10px 20px;
-  background: #ff0000;
-  color: white;
-}
-
-@media only screen and (min-width: 1100px) {
-  .dish {
-    display: grid;
-    grid-template-columns: 200px 1fr 100px;
-    grid-template-rows: auto;
-    grid-template-areas: "pic info del";
-  }
-
-  .info {
-    grid-area: info;
-    display: grid;
-    grid-template-columns: 170px 1fr 300px;
-    grid-template-areas:
-      "name desc ing"
-      "price desc ing"
-      "type desc ing"
-      "high desc ing";
-    padding: 20px;
-    gap: 20px;
-  }
-
-  .ingredients {
-    grid-template-rows: 100px 1fr;
-    align-items: flex-start;
-  }
-
-  textarea {
-    height: 100%;
-  }
-}
 </style>

@@ -1,123 +1,90 @@
 <template>
-  <article :id="theDish.id" class="detailed card card-photo">
+  <article :id="id" class="detailed card">
     <figure class="photo">
-      <img :src="`https://localhost:5001/images/${theDish.photo}`" />
+      <img :src="`https://localhost:5001/images/${photo}`" />
     </figure>
     <section class="info">
-      <section class="title">
-        <p>{{theDish.type}}</p>
-        <h2>{{theDish.name}}</h2>
+      <section class="name">
+        <label>{{type}}</label>
+        <h2>{{name}}</h2>
       </section>
       <section class="price">
         <label>Pris</label>
-        <h3>{{theDish.price}} kr</h3>
+        <h3>{{price}} kr</h3>
       </section>
-      <section>
+      <section class="desc">
         <label>Beskrivelse</label>
-        <p>{{theDish.description}}</p>
+        <p>{{description}}</p>
       </section>
-      <section>
+      <section class="ingredients">
         <label>Ingredienser</label>
-        <p v-for="ingredient in theDish.ingredients" :key="ingredient">{{ingredient}}</p>
+        <p v-for="ingredient in ingredients" :key="ingredient">{{ingredient}}</p>
       </section>
-      <BuyButton :id="theDish.id" :color="color"></BuyButton>
+      <BuyButton :id="id" class="buy"></BuyButton>
     </section>
   </article>
 </template>
 
 <script>
-import axios from "axios";
 import BuyButton from "./BuyButton";
 export default {
   name: "DetailedDish",
   props: {
-    color: String
+    name: String,
+    id: Number,
+    type: String,
+    ingredients: Array,
+    description: String,
+    photo: String,
+    price: Number
   },
   components: {
     BuyButton
-  },
-  data() {
-    return {
-      theDish: {}
-    };
-  },
-  watch: {
-    $route() {
-      let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
-      axios.get(webAPIUrl).then(response => {
-        this.theDish = response.data;
-        this.theDish.ingredients = JSON.parse(this.theDish.ingredients);
-      });
-    }
-  },
-  mounted() {
-    let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
-    axios.get(webAPIUrl).then(response => {
-      this.theDish = response.data;
-      this.theDish.ingredients = JSON.parse(this.theDish.ingredients);
-    });
   }
 };
 </script>
 
 <style scoped>
 .detailed {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: 400px 1fr;
-  grid-template-areas:
-    "picture picture"
-    "info info";
-  gap: 10px 0;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
 }
 
 .photo {
-  grid-area: picture;
-  overflow: hidden;
-}
-
-.photo img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 400px;
 }
 
 .info {
-  grid-area: info;
   width: 100%;
-  max-width: 600px;
+  max-width: 450px;
   margin: 0 auto;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
 
-.buy-button {
-  color: white;
-  width: 100%;
-  max-width: 150px;
-  padding: 10px;
-  font-family: var(--heading);
-  font-weight: 700;
-  border-radius: 2px;
-  transition: 0.3s ease-in-out;
+.name,
+.price,
+.desc,
+.ingredients {
+  margin-bottom: 15px;
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 900px) {
+  .photo {
+    width: 500px;
+    height: 100%;
+  }
+
   .detailed {
-    grid-template-areas:
-      "picture info"
-      "picture info";
-    gap: 0 10px;
+    flex-direction: row;
   }
 
   .info {
-    align-self: center;
-    margin-left: 0;
+    padding-left: 40px;
+    margin: unset;
   }
 }
 </style>

@@ -38,10 +38,4 @@ export default {
 </script>
 
 <style scoped>
-.color-pickers {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, max-content);
-  gap: 20px;
-}
 </style>

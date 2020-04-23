@@ -18,9 +18,4 @@ export default {
 </script>
 
 <style scoped>
-.settings {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 15px;
-}
 </style>
