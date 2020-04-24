@@ -116,21 +116,12 @@ input[type="password"],
 input[type="color"],
 input[type="file"],
 select,
-textarea {
+textarea,
+label.input {
   width: 100%;
   padding: 5px 3px;
   margin-top: 3px;
   font-size: 1em;
-}
-
-textarea {
-  min-height: 50px;
-  resize: vertical;
-}
-
-input[type="file"],
-input[type="color"] {
-  z-index: 1;
 }
 
 input[type="text"],
@@ -146,8 +137,28 @@ input[type="text"],
 input[type="search"],
 input[type="number"],
 input[type="password"],
+select,
+textarea,
+label.input {
+  background: rgba(255, 255, 255, 1);
+}
+
+input[type="text"],
+input[type="search"],
+input[type="number"],
+input[type="password"],
 select {
   border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+input[type="file"],
+input[type="color"] {
+  z-index: 1;
+}
+
+textarea {
+  min-height: 50px;
+  resize: vertical;
 }
 
 select[multiple] {
