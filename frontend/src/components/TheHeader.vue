@@ -1,7 +1,7 @@
 <template>
-  <header class="header">
+  <header class="global-header">
     <router-link to="/">
-      <h1 class="frontpage-title" :style="`color: ${settings.color}`">Sushi restaurant</h1>
+      <h1 :style="`color: ${settings.color}`">Sushi restaurant</h1>
     </router-link>
     <Navigation :color="settings.color" :text="settings.text"></Navigation>
   </header>
@@ -30,32 +30,33 @@ export default {
 </script>
 
 <style scoped>
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px;
+.global-header {
   width: 100%;
   max-width: 800px;
-  padding: 0 20px;
   margin: 0 auto;
-  position: relative;
-  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
 }
 
 h1 {
-  font-weight: 900;
-  font-size: 1.3em;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-@media only screen and (min-width: 700px) {
-  .header {
-    height: 100px;
+@media only screen and (min-width: 570px) {
+  .global-header {
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-between;
   }
+}
 
-  h1 {
-    font-size: 1.5em;
+@media only screen and (min-width: 1000px) {
+  .global-header {
+    padding: 30px 20px;
   }
 }
 </style>

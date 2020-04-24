@@ -19,8 +19,12 @@ export default {
 
 <style scoped>
 .settings {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings header {
+  margin-bottom: 10px;
 }
 </style>

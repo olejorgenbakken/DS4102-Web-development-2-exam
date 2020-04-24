@@ -52,14 +52,6 @@ namespace RestaurantAPI.Controllers
             return dishList;
         }
 
-        [HttpPut]
-        public async Task<Dish> Put(Dish updateDish)
-        {
-            _context.Update(updateDish);
-            await _context.SaveChangesAsync();
-            return updateDish;
-        }
-
         [HttpGet("{id}")]
         public async Task<Dish> Get(int id)
         {
@@ -74,11 +66,12 @@ namespace RestaurantAPI.Controllers
             return highlightedDish;
         }
 
-        [HttpGet("type/{type}")]
-        public async Task<Dish> Get(string type)
+        [HttpPut]
+        public async Task<Dish> Put(Dish updateDish)
         {
-            Dish dishesOfType = await _context.Dish.FirstOrDefaultAsync(dish => dish.Type == type);
-            return dishesOfType;
+            _context.Update(updateDish);
+            await _context.SaveChangesAsync();
+            return updateDish;
         }
 
         [HttpDelete("{id}")]

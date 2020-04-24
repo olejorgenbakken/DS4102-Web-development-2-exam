@@ -41,7 +41,6 @@ export default {
 .color-pickers {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, max-content);
-  gap: 20px;
+  gap: 10px;
 }
 </style>

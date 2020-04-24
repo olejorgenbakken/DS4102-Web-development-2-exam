@@ -29,8 +29,4 @@ export default {
 </script>
 
 <style scoped>
-.dish-types {
-  display: flex;
-  flex-direction: column;
-}
 </style>

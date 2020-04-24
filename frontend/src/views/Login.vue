@@ -1,41 +1,19 @@
 <template>
   <section class="wrapper">
-    <section class="content card">
-      <header class="login-header">
-        <h2>Login</h2>
-      </header>
-      <form>
-        <section>
-          <label>Username</label>
-          <input type="text" v-model="name" />
-        </section>
-        <section>
-          <label>Password</label>
-          <input type="password" v-model="pass" />
-        </section>
-
-        <button @click="login">Logg inn</button>
-        <button class="create-user">Lag bruker</button>
-      </form>
-      <section class="feedback" @change="showError">
-        <p>{{errorMsg}}</p>
-      </section>
+    <section class="login">
+      <LoginForm></LoginForm>
     </section>
+    <section class="create-user"></section>
   </section>
 </template>
 
 <script>
-import axios from "axios";
+import LoginForm from "../components/LoginForm";
 
 export default {
   name: "Login",
-  data() {
-    return {
-      name: "",
-      pass: "",
-      id: undefined,
-      errorMsg: undefined
-    };
+  components: {
+    LoginForm
   },
   beforeMount() {
     if (document.cookie) {
@@ -52,167 +30,26 @@ export default {
         }
       }
     }
-  },
-  methods: {
-    showError() {
-      let form = document.querySelector(".content");
-      let errorDiv = document.querySelector(".feedback");
-      form.classList.add("error");
-      errorDiv.classList.add("error");
-      setTimeout(() => {
-        form.classList.remove("error");
-        errorDiv.classList.remove("error");
-      }, 7000);
-    },
-    login(e) {
-      e.preventDefault();
-      let adminDb = `https://localhost:5001/users/user/${this.name}`;
-      axios
-        .get(adminDb)
-        .then(response => {
-          if (response.status == 200) {
-            if (
-              response.data.username == this.name &&
-              response.data.password == this.pass &&
-              response.data.admin
-            ) {
-              let name = "login";
-              let expires;
-              let date = new Date();
-              date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
-              expires = "; expires=" + date.toGMTString();
-              document.cookie = name + "=" + response.data.id + expires;
-              this.$router.push(`admin`);
-            } else if (
-              response.data.username == this.name &&
-              response.data.password == this.pass &&
-              !response.data.admin
-            ) {
-              console.log("bye");
-            } else {
-              this.showError();
-              this.errorMsg = "Feil brukernavn eller passord";
-            }
-          } else if (response.status == 204) {
-            this.showError();
-            this.errorMsg = "Bruker finnes ikke";
-          }
-        })
-        .catch(error => {
-          if (error.response.status == 404) {
-            this.showError();
-            this.errorMsg = "Ingen brukernavn funnet";
-          }
-        });
-    }
   }
 };
 </script>
 
 <style scoped>
 .wrapper {
-  width: 100%;
-  height: calc(100vh - 70px);
+  display: grid;
+  grid-template-rows: 600px auto;
+}
+
+.login {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background: url(https://images.unsplash.com/photo-1587082455459-397465b31608?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2003&q=80);
+  align-items: center;
+  background: url(https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80);
   background-size: cover;
-  background-position: center center;
-}
-
-.content {
-  background: #fff;
-  width: 80%;
-  max-width: 400px;
-  padding: 20px 20px 25px 20px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  position: relative;
-  overflow: hidden;
-}
-
-.content.error {
-  padding: 20px 20px 45px 20px;
-}
-
-.login-header {
-  text-align: center;
-  font-size: 0.8em;
-}
-
-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-
-form section {
-  display: flex;
-  flex-direction: column;
-}
-
-form input {
-  border: 2px solid black;
-  border-radius: 2px;
-  padding: 5px;
-  font-family: var(--paragraph);
-}
-
-form label {
-  padding: 0 0 2px 3px;
-}
-
-form button {
-  background: black;
-  padding: 9px;
-  color: white;
-  font-family: var(--heading);
-  font-weight: 700;
-  font-size: 0.9em;
-  border-radius: 2px;
-}
-
-.feedback {
-  background: rgb(221, 46, 46);
-  color: white;
-  font-size: 0.9em;
-  height: 0px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-
-.content,
-.feedback {
-  transition: 0.2s ease-in-out;
-}
-
-.feedback.error {
-  height: 30px;
+  background-position: center bottom;
 }
 
 .create-user {
-  background: transparent;
-  color: black;
-  padding: 0;
-}
-
-@media only screen and (min-width: 800px) {
-  .login {
-    grid-template-rows: 100px calc(100vh - 100px) auto;
-  }
-
-  .wrapper {
-    height: calc(100vh - 100px);
-    padding-bottom: 50px;
-  }
 }
 </style>

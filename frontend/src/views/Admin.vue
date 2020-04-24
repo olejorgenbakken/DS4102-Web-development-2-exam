@@ -1,17 +1,19 @@
 <template>
-  <section class="admin padding">
-    <Greeting class="greet" :firstName="user.firstName"></Greeting>
+  <section class="admin">
+    <Greeting class="name" :firstName="user.firstName" :lastName="user.lastName"></Greeting>
     <Settings class="settings"></Settings>
     <AddAdmin class="user"></AddAdmin>
-    <AddNewDish class="dish"></AddNewDish>
+    <AddNewDish class="add-dish"></AddNewDish>
     <section class="menu">
-      <header>
+      <header class="menu-header">
         <h2>Meny</h2>
+        <Search></Search>
       </header>
-      <Search></Search>
-      <router-view>
-        <EditableDishList :dishes="dishes"></EditableDishList>
-      </router-view>
+      <keep-alive>
+        <router-view>
+          <DishList :dishes="dishes"></DishList>
+        </router-view>
+      </keep-alive>
     </section>
   </section>
 </template>
@@ -21,7 +23,7 @@ import axios from "axios";
 import Settings from "../components/admin/Settings.vue";
 import Greeting from "../components/admin/Greeting.vue";
 import Search from "../components/Search";
-import EditableDishList from "../components/admin/EditableDishList.vue";
+import DishList from "../components/DishList";
 import AddNewDish from "../components/admin/AddNewDish.vue";
 import AddAdmin from "../components/admin/AddAdmin.vue";
 
@@ -31,7 +33,7 @@ export default {
     Greeting,
     Settings,
     Search,
-    EditableDishList,
+    DishList,
     AddNewDish,
     AddAdmin
   },
@@ -67,64 +69,78 @@ export default {
 
 <style scoped>
 .admin {
+  padding: 0 20px 20px 20px;
   display: grid;
+  grid-template-columns: 1fr;
   gap: 30px;
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 60px 20px;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(5, auto);
-  grid-template-areas:
-    "greet greet greet greet greet greet"
-    "settings settings settings settings settings settings"
-    "user user user user user user"
-    "dish dish dish dish dish dish"
-    "menu menu menu menu menu menu";
 }
 
-.greet {
-  grid-area: greet;
+.menu-header {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
 }
 
-.settings {
-  grid-area: settings;
-}
-
-.dish {
-  grid-area: dish;
-}
-
-.user {
-  grid-area: user;
-}
-
-.menu {
-  grid-area: menu;
-  display: grid;
-  grid-template-rows: repeat(3, auto);
-  gap: 30px;
+.menu-header h2 {
+  margin-bottom: 20px;
 }
 
 @media only screen and (min-width: 500px) {
   .admin {
+    grid-template-columns: repeat(5, 1fr);
     grid-template-areas:
-      "greet greet greet settings settings settings"
-      "user user user user user user"
-      "dish dish dish dish dish dish"
-      "menu menu menu menu menu menu";
+      "name name name settings settings"
+      "user user user user user"
+      "add-dish add-dish add-dish add-dish add-dish"
+      "menu menu menu menu menu ";
+  }
+
+  .name {
+    align-self: flex-start;
+    grid-area: name;
+  }
+
+  .settings {
+    align-self: flex-start;
+    grid-area: settings;
+  }
+
+  .user {
+    align-self: flex-start;
+    grid-area: user;
+  }
+
+  .add-dish {
+    align-self: flex-start;
+    grid-area: add-dish;
+  }
+
+  .menu {
+    align-self: flex-start;
+    grid-area: menu;
   }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 800px) {
   .admin {
-    grid-template-rows: 100px 220px auto repeat(3, auto);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
-      "greet greet dish dish dish dish"
-      "settings settings dish dish dish dish"
-      "user user dish dish dish dish"
-      "e e dish dish dish dish"
-      "menu menu menu menu menu menu";
+      "name add-dish"
+      "settings add-dish"
+      "user add-dish"
+      "empty add-dish"
+      "menu menu";
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .menu-header {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
   }
 }
 </style>

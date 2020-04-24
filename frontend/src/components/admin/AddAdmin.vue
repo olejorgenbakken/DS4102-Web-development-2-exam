@@ -14,4 +14,9 @@ export default {
 </script>
 
 <style scoped>
+.add-admin {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
 </style>

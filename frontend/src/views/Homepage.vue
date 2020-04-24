@@ -1,11 +1,11 @@
 <template>
   <main class="mainpage">
-    <DishHighlight :color="color" :text="text"></DishHighlight>
-    <header class="dish-list-header">
-      <h2 class="dish-list-heading">Meny</h2>
-    </header>
+    <DishHighlight></DishHighlight>
     <section class="menu">
-      <Search></Search>
+      <header class="menu-header">
+        <h2>Meny</h2>
+        <Search></Search>
+      </header>
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import DishHighlight from "../components/user/DishHighlight.vue";
 import Search from "../components/Search";
 
@@ -23,66 +22,37 @@ export default {
   components: {
     DishHighlight,
     Search
-  },
-  data() {
-    return {
-      text: "",
-      color: ""
-    };
-  },
-  beforeMount() {
-    const settings = `https://localhost:5001/settings/1`;
-    axios.get(settings).then(response => {
-      this.color = response.data.color;
-      this.text = response.data.text;
-    });
   }
 };
 </script>
 
 <style scoped>
-.mainpage {
-  display: grid;
-  grid-template-rows: calc(100vh - 70px) repeat(2, auto);
-}
-
-.dish-list-heading {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.dish-list-heading::after,
-.dish-list-heading::before {
-  content: "";
-  display: block;
-  height: 2px;
-  width: 50px;
-  background: black;
-  margin: 0 10px;
-}
-
-.dish-list-header {
-  padding: 40px 0 20px 0;
-}
-
 .menu {
   width: 100%;
   max-width: 1000px;
-  min-height: 50vh;
+  padding: 20px;
   margin: 0 auto;
-  padding: 0 20px 60px 20px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
 }
 
-@media only screen and (min-width: 700px) {
-  .mainpage {
-    grid-template-rows: 500px repeat(2, auto);
+.menu-header {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.menu-header h2 {
+  margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 800px) {
+  .menu {
+    padding: 50px 20px;
+  }
+
+  .menu-header {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
   }
 }
 </style>

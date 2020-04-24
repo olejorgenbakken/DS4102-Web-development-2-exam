@@ -1,69 +1,51 @@
 <template>
-  <article class="dish card card-photo">
+  <article class="dish card">
     <section class="photo">
       <figure class="figure">
         <input type="file" name="upload-img" id="uploaded-pic" @change="previewPic" />
-        <img :src="`https:/localhost:5001/images/${photo}`" />
+        <img :src="`https:/localhost:5001/images/${dish.photo}`" />
       </figure>
     </section>
     <section class="info">
       <section class="name">
         <label>Navn</label>
-        <input v-model="name" />
+        <input v-model="dish.name" type="text" class="title" placeholder="Tittel" />
       </section>
       <section class="price">
-        <label>Pris</label>
-        <input type="number" v-model="price" />
+        <label>Pris (kr)</label>
+        <input type="number" v-model="dish.price" />
       </section>
       <section class="type">
         <label>Type</label>
-        <select v-model="type">
+        <select v-model="dish.type">
           <option v-for="type in dishTypes" :value="type.name" :key="type.id">{{type.name}}</option>
         </select>
       </section>
       <section class="ingredients">
-        <section class="all-ingredients">
-          <label>Ingredienser</label>
-          <select multiple v-model="ingredients">
-            <option
-              v-for="ingredient in allIngredients"
-              :key="ingredient"
-              :value="ingredient"
-            >{{ingredient}}</option>
-          </select>
-        </section>
-        <section class="selected-ingredients" v-if="ingredients.length > 0">
-          <label>Valgte ingredienser:</label>
-          <section class="list">
-            <p
-              class="ingredient"
-              v-for="ingredient in ingredients"
-              :key="ingredient"
-              @click="removeIng"
-            >{{ingredient}}</p>
-          </section>
-        </section>
+        <label>Ingredienser</label>
+        <select multiple v-model="dish.ingredients">
+          <option
+            v-for="ingredient in allIngredients"
+            :key="ingredient"
+            :value="ingredient"
+          >{{ingredient}}</option>
+        </select>
       </section>
       <section class="highlighted">
-        <label>Fremhevet</label>
-        <section class="input-highlighted">
-          <label>
-            <input type="radio" v-model="highlighted" :value="true" />
-            <p>Ja</p>
-          </label>
-          <label>
-            <input type="radio" v-model="highlighted" :value="false" />
-            <p>Nei</p>
-          </label>
-        </section>
+        <label class="header">Skal den fremheves?</label>
+        <label class="input">
+          <input type="radio" v-model="dish.highlighted" :value="true" />
+          Ja
+        </label>
+        <label class="input">
+          <input type="radio" v-model="dish.highlighted" :value="false" />
+          Nei
+        </label>
       </section>
       <section class="desc">
         <label>Beskrivelse</label>
-        <textarea v-model="description" />
+        <textarea v-model="dish.description" />
       </section>
-    </section>
-
-    <section class="del">
       <button @click="deleteDish" class="del-btn">Slett</button>
     </section>
   </article>
@@ -75,22 +57,24 @@ import axios from "axios";
 export default {
   name: "EditableDishItem",
   props: {
-    name: String,
-    id: Number,
-    ingredients: Array,
-    type: String,
-    price: Number,
-    photo: String,
-    description: String,
-    highlighted: Boolean
+    id: Number
   },
   data() {
     return {
+      dish: {
+        ingredients: []
+      },
       allIngredients: [],
       dishTypes: []
     };
   },
   created() {
+    let dishesURL = `https://localhost:5001/dishes/${this.id}`;
+    axios.get(dishesURL).then(response => {
+      this.dish = response.data;
+      this.dish.ingredients = JSON.parse(this.dish.ingredients);
+    });
+
     let ingredientsURL = `https://localhost:5001/ingredients`;
     axios.get(ingredientsURL).then(response => {
       response.data.forEach(ingredient => {
@@ -113,7 +97,7 @@ export default {
     },
     previewPic() {
       let input = this.$el.querySelector("#uploaded-pic");
-      this.photo = input.files[0].name;
+      this.dish.photo = input.files[0].name;
     },
     removeIng(e) {
       this.ingredients.forEach(ingredient => {
@@ -129,14 +113,14 @@ export default {
   },
   updated() {
     this.newDish = {
-      name: this.name,
-      id: this.id,
-      ingredients: this.ingredients,
-      type: this.type,
-      price: this.price,
-      photo: this.photo,
-      description: this.description,
-      highlighted: this.highlighted
+      name: this.dish.name,
+      id: this.dish.id,
+      ingredients: this.dish.ingredients,
+      type: this.dish.type,
+      price: this.dish.price,
+      photo: this.dish.photo,
+      description: this.dish.description,
+      highlighted: this.dish.highlighted
     };
     this.newDish.price = parseInt(this.newDish.price);
     this.newDish.ingredients = JSON.stringify(this.newDish.ingredients);
@@ -171,220 +155,62 @@ export default {
 
 <style scoped>
 .dish {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 200px 1fr max-content;
-  grid-template-areas:
-    "pic"
-    "info"
-    "del";
-}
-
-section {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3px;
-  font-family: var(--paragraph);
+  display: flex;
+  flex-direction: column;
 }
 
 .photo {
-  grid-area: pic;
-  text-align: center;
+  height: 200px;
 }
 
-.figure {
+.photo figure,
+.photo input {
   height: 100%;
-  overflow: hidden;
-  position: relative;
 }
-.figure::before {
+
+.photo input {
   position: absolute;
-  content: "Endre";
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
   opacity: 0;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-}
-
-.figure:hover::before {
-  opacity: 1;
-}
-
-.figure img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-input,
-select,
-textarea,
-.input-highlighted label {
-  border: 1px solid black;
-  background: #ffffff;
-  border-radius: 2px;
-  padding: 5px;
-}
-
-input[type="text"],
-select,
-textarea,
-.input-highlighted label {
-  height: 35px;
-}
-
-textarea {
-  resize: none;
-}
-
-input[type="number"] {
-  width: 100%;
-}
-
-input[type="file"] {
-  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 1;
   cursor: pointer;
-  opacity: 0;
+}
+
+.info,
+.highlighted {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
 }
 
 .info {
-  grid-area: info;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "name"
-    "price"
-    "type"
-    "ing"
-    "high"
-    "desc";
   padding: 20px;
-  gap: 20px;
-}
-
-.name {
-  grid-template-rows: repeat(2, max-content);
-  align-items: flex-start;
-  grid-area: name;
-}
-
-.desc {
-  grid-template-rows: max-content 1fr;
-  align-items: flex-start;
-  grid-area: desc;
-}
-
-.price {
-  grid-template-rows: repeat(2, max-content);
-  align-items: flex-start;
-  grid-area: price;
-}
-
-.type {
-  grid-template-rows: repeat(2, max-content);
-  align-items: flex-start;
-  grid-area: type;
-}
-
-.ingredients {
-  grid-area: ing;
-  gap: 10px;
-}
-
-.list {
-  margin: -5px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.all-ingredients select {
-  height: 80px;
-  padding: 0;
-}
-
-.selected-ingredients p {
-  padding: 7px 15px;
-  margin: 5px 5px;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  cursor: pointer;
-  height: max-content;
 }
 
 .highlighted {
-  grid-template-rows: repeat(2, max-content);
-  align-items: flex-start;
-  grid-area: high;
+  gap: 0 10px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
-.input-highlighted {
-  grid-template-columns: repeat(2, auto);
-  gap: 20px;
+.highlighted .header {
+  grid-column: 1 / span 2;
 }
 
-.input-highlighted label {
+label.input {
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 0.8em;
+  padding: 5px;
 }
 
-.input-highlighted label p {
-  margin-left: 10px;
-}
-
-.del {
-  grid-area: del;
+label.input input {
+  margin-right: 5px;
 }
 
 .del-btn {
-  cursor: pointer;
-  padding: 10px 20px;
-  background: #ff0000;
+  background: red;
   color: white;
-}
-
-@media only screen and (min-width: 1100px) {
-  .dish {
-    display: grid;
-    grid-template-columns: 200px 1fr 100px;
-    grid-template-rows: auto;
-    grid-template-areas: "pic info del";
-  }
-
-  .info {
-    grid-area: info;
-    display: grid;
-    grid-template-columns: 170px 1fr 300px;
-    grid-template-areas:
-      "name desc ing"
-      "price desc ing"
-      "type desc ing"
-      "high desc ing";
-    padding: 20px;
-    gap: 20px;
-  }
-
-  .ingredients {
-    grid-template-rows: 100px 1fr;
-    align-items: flex-start;
-  }
-
-  textarea {
-    height: 100%;
-  }
 }
 </style>

@@ -1,39 +1,46 @@
 <template>
   <section class="dish">
-    <router-view>
-      <DetailedDish></DetailedDish>
-    </router-view>
-
-    <section class="related">
-      <header>
-        <h3>Andre retter</h3>
-      </header>
-      <DishList :dishes="dishes"></DishList>
-    </section>
+    <DetailedDish
+      :name="dish.name"
+      :id="dish.id"
+      :photo="dish.photo"
+      :type="dish.type"
+      :price="dish.price"
+      :ingredients="dish.ingredients"
+      :description="dish.description"
+    ></DetailedDish>
   </section>
 </template>
 
 <script>
 import axios from "axios";
 import DetailedDish from "../components/user/DetailedDish";
-import DishList from "../components/user/DishList";
 
 export default {
   name: "Dish",
   components: {
-    DishList,
     DetailedDish
   },
   data() {
     return {
-      theDish: {},
-      dishes: []
+      dish: {}
     };
   },
-  created() {
-    const webAPIUrl = `https://localhost:5001/dishes/type/drikke`;
+  watch: {
+    $route() {
+      let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
+      axios.get(webAPIUrl).then(response => {
+        this.dish = response.data;
+        this.dish.ingredients = JSON.parse(this.dish.ingredients);
+        console.log(this.dish);
+      });
+    }
+  },
+  beforeCreate() {
+    let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
     axios.get(webAPIUrl).then(response => {
-      this.dishes = response.data;
+      this.dish = response.data;
+      this.dish.ingredients = JSON.parse(this.dish.ingredients);
     });
   }
 };
@@ -41,33 +48,14 @@ export default {
 
 <style scoped>
 .dish {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, auto);
   width: 100%;
-  gap: 20px;
-}
-
-.related {
-  width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px 60px 20px;
 }
 
-.related header {
-  padding: 40px 0 10px 0;
-}
-
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 900px) {
   .dish {
-    grid-template-rows: 400px auto;
-  }
-}
-
-@media only screen and (min-width: 1100px) {
-  .related {
-    padding: 0 0 60px 0;
+    padding: 40px;
   }
 }
 </style>

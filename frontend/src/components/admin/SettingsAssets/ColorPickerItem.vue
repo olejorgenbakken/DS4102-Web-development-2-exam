@@ -1,11 +1,7 @@
 <template>
   <article class="color-picker">
-    <h2 class="color-picker">
-      <label class="label">
-        {{text}}
-        <input type="color" :value="value" @input="$emit('input', $event.target.value)" />
-      </label>
-    </h2>
+    <label>{{text}}</label>
+    <input type="color" :value="value" @input="$emit('input', $event.target.value)" />
   </article>
 </template>
 
@@ -25,16 +21,8 @@ export default {
   flex-direction: column;
 }
 
-input {
-  height: 30px;
-  width: 100%;
-  overflow: hidden;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-}
-
-input::-webkit-color-swatch {
-  border: none;
+.color-picker input {
+  padding: 0;
+  max-width: 200px;
 }
 </style>

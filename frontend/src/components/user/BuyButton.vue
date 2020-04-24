@@ -1,5 +1,10 @@
 <template>
-  <button class="buy-button" @click="addToCart" :id="id" :style="`background: ${color}`">Kjøp</button>
+  <button
+    :style="`background: ${text}; color: ${color}`"
+    class="buy-button"
+    @click="addToCart"
+    :id="id"
+  >Kjøp</button>
 </template>
 
 <script>
@@ -10,14 +15,17 @@ export default {
     id: Number
   },
   data() {
-    const settings = `https://localhost:5001/settings/1`;
-    axios.get(settings).then(response => {
-      this.color = response.data.color;
-    });
-
     return {
-      color: {}
+      color: String,
+      text: String
     };
+  },
+  created() {
+    const settingsURL = `https://localhost:5001/settings/1`;
+    axios.get(settingsURL).then(response => {
+      this.color = response.data.color;
+      this.text = response.data.text;
+    });
   },
   methods: {
     addToCart() {
@@ -40,13 +48,7 @@ export default {
 
 <style scoped>
 .buy-button {
-  color: white;
-  width: 100%;
-  max-width: 150px;
-  padding: 10px;
-  font-family: var(--heading);
   font-weight: 700;
-  border-radius: 2px;
-  transition: 0.3s ease-in-out;
+  max-width: 200px;
 }
 </style>

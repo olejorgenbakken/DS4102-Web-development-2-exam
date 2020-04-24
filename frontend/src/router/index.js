@@ -14,20 +14,13 @@ const routes = [
         name: "Homepage",
         path: "/",
         query: "?=dishTerm?=dishType",
-        component: () => import(/* webpackChunkName: 'DishList' */ '../components/user/DishList.vue')
+        component: () => import(/* webpackChunkName: 'DishList' */ '../components/DishList.vue')
       }
     ]
   },
   {
-    path: "/dish",
+    path: "/dish/:id",
     name: "Dish",
-    children: [
-      {
-        path: ':id',
-        name: 'Details',
-        component: () => import(/* webpackChunkName: 'Dish' */ '../components/user/DetailedDish.vue')
-      }
-    ],
     component: () => import(/* webpackChunkName: 'Dish' */ '../views/Dish.vue')
   },
   {
@@ -43,7 +36,7 @@ const routes = [
         name: "Admin",
         path: "/",
         query: "?=dishTerm?=dishType",
-        component: () => import(/* webpackChunkName: 'EditableDishList' */ '../components/admin/EditableDishList.vue')
+        component: () => import(/* webpackChunkName: 'DishList' */ '../components/DishList.vue')
       }
     ]
   }

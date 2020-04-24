@@ -1,9 +1,7 @@
 <template>
   <article class="greeting card">
-    <h2 class="greeting-text">
-      <label class="label">Logget inn som</label>
-      {{firstName}}
-    </h2>
+    <label>Logget inn som</label>
+    <h2 class="greeting-text">{{firstName}} {{lastName}}</h2>
   </article>
 </template>
 
@@ -11,16 +9,16 @@
 export default {
   name: "Greeting",
   props: {
-    firstName: String
+    firstName: String,
+    lastName: String
   }
 };
 </script>
 
 <style scoped>
-.greeting-text {
+.greeting {
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
 }
 </style>

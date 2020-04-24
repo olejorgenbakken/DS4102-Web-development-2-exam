@@ -8,20 +8,17 @@
       <section class="text">
         <h2 class="title">
           {{dish.name}}
-          <small>fra {{dish.price}}kr</small>
+          <small class="price">{{dish.price}}kr</small>
         </h2>
-        <p>{{dish.description}}</p>
+
+        <p class="desc">{{dish.description}}</p>
       </section>
 
       <section class="links">
-        <router-link :to="{ name: 'Details', params: {id: dish.id}}">
+        <router-link :to="{ name: 'Dish', params: {id: dish.id}}">
           <button class="more-button" :style="`border: 3px solid ${text}; color: ${text}`">Les mer</button>
         </router-link>
-        <BuyButton
-          :id="dish.id"
-          :style="`background: ${text}; color: ${color}`"
-          class="buy-button card card-photo"
-        ></BuyButton>
+        <BuyButton :id="dish.id"></BuyButton>
       </section>
     </section>
   </article>
@@ -36,17 +33,21 @@ export default {
   components: {
     BuyButton
   },
-  props: {
-    color: String,
-    text: String
-  },
   data() {
     return {
       dish: {},
-      settings: {}
+      settings: {},
+      color: "",
+      text: ""
     };
   },
   beforeMount() {
+    const settingsURL = `https://localhost:5001/settings/1`;
+    axios.get(settingsURL).then(response => {
+      this.color = response.data.color;
+      this.text = response.data.text;
+    });
+
     let highlightedDish = "https://localhost:5001/dishes/highlighted/true";
     axios.get(highlightedDish).then(response => {
       if (response.status != 200) {
@@ -65,75 +66,76 @@ export default {
 <style scoped>
 .highlighted {
   position: relative;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  grid-template-areas:
-    "pic"
-    "info";
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto;
+  height: 500px;
 }
 
 .photo {
-  grid-area: pic;
-  width: 100%;
   height: 100%;
-  background-size: cover;
   background-position: center center;
+  background-size: cover;
 }
 
 .info {
-  grid-area: info;
-  padding: 20px 20px 30px 20px;
+  padding: 15px 20px;
 }
 
-.text {
+.desc {
+  margin: 5px 0 10px 0;
+}
+
+.text,
+.links {
   width: 100%;
-  max-width: 400px;
-  padding-bottom: 20px;
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 .links {
-  width: 100%;
-  max-width: 400px;
   display: grid;
+  grid-template-columns: repeat(2, max-content);
   gap: 20px;
-  grid-template-columns: 120px 1fr;
+  padding: 10px 0;
 }
 
-.more-button {
-  background: transparent;
-  width: 100%;
-  height: 100%;
-}
-
-.buy-button::after {
-  background: transparent;
-}
-
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 600px) {
   .highlighted {
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: 1fr;
-    grid-template-areas: "info info info info info pic pic pic";
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas: "info info info pic pic pic";
+    align-items: center;
+  }
+
+  .photo {
+    grid-area: pic;
   }
 
   .info {
-    height: 100%;
     grid-area: info;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    height: 100%;
   }
 
+  .text,
   .links {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .highlighted {
     display: grid;
-    gap: 20px;
-    grid-template-columns: 120px 1fr;
-    justify-content: flex-start;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-areas: "info info info info info pic pic pic";
+    align-items: center;
+    height: 420px;
   }
 }
 </style>
