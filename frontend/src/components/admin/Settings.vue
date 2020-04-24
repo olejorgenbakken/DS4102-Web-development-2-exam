@@ -18,4 +18,13 @@ export default {
 </script>
 
 <style scoped>
+.settings {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings header {
+  margin-bottom: 10px;
+}
 </style>

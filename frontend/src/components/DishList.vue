@@ -1,18 +1,7 @@
 <template>
   <section class="lists">
     <section class="admin-list list" v-if="$route.name == 'Admin'">
-      <EditableDishItem
-        v-for="dish in dishesToShow"
-        :key="dish.id"
-        :id="dish.id"
-        :name="dish.name"
-        :price="dish.price"
-        :photo="dish.photo"
-        :description="dish.description"
-        :highlighted="dish.highlighted"
-        :type="dish.type"
-        :ingredients="JSON.parse(dish.ingredients)"
-      ></EditableDishItem>
+      <EditableDishItem v-for="dish in dishesToShow" :key="dish.id" :id="dish.id"></EditableDishItem>
     </section>
     <section v-else class="user-list" v-for="dishType in dishTypes" :key="dishType.id">
       <header class="list-header">

@@ -36,7 +36,7 @@ export default {
       });
     }
   },
-  created() {
+  beforeCreate() {
     let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
     axios.get(webAPIUrl).then(response => {
       this.dish = response.data;

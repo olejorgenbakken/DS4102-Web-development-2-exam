@@ -1,5 +1,5 @@
 <template>
-  <article :id="id" class="detailed card">
+  <article :id="id" class="detailed">
     <figure class="photo">
       <img :src="`https://localhost:5001/images/${photo}`" />
     </figure>
@@ -20,7 +20,7 @@
         <label>Ingredienser</label>
         <p v-for="ingredient in ingredients" :key="ingredient">{{ingredient}}</p>
       </section>
-      <BuyButton :id="id" class="buy"></BuyButton>
+      <BuyButton :id="id"></BuyButton>
     </section>
   </article>
 </template>

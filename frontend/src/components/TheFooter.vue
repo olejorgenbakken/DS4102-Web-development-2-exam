@@ -1,9 +1,11 @@
 <template>
   <footer class="footer" :style="`background: ${settings.color}`">
     <section class="content">
-      <router-link to="/">
-        <h1 class="frontpage-title" :style="`color: ${settings.text}`">Sushi restaurant</h1>
-      </router-link>
+      <header class="content-header">
+        <router-link to="/">
+          <h1 class="frontpage-title" :style="`color: ${settings.text}`">Sushi restaurant</h1>
+        </router-link>
+      </header>
     </section>
   </footer>
 </template>
@@ -35,6 +37,7 @@ export default {
   align-items: center;
   position: relative;
   z-index: 3;
+  height: 500px;
 }
 
 .content {

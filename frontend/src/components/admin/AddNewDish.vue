@@ -31,17 +31,15 @@
         <textarea placeholder="Beskrivelse" autocomplete="off" v-model="dish.description"></textarea>
       </section>
       <section class="highlighted">
-        <label>Skal den fremheves?</label>
-        <section class="input-highlighted">
-          <label class="input">
-            <input type="radio" v-model="dish.highlighted" :value="true" />
-            <p>Ja</p>
-          </label>
-          <label class="input">
-            <input type="radio" v-model="dish.highlighted" :value="false" />
-            <p>Nei</p>
-          </label>
-        </section>
+        <label class="header">Skal den fremheves?</label>
+        <label class="input">
+          <input type="radio" v-model="dish.highlighted" :value="true" />
+          Ja
+        </label>
+        <label class="input">
+          <input type="radio" v-model="dish.highlighted" :value="false" />
+          Nei
+        </label>
       </section>
       <section class="ingredients">
         <label>Ingredienser</label>
@@ -52,12 +50,6 @@
             :value="ingredient"
           >{{ingredient}}</option>
         </select>
-      </section>
-      <section class="selected-ingredients" v-if="dish.ingredients.length > 0">
-        <label>Valgte ingredienser:</label>
-        <section class="list">
-          <p class="ingredient" v-for="n in dish.ingredients" :key="n" @click="removeIng">{{n}}</p>
-        </section>
       </section>
       <button @click="addNewDish" class="submit-btn">Last opp ny rett</button>
     </section>
@@ -97,17 +89,6 @@ export default {
     });
   },
   methods: {
-    removeIng(e) {
-      this.dish.ingredients.forEach(ingredient => {
-        if (ingredient == e.target.innerText) {
-          const index = this.dish.ingredients.indexOf(ingredient);
-          if (index > -1) {
-            this.dish.ingredients.splice(index, 1);
-          }
-        }
-      });
-    },
-
     showPicture() {
       let input = this.$el.querySelector("#new-pic");
       if (input.files && input.files[0]) {
@@ -143,4 +124,109 @@ export default {
 </script>
 
 <style scoped>
+.new-dish {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-dish header {
+  margin-bottom: 10px;
+}
+
+.upload,
+.highlighted {
+  display: grid;
+}
+
+.upload {
+  grid-template-columns: 1fr;
+  gap: 14px 20px;
+}
+
+.photo {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.photo figure,
+.photo input {
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.photo input {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+}
+
+.highlighted {
+  gap: 0 10px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.highlighted .header {
+  grid-column: 1 / span 2;
+}
+
+label.input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+}
+
+label.input input {
+  margin-right: 5px;
+}
+
+@media only screen and (min-width: 800px) {
+  .upload {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-areas:
+      "pic pic name name name"
+      "pic pic price type type"
+      "pic pic desc desc desc"
+      "pic pic highlighted highlighted highlighted"
+      "ingredients ingredients ingredients ingredients ingredients"
+      "submit-btn submit-btn submit-btn submit-btn submit-btn";
+  }
+
+  .photo {
+    height: 100%;
+    grid-area: pic;
+    grid-row: 1 / span 4;
+  }
+
+  .name {
+    grid-area: name;
+  }
+
+  .price {
+    grid-area: price;
+  }
+
+  .type {
+    grid-area: type;
+  }
+
+  .desc {
+    grid-area: desc;
+  }
+
+  .highlighted {
+    grid-area: highlighted;
+  }
+
+  .ingredients {
+    grid-area: ingredients;
+  }
+
+  .submit-btn {
+    grid-area: submit-btn;
+  }
+}
 </style>

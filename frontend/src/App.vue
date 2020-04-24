@@ -78,7 +78,9 @@ img {
 }
 
 a,
-button {
+button,
+input[type="file"],
+input[type="color"] {
   cursor: pointer;
 }
 
@@ -111,13 +113,53 @@ input[type="text"],
 input[type="search"],
 input[type="number"],
 input[type="password"],
-select {
-  font-size: 1em;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+input[type="color"],
+input[type="file"],
+select,
+textarea {
   width: 100%;
-  padding: 5px 10px;
+  padding: 5px 3px;
   margin-top: 3px;
+  font-size: 1em;
+}
+
+textarea {
+  min-height: 50px;
+  resize: vertical;
+}
+
+input[type="file"],
+input[type="color"] {
+  z-index: 1;
+}
+
+input[type="text"],
+input[type="search"],
+input[type="number"],
+input[type="password"],
+input[type="color"],
+select {
+  border: none;
+}
+
+input[type="text"],
+input[type="search"],
+input[type="number"],
+input[type="password"],
+select {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+select[multiple] {
+  border: 1px solid black;
+  padding: 0;
+  height: 100px;
+  overflow: auto;
+}
+
+option {
+  padding: 5px 2px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 figure {
@@ -133,6 +175,44 @@ figure img {
 }
 
 .card {
-  background: #fff;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: 0.2s ease-in-out;
+}
+
+.card::before {
+  filter: blur(10px);
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  z-index: -1;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: #f0f0f0;
+}
+
+.card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover::after {
+  border: 1px solid #fff;
+}
+
+.submit-btn {
+  background: black;
+  color: white;
 }
 </style>

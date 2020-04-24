@@ -1,6 +1,9 @@
 <template>
   <section class="wrapper">
-    <LoginForm></LoginForm>
+    <section class="login">
+      <LoginForm></LoginForm>
+    </section>
+    <section class="create-user"></section>
   </section>
 </template>
 
@@ -33,7 +36,11 @@ export default {
 
 <style scoped>
 .wrapper {
-  height: calc(100vh - 100px);
+  display: grid;
+  grid-template-rows: 600px auto;
+}
+
+.login {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,5 +48,8 @@ export default {
   background: url(https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80);
   background-size: cover;
   background-position: center bottom;
+}
+
+.create-user {
 }
 </style>

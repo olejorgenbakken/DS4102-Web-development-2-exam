@@ -91,7 +91,7 @@ export default {
 .text,
 .links {
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   margin: 0 auto;
 }
 
@@ -121,14 +121,21 @@ export default {
     justify-content: center;
     height: 100%;
   }
+
+  .text,
+  .links {
+    width: 90%;
+    margin: 0 auto;
+  }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .highlighted {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-areas: "info info info info info pic pic pic";
     align-items: center;
+    height: 420px;
   }
 }
 </style>
