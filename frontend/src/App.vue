@@ -110,6 +110,11 @@ button {
   font-family: var(--heading);
 }
 
+.del-btn {
+  background: red;
+  color: white;
+}
+
 input[type="text"],
 input[type="search"],
 input[type="number"],

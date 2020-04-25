@@ -48,7 +48,6 @@ export default {
 .detailed {
   display: flex;
   flex-direction: column;
-  height: 80vh;
 }
 
 .photo {
@@ -62,6 +61,7 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 20px;
 }
 
@@ -73,6 +73,9 @@ export default {
 }
 
 @media only screen and (min-width: 900px) {
+  .detailed {
+    height: 80vh;
+  }
   .photo {
     width: 500px;
     height: 100%;

@@ -208,9 +208,4 @@ label.input {
 label.input input {
   margin-right: 5px;
 }
-
-.del-btn {
-  background: red;
-  color: white;
-}
 </style>

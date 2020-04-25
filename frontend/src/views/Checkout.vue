@@ -5,11 +5,17 @@
 </template>
 
 <script>
+import { store } from "../store.js";
 export default {
   name: "Checkout",
+  data() {
+    return {
+      order: store.state.order
+    };
+  },
   created() {
-    if (localStorage.getItem("order")) {
-      this.$router.push({ name: "Order" });
+    if (this.order) {
+      this.$router.push({ name: "Overview" });
     } else {
       this.$router.push({ name: "NoItems" });
     }
@@ -20,6 +26,7 @@ export default {
 <style scoped>
 .checkout {
   width: 100%;
+  max-width: 1200px;
   padding: 0 10px 40px 10px;
   margin: 0 auto;
 }

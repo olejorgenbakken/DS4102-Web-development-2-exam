@@ -8,6 +8,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import { store } from "../../store.js";
+
 export default {
   name: "BuyButton",
   props: {
@@ -23,14 +26,22 @@ export default {
   },
   methods: {
     addToCart() {
-      if (localStorage.getItem("order") == null) {
-        let order = [{ id: this.id }];
-        localStorage.setItem("order", JSON.stringify(order));
-      } else {
-        let order = JSON.parse(localStorage.getItem("order"));
-        order.push({ id: this.id });
-        localStorage.setItem("order", JSON.stringify(order));
-      }
+      let dishesURL = `https://localhost:5001/dishes/${this.id}`;
+      axios.get(dishesURL).then(response => {
+        if (store.state.order == null) {
+          store.state.order = [
+            { id: response.data.id, amount: 1, price: response.data.price }
+          ];
+        } else {
+          store.state.order.forEach(item => {
+            if (item.id == this.id) {
+              item.amount++;
+            } else {
+              console.log(true);
+            }
+          });
+        }
+      });
     }
   }
 };

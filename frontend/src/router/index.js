@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '*',
+    path: '/',
     component: Homepage,
     name: "Homepage",
     query: "?=dishTerm?=dishType",
@@ -39,14 +39,24 @@ const routes = [
     component: () => import(/* webpackChunkName: 'Checkout' */ '../views/Checkout.vue'),
     children: [
       {
-        path: "/",
-        name: "Order",
-        component: () => import(/* webpackChunkName: 'Order' */ '../components/checkout/Order.vue'),
-      },
-      {
         path: "/order-empty",
         name: "NoItems",
-        component: () => import(/* webpackChunkName: 'Order' */ '../components/checkout/NoItems.vue'),
+        component: () => import(/* webpackChunkName: 'NoItems' */ '../components/checkout/NoItems.vue'),
+      },
+      {
+        path: "/overview",
+        name: "Overview",
+        component: () => import(/* webpackChunkName: 'Overview' */ '../components/checkout/Overview.vue'),
+      },
+      {
+        path: "/payment",
+        name: "Payment",
+        component: () => import(/* webpackChunkName: 'Payment' */ '../components/checkout/NoItems.vue'),
+      },
+      {
+        path: "/finished",
+        name: "OrderDone",
+        component: () => import(/* webpackChunkName: 'OrderDone' */ '../components/checkout/NoItems.vue'),
       },
     ]
   },
