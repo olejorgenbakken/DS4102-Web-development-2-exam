@@ -1,34 +1,30 @@
 <template>
-  <section class="wrapper">
+  <section class="wrapper" @keydown.esc="close">
     <section class="login">
-      <LoginForm></LoginForm>
+      <section class="login-form card">
+        <router-view></router-view>
+      </section>
     </section>
-    <section class="create-user"></section>
   </section>
 </template>
 
 <script>
-import LoginForm from "../components/LoginForm";
-
 export default {
   name: "Login",
-  components: {
-    LoginForm
+  created() {
+    let body = document.querySelector("body");
+    window.scrollTo(0, 0);
+    body.style.height = "100vh";
+    body.style.overflow = "hidden";
   },
-  beforeMount() {
-    if (document.cookie) {
-      let cookies = document.cookie.split(";");
-      if (cookies.length > 1) {
-        return "";
-      } else {
-        let loginCookie = cookies[0].split("=");
-        if (loginCookie[0] == "login") {
-          loginCookie = loginCookie[1];
-          this.$router.push(`admin`);
-        } else {
-          return "";
-        }
-      }
+  beforeDestroy() {
+    let body = document.querySelector("body");
+    body.style.height = "auto";
+    body.style.overflow = "auto";
+  },
+  methods: {
+    close() {
+      this.$router.push({ name: "Homepage" });
     }
   }
 };
@@ -36,20 +32,34 @@ export default {
 
 <style scoped>
 .wrapper {
-  display: grid;
-  grid-template-rows: 600px auto;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.7);
+  overflow: hidden;
 }
 
 .login {
+  cursor: default;
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url(https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80);
   background-size: cover;
   background-position: center bottom;
 }
 
-.create-user {
+.login-form {
+  width: 80%;
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 20px;
 }
 </style>

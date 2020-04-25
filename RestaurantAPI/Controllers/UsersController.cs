@@ -28,18 +28,43 @@ namespace RestaurantAPI.Controllers
             return UserList;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<User> Get(int id)
         {
             User thisUser = await _context.User.FirstOrDefaultAsync(user => user.Id == id);
             return thisUser;
         }
 
-        [HttpGet("user/{name}")]
-        public async Task<User> Get(string name)
+        [HttpGet("{email}")]
+        public async Task<User> Get(string email)
         {
-            User thisUser = await _context.User.FirstOrDefaultAsync(user => user.Username == name);
+            User thisUser = await _context.User.FirstOrDefaultAsync(user => user.Email == email);
             return thisUser;
+        }
+
+        [HttpPost]
+        public async Task<User> Post(User newUser)
+        {
+            _context.User.Add(newUser);
+            await _context.SaveChangesAsync();
+            return newUser;
+        }
+
+        [HttpPut]
+        public async Task<User> Put(User updateUser)
+        {
+            _context.Update(updateUser);
+            await _context.SaveChangesAsync();
+            return updateUser;
+        }
+
+        [HttpDelete("{email}")]
+        public async Task<User> Delete(string email)
+        {
+            User userToDelete = await _context.User.FirstOrDefaultAsync(user => user.Email == email);
+            _context.Remove(userToDelete);
+            await _context.SaveChangesAsync();
+            return userToDelete;
         }
     }
 }

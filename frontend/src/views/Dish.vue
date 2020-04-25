@@ -36,7 +36,8 @@ export default {
       });
     }
   },
-  beforeCreate() {
+  beforeMount() {
+    window.scrollTo(0, 0);
     let webAPIUrl = `https://localhost:5001/dishes/${this.$route.params.id}`;
     axios.get(webAPIUrl).then(response => {
       this.dish = response.data;
@@ -50,12 +51,13 @@ export default {
 .dish {
   width: 100%;
   max-width: 1200px;
+  padding-bottom: 30px;
   margin: 0 auto;
 }
 
 @media only screen and (min-width: 900px) {
   .dish {
-    padding: 40px;
+    width: 90%;
   }
 }
 </style>

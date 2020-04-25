@@ -6,15 +6,25 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '*',
     component: Homepage,
-    props: { default: true, sidebar: false },
+    name: "Homepage",
+    query: "?=dishTerm?=dishType",
     children: [
       {
-        name: "Homepage",
-        path: "/",
-        query: "?=dishTerm?=dishType",
-        component: () => import(/* webpackChunkName: 'DishList' */ '../components/DishList.vue')
+        path: "/login",
+        component: () => import(/* webpackChunkName: 'Login' */ '../views/Login'),
+        children: [
+          {
+            name: "Login",
+            path: "/",
+            component: () => import(/* webpackChunkName: 'ExistingUser' */ '../components/login/LoginForm')
+          }, {
+            name: "CreateUser",
+            path: "/new",
+            component: () => import(/* webpackChunkName: 'NewUser' */ '../components/login/CreateUserForm')
+          }
+        ]
       }
     ]
   },
@@ -24,9 +34,21 @@ const routes = [
     component: () => import(/* webpackChunkName: 'Dish' */ '../views/Dish.vue')
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: 'Login' */ '../views/Login.vue')
+    path: "/checkout",
+    name: "Checkout",
+    component: () => import(/* webpackChunkName: 'Checkout' */ '../views/Checkout.vue'),
+    children: [
+      {
+        path: "/",
+        name: "Order",
+        component: () => import(/* webpackChunkName: 'Order' */ '../components/checkout/Order.vue'),
+      },
+      {
+        path: "/order-empty",
+        name: "NoItems",
+        component: () => import(/* webpackChunkName: 'Order' */ '../components/checkout/NoItems.vue'),
+      },
+    ]
   },
   {
     path: '/admin',

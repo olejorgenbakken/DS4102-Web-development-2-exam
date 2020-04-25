@@ -15,7 +15,7 @@ export default {
   name: "Search",
   data() {
     return {
-      term: "",
+      term: null,
       dishTypes: ["Alle"],
       selected: null
     };
@@ -27,15 +27,15 @@ export default {
     });
   },
   updated() {
-    if (this.term != "" && this.selected != "") {
+    if (this.term != "" && this.selected) {
       this.$router.push({
         query: { dish: this.term, type: this.selected }
       });
-    } else if (this.selected != "") {
+    } else if (this.selected) {
       this.$router.push({
         query: { type: this.selected }
       });
-    } else if (this.term != "") {
+    } else if (this.term) {
       this.$router.push({
         query: { dish: this.term }
       });
