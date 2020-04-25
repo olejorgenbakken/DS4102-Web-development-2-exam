@@ -42,8 +42,7 @@ export default {
   overflow: hidden;
 }
 
-.login,
-.create-user {
+.login {
   cursor: default;
   position: relative;
   z-index: 2;

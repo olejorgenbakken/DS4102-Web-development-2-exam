@@ -1,5 +1,5 @@
 <template>
-  <form class="card shadow form">
+  <form class="form">
     <section class="form-input">
       <label>E-post</label>
       <input autocomplete="email" type="text" v-model="email" />
