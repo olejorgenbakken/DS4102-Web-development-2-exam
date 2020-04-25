@@ -2,7 +2,6 @@
   <section class="admin">
     <Greeting class="name" :firstName="user.firstName" :lastName="user.lastName"></Greeting>
     <Settings class="settings"></Settings>
-    <AddAdmin class="user"></AddAdmin>
     <AddNewDish class="add-dish"></AddNewDish>
     <section class="menu">
       <header class="menu-header">
@@ -19,13 +18,12 @@
 </template>
 
 <script>
-import axios from "axios";
+import { store } from "../store.js";
 import Settings from "../components/admin/Settings.vue";
 import Greeting from "../components/admin/Greeting.vue";
 import Search from "../components/Search";
 import DishList from "../components/DishList";
 import AddNewDish from "../components/admin/AddNewDish.vue";
-import AddAdmin from "../components/admin/AddAdmin.vue";
 
 export default {
   name: "AdminHome",
@@ -34,34 +32,23 @@ export default {
     Settings,
     Search,
     DishList,
-    AddNewDish,
-    AddAdmin
+    AddNewDish
   },
   data() {
     return {
-      user: {},
+      loggedIn: store.state.loggedIn,
+      isAdmin: store.state.isAdmin,
+      user: store.state.user,
       dishes: []
     };
   },
-  beforeMount() {
-    if (document.cookie) {
-      let cookies = document.cookie.split(";");
-      if (cookies.length > 1) {
-        return "";
-      } else {
-        let loginCookie = cookies[0].split("=");
-        if (loginCookie[0] == "login") {
-          this.user.id = loginCookie[1];
-          let userDB = `https://localhost:5001/users/${this.user.id}`;
-          axios.get(userDB).then(response => {
-            this.user = response.data;
-          });
-        } else {
-          this.$router.push("/login");
-        }
+  created() {
+    if (this.loggedIn) {
+      if (!this.isAdmin) {
+        this.$router.push({ name: "Homepage" });
       }
     } else {
-      this.$router.push("/login");
+      this.$router.push({ name: "Login" });
     }
   }
 };

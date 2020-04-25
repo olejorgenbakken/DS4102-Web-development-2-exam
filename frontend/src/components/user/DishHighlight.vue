@@ -4,7 +4,10 @@
       class="photo"
       :style="'background-image: url(https:localhost:5001/images/' + dish.photo + ')'"
     ></section>
-    <section class="info" :style="`background: ${color}; color: ${text}`">
+    <section
+      class="info"
+      :style="`background: ${colors.highlighted}; color: ${colors.highlightedText}`"
+    >
       <section class="text">
         <h2 class="title">
           {{dish.name}}
@@ -16,15 +19,23 @@
 
       <section class="links">
         <router-link :to="{ name: 'Dish', params: {id: dish.id}}">
-          <button class="more-button" :style="`border: 3px solid ${text}; color: ${text}`">Les mer</button>
+          <button
+            class="more-button"
+            :style="`border: 3px solid ${colors.highlightedText}; color: ${colors.highlightedText}`"
+          >Les mer</button>
         </router-link>
-        <BuyButton :id="dish.id"></BuyButton>
+        <BuyButton
+          :id="dish.id"
+          :background="colors.highlightedText"
+          :textColor="colors.highlighted"
+        ></BuyButton>
       </section>
     </section>
   </article>
 </template>
 
 <script>
+import { store } from "../../store.js";
 import axios from "axios";
 import BuyButton from "./BuyButton";
 
@@ -37,17 +48,10 @@ export default {
     return {
       dish: {},
       settings: {},
-      color: "",
-      text: ""
+      colors: store.state.colors
     };
   },
-  beforeMount() {
-    const settingsURL = `https://localhost:5001/settings/1`;
-    axios.get(settingsURL).then(response => {
-      this.color = response.data.color;
-      this.text = response.data.text;
-    });
-
+  created() {
     let highlightedDish = "https://localhost:5001/dishes/highlighted/true";
     axios.get(highlightedDish).then(response => {
       if (response.status != 200) {
@@ -102,6 +106,10 @@ export default {
   padding: 10px 0;
 }
 
+.more-button {
+  background: transparent;
+}
+
 @media only screen and (min-width: 600px) {
   .highlighted {
     display: grid;
@@ -135,7 +143,7 @@ export default {
     grid-template-columns: repeat(8, 1fr);
     grid-template-areas: "info info info info info pic pic pic";
     align-items: center;
-    height: 420px;
+    height: 470px;
   }
 }
 </style>

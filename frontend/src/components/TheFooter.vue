@@ -1,9 +1,9 @@
 <template>
-  <footer class="footer" :style="`background: ${settings.color}`">
+  <footer class="footer">
     <section class="content">
       <header class="content-header">
         <router-link to="/">
-          <h1 class="frontpage-title" :style="`color: ${settings.text}`">Sushi restaurant</h1>
+          <h1 class="frontpage-title" :style="`color: ${colors.logo}`">{{sitetitle}}</h1>
         </router-link>
       </header>
     </section>
@@ -11,27 +11,22 @@
 </template>
 
 <script>
-import axios from "axios";
+import { store } from "../store.js";
 export default {
   name: "Footer",
+  props: {
+    sitetitle: String
+  },
   data() {
     return {
-      settings: {}
+      colors: store.state.colors
     };
-  },
-  created() {
-    const settings = `https://localhost:5001/settings/1`;
-    axios.get(settings).then(response => {
-      this.settings = response.data;
-    });
   }
 };
 </script>
 
 <style scoped>
 .footer {
-  background: black;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;

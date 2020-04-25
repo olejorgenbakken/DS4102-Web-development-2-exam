@@ -1,14 +1,13 @@
 <template>
   <main class="mainpage">
+    <router-view></router-view>
     <DishHighlight></DishHighlight>
     <section class="menu">
       <header class="menu-header">
         <h2>Meny</h2>
         <Search></Search>
       </header>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <DishList></DishList>
     </section>
   </main>
 </template>
@@ -16,12 +15,14 @@
 <script>
 import DishHighlight from "../components/user/DishHighlight.vue";
 import Search from "../components/Search";
+import DishList from "../components/DishList";
 
 export default {
   name: "Homepage",
   components: {
     DishHighlight,
-    Search
+    Search,
+    DishList
   }
 };
 </script>

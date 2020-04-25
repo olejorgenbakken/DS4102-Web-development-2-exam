@@ -1,29 +1,27 @@
 <template>
-  <header class="global-header">
+  <header class="global-header" :style="`color: ${colors.logo}`">
     <router-link to="/">
-      <h1 :style="`color: ${settings.color}`">Sushi restaurant</h1>
+      <h1 :style="`color: ${colors.logo}`">{{sitetitle}}</h1>
     </router-link>
-    <Navigation :color="settings.color" :text="settings.text"></Navigation>
+    <Navigation :color="colors.highlighted"></Navigation>
   </header>
 </template>
 
 <script>
-import axios from "axios";
+import { store } from "../store.js";
 import Navigation from "./Navigation.vue";
 
 export default {
   name: "Header",
+  props: {
+    sitetitle: String
+  },
   components: {
     Navigation
   },
   data() {
-    const settings = `https://localhost:5001/settings/1`;
-    axios.get(settings).then(response => {
-      this.settings = response.data;
-    });
-
     return {
-      settings: {}
+      colors: store.state.colors
     };
   }
 };

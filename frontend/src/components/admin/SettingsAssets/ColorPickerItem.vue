@@ -22,7 +22,6 @@ export default {
 }
 
 .color-picker input {
-  padding: 0;
   max-width: 200px;
 }
 </style>
