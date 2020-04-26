@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import { store } from "../../store.js";
+import axios from "axios";
 
 export default {
   name: "BuyButton",
@@ -26,22 +26,27 @@ export default {
   },
   methods: {
     addToCart() {
-      let dishesURL = `https://localhost:5001/dishes/${this.id}`;
-      axios.get(dishesURL).then(response => {
-        if (store.state.order == null) {
-          store.state.order = [
-            { id: response.data.id, amount: 1, price: response.data.price }
-          ];
-        } else {
-          store.state.order.forEach(item => {
-            if (item.id == this.id) {
-              item.amount++;
-            } else {
-              console.log(true);
-            }
-          });
-        }
-      });
+      let order;
+      if (localStorage.getItem("order")) {
+        order = JSON.parse(localStorage.getItem("order"));
+        let dishesURL = `https://localhost:5001/dishes/${this.id}`;
+        axios.get(dishesURL).then(response => {
+          order.push({ id: this.id, price: response.data.price });
+          localStorage.setItem("order", JSON.stringify(order));
+        });
+        let total = 0;
+        order.forEach(item => {
+          total += item.price;
+        });
+        store.state.total = total;
+      } else {
+        let dishesURL = `https://localhost:5001/dishes/${this.id}`;
+        axios.get(dishesURL).then(response => {
+          order = [{ id: this.id, price: response.data.price }];
+          localStorage.setItem("order", JSON.stringify(order));
+          store.state.total = response.data.price;
+        });
+      }
     }
   }
 };

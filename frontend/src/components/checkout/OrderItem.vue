@@ -8,20 +8,12 @@
         <h3>{{dish.name}}</h3>
         <p>{{dish.price}}kr</p>
       </section>
-      <section class="amount">
-        <label>Antall:</label>
-        <select v-model="amount">
-          <option v-for="n in 10" :key="n" :value="n">{{n}}</option>
-        </select>
-      </section>
-
       <button class="del-btn">Fjern fra ordre</button>
     </section>
   </article>
 </template>
 
 <script>
-import { store } from "../../store.js";
 import axios from "axios";
 
 export default {
@@ -31,9 +23,7 @@ export default {
   },
   data() {
     return {
-      order: store.state.order,
-      dish: {},
-      amount: 1
+      dish: {}
     };
   },
   created() {
@@ -41,32 +31,19 @@ export default {
     axios.get(dishesURL).then(response => {
       this.dish = response.data;
     });
-
-    this.order.forEach(item => {
-      if (item.id == this.id) {
-        this.amount = item.amount;
-      }
-    });
-  },
-  updated() {
-    store.state.order.forEach(item => {
-      if (item.id == this.id) {
-        item.amount = this.amount;
-      }
-    });
   }
 };
 </script>
 
 <style scoped>
 .item {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
 }
 
 figure {
   width: 100%;
-  height: 200px;
+  height: 100px;
 }
 
 .info {
@@ -81,19 +58,24 @@ figure {
   margin-bottom: 5px;
 }
 
+.del-btn {
+  max-width: max-content;
+}
+
 @media only screen and (min-width: 400px) {
+  .item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+  }
+
+  figure {
+    width: 100%;
+    height: 100%;
+  }
+
   .info {
-    grid-template-columns: 1fr 100px 100px;
-  }
-
-  .amount {
-    grid-column: 3;
-  }
-
-  .del-btn {
-    grid-column: 2 / span 2;
-    justify-self: right;
-    max-width: max-content;
+    gap: 20px;
+    padding: 15px;
   }
 }
 </style>

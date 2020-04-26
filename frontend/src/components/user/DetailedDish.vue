@@ -5,7 +5,7 @@
     </figure>
     <section class="info">
       <section class="name">
-        <label>{{type}}</label>
+        <label class="type">{{type}}</label>
         <h2>{{name}}</h2>
       </section>
       <section class="price">
@@ -70,6 +70,12 @@ export default {
 .desc,
 .ingredients {
   margin-bottom: 15px;
+}
+
+.name h2 {
+  font-size: 2em;
+  font-weight: 900;
+  margin-top: 5px;
 }
 
 @media only screen and (min-width: 900px) {

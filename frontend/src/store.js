@@ -8,14 +8,12 @@ export const store = {
             highlightedText: "#ffffff",
             logo: "#ff5c42"
         },
-        order: null,
     },
-    calculateTotal() {
+    total() {
         let total = 0;
-        this.state.order.forEach(item => {
-            total += item.amount * item.price
+        JSON.parse(localStorage.getItem("order")).forEach(item => {
+            total += item.price
         });
-
         return total;
     }
 };

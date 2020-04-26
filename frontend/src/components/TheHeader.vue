@@ -1,6 +1,6 @@
 <template>
   <header class="global-header" :style="`color: ${colors.logo}`">
-    <router-link to="/">
+    <router-link :to="{name: 'Homepage'}">
       <h1 :style="`color: ${colors.logo}`">{{sitetitle}}</h1>
     </router-link>
     <Navigation :color="colors.highlighted"></Navigation>

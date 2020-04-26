@@ -1,7 +1,7 @@
 <template>
   <section class="search">
-    <input class="search-box" type="search" placeholder="Søk" v-model="term" />
-    <select v-model="selected">
+    <input class="search-box" type="search" placeholder="Søk" v-model="term" @input="search" />
+    <select v-model="selected" @change="search">
       <option :value="null" selected="selected">Alle</option>
       <option v-for="type in dishTypes" :key="type.name">{{type.name}}</option>
     </select>
@@ -26,21 +26,25 @@ export default {
       this.dishTypes = response.data;
     });
   },
-  updated() {
-    if (this.term != "" && this.selected) {
-      this.$router.push({
-        query: { dish: this.term, type: this.selected }
-      });
-    } else if (this.selected) {
-      this.$router.push({
-        query: { type: this.selected }
-      });
-    } else if (this.term) {
-      this.$router.push({
-        query: { dish: this.term }
-      });
-    } else {
-      this.$router.push({});
+  methods: {
+    search() {
+      if (this.term != "" && this.selected) {
+        this.$router.push({
+          query: { dish: this.term, type: this.selected }
+        });
+      } else if (this.selected) {
+        this.$router.push({
+          query: { type: this.selected }
+        });
+      } else if (this.term) {
+        this.$router.push({
+          query: { dish: this.term }
+        });
+      } else {
+        this.$router.push({
+          query: { dish: this.term }
+        });
+      }
     }
   }
 };

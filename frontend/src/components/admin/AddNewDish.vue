@@ -153,7 +153,6 @@ export default {
 .photo figure,
 .photo input {
   height: 100%;
-  background: rgba(0, 0, 0, 0.2);
 }
 
 .photo input {
