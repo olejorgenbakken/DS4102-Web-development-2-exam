@@ -8,7 +8,6 @@
         <h3>{{dish.name}}</h3>
         <p>{{dish.price}}kr</p>
       </section>
-      <button class="del-btn">Fjern fra ordre</button>
     </section>
   </article>
 </template>
@@ -66,6 +65,7 @@ figure {
   .item {
     display: grid;
     grid-template-columns: 100px 1fr;
+    min-height: 100px;
   }
 
   figure {

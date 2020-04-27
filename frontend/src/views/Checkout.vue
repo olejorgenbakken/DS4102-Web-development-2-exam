@@ -28,16 +28,24 @@
           <h3>{{total}}kr</h3>
         </section>
       </section>
-      <router-link v-if="loggedIn" :to="{name: 'Payment'}">
-        <button>Betal</button>
+      <router-link v-if="loggedIn  && $route.path == '/checkout/overview'" :to="{name: 'Payment'}">
+        <button>Til betaling</button>
       </router-link>
-      <Login v-else></Login>
+      <router-link
+        v-else-if="loggedIn  && $route.path != '/checkout/complete'"
+        :to="{name: 'FinishedOrder'}"
+      >
+        <button @click="complete">Bestill</button>
+      </router-link>
+      <Login v-else-if="$route.path != '/checkout/complete'"></Login>
     </section>
   </section>
 </template>
 
 <script>
 import { store } from "../store.js";
+import axios from "axios";
+
 import Login from "../components/login/LoginForm";
 
 export default {
@@ -57,6 +65,16 @@ export default {
       this.$router.push({ name: "OrderList" });
     } else {
       this.$router.push({ name: "NoItems" });
+    }
+  },
+  methods: {
+    complete() {
+      let orderURL = "https://localhost:5001/dishes";
+      let newOrder = {
+        items: localStorage.getItem("order"),
+        user: store.state.user.email
+      };
+      axios.post(orderURL, newOrder);
     }
   }
 };

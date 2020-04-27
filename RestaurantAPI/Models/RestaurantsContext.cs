@@ -10,5 +10,6 @@ namespace RestaurantAPI.Models
         public DbSet<RestaurantAPI.Models.DishType> DishType { get; set; }
         public DbSet<RestaurantAPI.Models.User> User { get; set; }
         public DbSet<RestaurantAPI.Models.Dish> Dish { get; set; }
+        public DbSet<RestaurantAPI.Models.Order> Order { get; set; }
     }
 }

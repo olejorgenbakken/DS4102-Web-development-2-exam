@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { store } from "../../store.js";
 import OrderItem from "./OrderItem";
 
 export default {
@@ -15,8 +14,7 @@ export default {
   },
   data() {
     return {
-      order: JSON.parse(localStorage.getItem("order")),
-      total: store.state.total
+      order: JSON.parse(localStorage.getItem("order"))
     };
   }
 };

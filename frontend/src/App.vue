@@ -74,7 +74,8 @@ h2 {
 p,
 textarea,
 label,
-small {
+small,
+input {
   font-family: var(--paragraph);
 }
 
@@ -125,6 +126,7 @@ input[type="number"],
 input[type="password"],
 input[type="color"],
 input[type="file"],
+input[type="month"],
 select,
 textarea,
 label.input {
@@ -132,6 +134,7 @@ label.input {
   padding: 5px 3px;
   margin-top: 3px;
   font-size: 1em;
+  height: 100%;
 }
 
 input[type="text"],
@@ -139,6 +142,7 @@ input[type="search"],
 input[type="number"],
 input[type="password"],
 input[type="color"],
+input[type="month"],
 select {
   border: none;
 }
@@ -147,6 +151,7 @@ input[type="text"],
 input[type="search"],
 input[type="number"],
 input[type="password"],
+input[type="month"],
 select,
 textarea,
 label.input {
@@ -158,6 +163,7 @@ input[type="text"],
 input[type="search"],
 input[type="number"],
 input[type="password"],
+input[type="month"],
 select {
   border-bottom: 1px solid var(--text);
 }
@@ -192,7 +198,8 @@ label.hint {
 label.type {
   font-family: var(--heading);
   font-size: 0.8em;
-  padding: 3px 10px;
+  letter-spacing: 1px;
+  padding: 4px 10px;
   border-radius: 5px;
   font-weight: 900;
   text-transform: uppercase;
@@ -235,6 +242,11 @@ figure img {
   object-fit: cover;
   left: 0;
   top: 0;
+}
+
+form section {
+  display: flex;
+  flex-direction: column;
 }
 
 .card {

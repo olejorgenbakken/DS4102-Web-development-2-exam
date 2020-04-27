@@ -54,9 +54,9 @@ const routes = [
         component: () => import(/* webpackChunkName: 'Payment' */ '../components/checkout/Payment.vue'),
       },
       {
-        path: "finished",
-        name: "OrderDone",
-        component: () => import(/* webpackChunkName: 'OrderDone' */ '../components/checkout/NoItems.vue'),
+        path: "complete",
+        name: "FinishedOrder",
+        component: () => import(/* webpackChunkName: 'FinishedOrder' */ '../components/checkout/FinishedOrder.vue'),
       },
     ]
   },
