@@ -126,13 +126,13 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: 0.2s ease-in-out;
+  transition: 0.3s ease-in-out;
   height: 50px;
   padding: 10px;
   z-index: -2;
 }
 
 .feedback.error {
-  bottom: -50px;
+  bottom: -70px;
 }
 </style>

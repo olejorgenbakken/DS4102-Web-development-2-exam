@@ -140,8 +140,8 @@ export default {
 @media only screen and (min-width: 800px) {
   .highlighted {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-areas: "info info info info info pic pic pic";
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-areas: "info info info info info pic pic pic pic";
     align-items: center;
     height: 470px;
   }

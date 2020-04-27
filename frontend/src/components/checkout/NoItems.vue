@@ -1,5 +1,5 @@
 <template>
-  <section class="empty">
+  <section class="card empty">
     <svg
       aria-hidden="true"
       focusable="false"
@@ -35,13 +35,14 @@ export default {
 
 <style scoped>
 .empty {
-  height: calc(100vh - 110px);
+  min-height: 300px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   justify-content: center;
-  padding-bottom: 40px;
+  padding: 20px 40px;
 }
 
 .empty-icon {

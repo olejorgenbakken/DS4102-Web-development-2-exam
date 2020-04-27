@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     close() {
-      this.$router.push({ name: "Homepage" });
+      this.$router.go(-1);
     }
   }
 };

@@ -32,7 +32,7 @@ export default {
   align-items: center;
   position: relative;
   z-index: 3;
-  height: 500px;
+  padding: 50px 0;
 }
 
 .content {

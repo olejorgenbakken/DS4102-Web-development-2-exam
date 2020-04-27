@@ -142,6 +142,6 @@ export default {
 }
 
 .feedback.error {
-  bottom: -50px;
+  bottom: -70px;
 }
 </style>

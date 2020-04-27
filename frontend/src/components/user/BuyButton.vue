@@ -8,6 +8,9 @@
 </template>
 
 <script>
+import { store } from "../../store.js";
+import axios from "axios";
+
 export default {
   name: "BuyButton",
   props: {
@@ -23,13 +26,26 @@ export default {
   },
   methods: {
     addToCart() {
-      if (localStorage.getItem("order") == null) {
-        let order = [{ id: this.id }];
-        localStorage.setItem("order", JSON.stringify(order));
+      let order;
+      if (localStorage.getItem("order")) {
+        order = JSON.parse(localStorage.getItem("order"));
+        let dishesURL = `https://localhost:5001/dishes/${this.id}`;
+        axios.get(dishesURL).then(response => {
+          order.push({ id: this.id, price: response.data.price });
+          localStorage.setItem("order", JSON.stringify(order));
+        });
+        let total = 0;
+        order.forEach(item => {
+          total += item.price;
+        });
+        store.state.total = total;
       } else {
-        let order = JSON.parse(localStorage.getItem("order"));
-        order.push({ id: this.id });
-        localStorage.setItem("order", JSON.stringify(order));
+        let dishesURL = `https://localhost:5001/dishes/${this.id}`;
+        axios.get(dishesURL).then(response => {
+          order = [{ id: this.id, price: response.data.price }];
+          localStorage.setItem("order", JSON.stringify(order));
+          store.state.total = response.data.price;
+        });
       }
     }
   }

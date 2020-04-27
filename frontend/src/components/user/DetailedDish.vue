@@ -5,7 +5,7 @@
     </figure>
     <section class="info">
       <section class="name">
-        <label>{{type}}</label>
+        <label class="type">{{type}}</label>
         <h2>{{name}}</h2>
       </section>
       <section class="price">
@@ -48,7 +48,6 @@ export default {
 .detailed {
   display: flex;
   flex-direction: column;
-  height: 80vh;
 }
 
 .photo {
@@ -62,6 +61,7 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 20px;
 }
 
@@ -72,7 +72,16 @@ export default {
   margin-bottom: 15px;
 }
 
+.name h2 {
+  font-size: 2em;
+  font-weight: 900;
+  margin-top: 5px;
+}
+
 @media only screen and (min-width: 900px) {
+  .detailed {
+    height: 80vh;
+  }
   .photo {
     width: 500px;
     height: 100%;

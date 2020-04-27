@@ -4,9 +4,10 @@
       <img :src="`https:/localhost:5001/images/${dish.photo}`" />
     </figure>
     <section class="info">
-      <h3>{{dish.name}}</h3>
-      <p>{{dish.price}}kr</p>
-      <button class="del">Fjern fra ordre</button>
+      <section class="info-text">
+        <h3>{{dish.name}}</h3>
+        <p>{{dish.price}}kr</p>
+      </section>
     </section>
   </article>
 </template>
@@ -33,18 +34,48 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .item {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
-.info {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 figure {
   width: 100%;
-  height: 200px;
+  height: 100px;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.info h3 {
+  margin-bottom: 5px;
+}
+
+.del-btn {
+  max-width: max-content;
+}
+
+@media only screen and (min-width: 400px) {
+  .item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    min-height: 100px;
+  }
+
+  figure {
+    width: 100%;
+    height: 100%;
+  }
+
+  .info {
+    gap: 20px;
+    padding: 15px;
+  }
 }
 </style>

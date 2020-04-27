@@ -1,13 +1,12 @@
 <template>
   <main>
-    <TheHeader :color="settings.color" :text="settings.text" :sitetitle="sitetitle"></TheHeader>
+    <TheHeader :sitetitle="sitetitle"></TheHeader>
     <router-view></router-view>
-    <TheFooter :text="settings.color" :color="settings.text" :sitetitle="sitetitle"></TheFooter>
+    <TheFooter :sitetitle="sitetitle"></TheFooter>
   </main>
 </template>
 
 <script>
-import axios from "axios";
 import TheHeader from "./components/TheHeader";
 import TheFooter from "./components/TheFooter";
 
@@ -20,15 +19,8 @@ export default {
   data() {
     return {
       settings: {},
-      sitetitle: "Oslo Burger"
+      sitetitle: "Oslo Sushi"
     };
-  },
-  created() {
-    const settings = `https://localhost:5001/settings/1`;
-    axios.get(settings).then(response => {
-      this.color = response.data.color;
-      this.text = response.data.text;
-    });
   }
 };
 </script>
@@ -38,6 +30,11 @@ export default {
 :root {
   --heading: "Montserrat", sans-serif;
   --paragraph: "Roboto", sans-serif;
+  --background: #ffffff;
+  --card-background: #f7f7f7;
+  --text: #000000;
+  --links: rgb(0, 0, 218);
+  --footer: #f0f0f0;
 }
 
 * {
@@ -48,8 +45,8 @@ export default {
 }
 
 body {
-  background-color: rgb(29, 29, 31);
-  color: white;
+  background-color: var(--background);
+  color: var(--text);
 }
 
 h1,
@@ -62,7 +59,7 @@ a {
 }
 
 a {
-  color: rgb(0, 162, 255);
+  color: var(--links);
   text-decoration: none;
 }
 
@@ -77,7 +74,8 @@ h2 {
 p,
 textarea,
 label,
-small {
+small,
+input {
   font-family: var(--paragraph);
 }
 
@@ -87,8 +85,8 @@ small {
 
 img {
   max-width: 100%;
-  background: black;
-  color: white;
+  background: var(--footer);
+  color: var(--text);
 }
 
 a,
@@ -104,10 +102,22 @@ button {
   border: none;
   border-radius: 0;
   outline: none;
-  background: white;
-  color: black;
+  background-color: var(--text);
+  color: var(--background);
   font-weight: 700;
   font-family: var(--heading);
+  width: 100%;
+}
+
+.del-btn {
+  background: red;
+  color: white;
+}
+
+.del-text {
+  color: rgb(250, 58, 58);
+  font-weight: 700;
+  cursor: pointer;
 }
 
 input[type="text"],
@@ -116,6 +126,7 @@ input[type="number"],
 input[type="password"],
 input[type="color"],
 input[type="file"],
+input[type="month"],
 select,
 textarea,
 label.input {
@@ -123,6 +134,7 @@ label.input {
   padding: 5px 3px;
   margin-top: 3px;
   font-size: 1em;
+  height: 100%;
 }
 
 input[type="text"],
@@ -130,6 +142,7 @@ input[type="search"],
 input[type="number"],
 input[type="password"],
 input[type="color"],
+input[type="month"],
 select {
   border: none;
 }
@@ -138,19 +151,21 @@ input[type="text"],
 input[type="search"],
 input[type="number"],
 input[type="password"],
+input[type="month"],
 select,
 textarea,
 label.input {
-  background: rgba(255, 255, 255, 1);
-  color: black;
+  background-color: var(--background);
+  color: var(--text);
 }
 
 input[type="text"],
 input[type="search"],
 input[type="number"],
 input[type="password"],
+input[type="month"],
 select {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--text);
 }
 
 input[type="file"],
@@ -171,6 +186,7 @@ select {
 }
 
 label {
+  font-family: var(--heading);
   font-size: 0.9em;
 }
 
@@ -179,13 +195,25 @@ label.hint {
   font-size: 0.8em;
 }
 
+label.type {
+  font-family: var(--heading);
+  font-size: 0.8em;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-weight: 900;
+  text-transform: uppercase;
+  background: var(--text);
+  color: var(--background);
+}
+
 textarea {
   min-height: 50px;
   resize: vertical;
 }
 
 select[multiple] {
-  border: 1px solid black;
+  border: 1px solid var(--text);
   padding: 0;
   height: 100px;
   overflow: auto;
@@ -193,7 +221,13 @@ select[multiple] {
 
 option {
   padding: 5px 2px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background: var(--background);
+  border-bottom: 1px solid var(--footer);
+  transition: 0.3s ease-in-out;
+}
+
+option:hover {
+  background: var(--footer);
 }
 
 figure {
@@ -210,11 +244,16 @@ figure img {
   top: 0;
 }
 
+form section {
+  display: flex;
+  flex-direction: column;
+}
+
 .card {
   position: relative;
   z-index: 1;
-  transition: 0.2s ease-in-out;
-  color: white;
+  transition: 0.1s ease-in-out;
+  color: var(--text);
 }
 
 .card::before {
@@ -236,52 +275,31 @@ figure img {
   right: 0;
   bottom: 0;
   z-index: -1;
-  background: rgb(65, 61, 61);
+  background: var(--card-background);
 }
 
-.card:hover {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.1);
-}
-
+.card:hover,
 .shadow {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.1);
 }
 
 footer {
-  background: rgb(15, 15, 15);
+  background: var(--footer);
+  color: var(--text);
 }
 
-@media screen and (prefers-color-scheme: light) {
-  body {
-    background-color: white;
-    color: black;
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --background: #202020;
+    --card-background: #111111;
+    --text: #f5f5f5;
+    --links: rgb(85, 139, 255);
+    --footer: #141414;
   }
 
-  a {
-    color: rgb(0, 68, 255);
-  }
-
-  img {
-    max-width: 100%;
-    background: #bbbbbb;
-    color: black;
-  }
-
-  button {
-    background: black;
-    color: white;
-  }
-
-  .card {
-    color: black;
-  }
-
-  .card::after {
-    background: #f0f0f0;
-  }
-
-  footer {
-    background: rgb(241, 241, 241);
+  .card:hover,
+  .shadow {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 1px 8px rgba(0, 0, 0, 0.75);
   }
 }
 </style>

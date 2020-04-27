@@ -1,18 +1,18 @@
 <template>
   <nav class="global-navigation">
     <section class="nav-content" v-if="loggedIn && !isAdmin">
-      <router-link :to="{name: 'Checkout'}">Kasse</router-link>
+      <router-link :to="{name: 'Checkout'}">Handlekurv</router-link>
       <p class="last" @click="logout">Logg ut</p>
     </section>
 
     <section class="nav-content" v-else-if="loggedIn && isAdmin">
-      <router-link :to="{name: 'Checkout'}">Kasse</router-link>
+      <router-link :to="{name: 'Checkout'}">Handlekurv</router-link>
       <router-link :to="{name: 'Admin'}">Dashboard</router-link>
       <p class="last" @click="logout">Logg ut</p>
     </section>
 
     <section class="nav-content" v-else>
-      <router-link :to="{name: 'Checkout'}">Kasse</router-link>
+      <router-link :to="{name: 'Checkout'}">Handlekurv</router-link>
       <router-link class="last" :to="{name: 'Login'}">Logg inn</router-link>
     </section>
   </nav>
