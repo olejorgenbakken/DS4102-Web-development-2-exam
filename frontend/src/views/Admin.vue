@@ -61,6 +61,8 @@ export default {
           });
         }
       }
+    } else {
+      this.$router.push({ name: "Homepage" });
     }
   }
 };

@@ -23,7 +23,7 @@
     </section>
 
     <section class="form-input">
-      <button class="submit-btn" @click="login">Lag bruker</button>
+      <button class="submit-btn" @click="createUser">Lag bruker</button>
     </section>
 
     <LoginFeedback :msg="errorMsg"></LoginFeedback>
@@ -50,7 +50,7 @@ export default {
     };
   },
   methods: {
-    login(e) {
+    createUser(e) {
       e.preventDefault();
       let userDb = `https://localhost:5001/users/`;
       let userDbCheck = `https://localhost:5001/users/${this.email}`;
@@ -75,13 +75,16 @@ export default {
             lastname: this.lastname
           };
           axios.post(userDb, newUser).then(() => {
-            let name = "login";
-            let expires;
-            let date = new Date();
-            date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
-            expires = "; expires=" + date.toGMTString();
-            document.cookie = name + "=" + response.data.id + expires;
-            this.$router.push({ name: "Homepage" });
+            let getUserID = `https://localhost:5001/users/${this.email}`;
+            axios.get(getUserID).then(response => {
+              let name = "login";
+              let expires;
+              let date = new Date();
+              date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
+              expires = "; expires=" + date.toGMTString();
+              document.cookie = name + "=" + response.data.id + expires;
+              this.$router.push({ name: "Homepage" });
+            });
           });
         }
       });
