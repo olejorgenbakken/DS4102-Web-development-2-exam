@@ -1,17 +1,23 @@
 <template>
   <section class="color-pickers">
-    <ColorPicker v-model="colors.highlighted" :text="'Fremhevet farge'" :value="colors.highlighted"></ColorPicker>
+    <ColorPicker v-model="colors.logo" class="color" :text="'Logo'" :value="colors.logo"></ColorPicker>
+    <ColorPicker
+      v-model="colors.highlighted"
+      class="color"
+      :text="'Fremhevet rett'"
+      :value="colors.highlighted"
+    ></ColorPicker>
     <ColorPicker
       v-model="colors.highlightedText"
+      class="color"
       :text="'Fremhevet tekst'"
       :value="colors.highlightedText"
     ></ColorPicker>
-    <ColorPicker v-model="colors.logo" :text="'Logo'" :value="colors.logo"></ColorPicker>
   </section>
 </template>
 
 <script>
-import { store } from "../../../store.js";
+import axios from "axios";
 import ColorPicker from "./ColorPickerItem";
 
 export default {
@@ -21,10 +27,19 @@ export default {
   },
   data() {
     return {
-      colors: store.state.colors
+      colors: null
     };
   },
-  updated() {}
+  created() {
+    let settingsURL = `https://localhost:5001/settings/1`;
+    axios.get(settingsURL).then(response => {
+      this.colors = response.data;
+    });
+  },
+  updated() {
+    const settingsURL = `https://localhost:5001/settings`;
+    axios.put(settingsURL, this.colors);
+  }
 };
 </script>
 
@@ -35,9 +50,15 @@ export default {
   gap: 10px;
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 400px) {
   .color-pickers {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .color-pickers {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 </style>

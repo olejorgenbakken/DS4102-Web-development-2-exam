@@ -3,12 +3,12 @@
     <router-link :to="{name: 'Homepage'}">
       <h1 :style="`color: ${colors.logo}`">{{sitetitle}}</h1>
     </router-link>
-    <Navigation :color="colors.highlighted"></Navigation>
+    <Navigation :color="colors.logo"></Navigation>
   </header>
 </template>
 
 <script>
-import { store } from "../store.js";
+import axios from "axios";
 import Navigation from "./Navigation.vue";
 
 export default {
@@ -16,13 +16,18 @@ export default {
   props: {
     sitetitle: String
   },
+  data() {
+    return {
+      colors: {}
+    };
+  },
   components: {
     Navigation
   },
-  data() {
-    return {
-      colors: store.state.colors
-    };
+  created() {
+    axios.get("https://localhost:5001/settings/1").then(response => {
+      this.colors = response.data;
+    });
   }
 };
 </script>

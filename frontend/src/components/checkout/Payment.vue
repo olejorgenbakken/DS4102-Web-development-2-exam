@@ -46,6 +46,10 @@
         <input type="number" autocomplete="cc-csc" />
       </section>
     </section>
+
+    <router-link :to="{name: 'FinishedOrder'}">
+      <button>Betal</button>
+    </router-link>
   </form>
 </template>
 

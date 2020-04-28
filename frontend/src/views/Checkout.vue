@@ -4,7 +4,7 @@
       <h2>Handlekurv</h2>
     </header>
     <router-view></router-view>
-    <section class="card order-total">
+    <section class="card order-total" v-if="total">
       <h2>Kasse</h2>
       <section class="info">
         <aside class="info-icon">
@@ -28,54 +28,48 @@
           <h3>{{total}}kr</h3>
         </section>
       </section>
-      <router-link v-if="loggedIn  && $route.path == '/checkout/overview'" :to="{name: 'Payment'}">
-        <button>Til betaling</button>
-      </router-link>
-      <router-link
-        v-else-if="loggedIn  && $route.path != '/checkout/complete'"
-        :to="{name: 'FinishedOrder'}"
-      >
-        <button @click="complete">Bestill</button>
-      </router-link>
-      <Login v-else-if="$route.path != '/checkout/complete'"></Login>
+    </section>
+    <section v-if="!loggedIn" class="login-details">
+      <LoginForm></LoginForm>
+      <CreateUser></CreateUser>
     </section>
   </section>
 </template>
 
 <script>
 import { store } from "../store.js";
-import axios from "axios";
 
-import Login from "../components/login/LoginForm";
+import LoginForm from "../components/login/LoginForm";
+import CreateUser from "../components/login/CreateUserForm";
 
 export default {
   name: "Checkout",
   components: {
-    Login
+    LoginForm,
+    CreateUser
   },
   data() {
     return {
-      loggedIn: store.state.loggedIn,
-      order: JSON.parse(localStorage.getItem("order")),
+      loggedIn: false,
       total: store.total()
     };
   },
   created() {
-    if (this.order) {
-      this.$router.push({ name: "OrderList" });
-    } else {
+    if (!localStorage.getItem("order")) {
       this.$router.push({ name: "NoItems" });
+    } else {
+      this.$router.push({ name: "Overview" });
     }
-  },
-  methods: {
-    complete() {
-      let orderURL = "https://localhost:5001/orders";
-      let newOrder = {
-        items: localStorage.getItem("order"),
-        user: store.state.user.email,
-        total: store.total()
-      };
-      axios.post(orderURL, newOrder);
+    if (document.cookie) {
+      let cookies = document.cookie.split(";");
+      if (cookies.length > 1) {
+        return "";
+      } else {
+        let loginCookie = cookies[0].split("=");
+        if (loginCookie[0] == "login") {
+          this.loggedIn = true;
+        }
+      }
     }
   }
 };
@@ -128,14 +122,38 @@ export default {
   font-weight: 700;
 }
 
-@media screen and (min-width: 800px) {
+.login-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media screen and (min-width: 540px) {
   .checkout {
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 250px;
+    grid-template-areas:
+      "header header"
+      "order checkout"
+      "order buttons-or-buttons";
     align-items: flex-start;
   }
 
   .checkout-header {
-    grid-column: 1 / span 2;
+    grid-area: header;
+  }
+
+  .order-total {
+    grid-area: checkout;
+  }
+  .checkout-buttons,
+  .login-details {
+    grid-area: buttons-or-buttons;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  .checkout {
+    grid-template-columns: 1fr 400px;
   }
 }
 </style>

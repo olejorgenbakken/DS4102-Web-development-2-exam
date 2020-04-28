@@ -1,5 +1,8 @@
 <template>
   <form class="form">
+    <header>
+      <h2>Logg inn</h2>
+    </header>
     <section class="form-input">
       <label>E-post</label>
       <input autocomplete="email" type="text" v-model="email" />
@@ -12,24 +15,21 @@
     <section class="form-input">
       <button class="submit-btn" @click="login">Logg inn</button>
     </section>
-    <section class="form-input create-user">
-      <label>Har du ikke bruker?</label>
-      <router-link :to="{ name: 'CreateUser'}">Lag bruker</router-link>
-    </section>
 
-    <section class="feedback" @change="showError">
-      <p>{{errorMsg}}</p>
-    </section>
+    <LoginFeedback :msg="errorMsg"></LoginFeedback>
   </form>
 </template>
 
 <script>
-import { store } from "../../store.js";
-
 import axios from "axios";
+
+import LoginFeedback from "./LoginFeedback";
 
 export default {
   name: "LoginForm",
+  components: {
+    LoginFeedback
+  },
   data() {
     return {
       email: "",
@@ -38,16 +38,6 @@ export default {
     };
   },
   methods: {
-    showError() {
-      let form = document.querySelector(".content");
-      let errorDiv = document.querySelector(".feedback");
-      form.classList.add("error");
-      errorDiv.classList.add("error");
-      setTimeout(() => {
-        form.classList.remove("error");
-        errorDiv.classList.remove("error");
-      }, 7000);
-    },
     login(e) {
       e.preventDefault();
 
@@ -60,28 +50,23 @@ export default {
               response.data.email == this.email &&
               response.data.password == this.password
             ) {
-              console.log(true);
-              store.state.loggedIn = true;
-              store.state.isAdmin = response.data.admin;
-              store.state.user = {
-                email: response.data.email,
-                firstName: response.data.firstName,
-                lastName: response.data.lastName
-              };
+              let name = "login";
+              let expires;
+              let date = new Date();
+              date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
+              expires = "; expires=" + date.toGMTString();
+              document.cookie = name + "=" + response.data.id + expires;
               this.$router.push({ name: "Homepage" });
             } else {
               this.errorMsg = "Feil brukernavn eller passord";
-              this.showError();
             }
           } else if (response.status == 204) {
             this.errorMsg = "Bruker finnes ikke";
-            this.showError();
           }
         })
         .catch(error => {
           if (error.response.status == 404) {
             this.errorMsg = "Ingen brukernavn funnet";
-            this.showError();
           }
         });
     }
@@ -95,7 +80,9 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
+  padding: 20px;
   position: relative;
+  background: var(--card-background);
 }
 
 .form-input {
@@ -113,26 +100,5 @@ export default {
 .create-user a::after {
   content: ">";
   margin-left: 5px;
-}
-
-.feedback {
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  width: 100%;
-  background: rgb(180, 0, 0);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: 0.3s ease-in-out;
-  height: 50px;
-  padding: 10px;
-  z-index: -2;
-}
-
-.feedback.error {
-  bottom: -70px;
 }
 </style>

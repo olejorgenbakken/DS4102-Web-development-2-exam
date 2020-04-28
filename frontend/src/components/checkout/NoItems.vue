@@ -22,13 +22,19 @@
 </template>
 
 <script>
-import { store } from "../../store.js";
+import axios from "axios";
 export default {
   name: "NoItems",
   data() {
     return {
-      colors: store.state.colors
+      colors: null
     };
+  },
+  created() {
+    let settingsURL = `https://localhost:5001/settings/1`;
+    axios.get(settingsURL).then(response => {
+      this.colors = response.data;
+    });
   }
 };
 </script>

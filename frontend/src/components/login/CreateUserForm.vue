@@ -1,5 +1,8 @@
 <template>
   <form class="form">
+    <header>
+      <h2>Lag ny bruker</h2>
+    </header>
     <section class="form-input">
       <label>E-post</label>
       <input autocomplete="email" name="username" type="text" v-model="email" />
@@ -22,23 +25,21 @@
     <section class="form-input">
       <button class="submit-btn" @click="login">Lag bruker</button>
     </section>
-    <section class="form-input create-user">
-      <label>Har du allerede bruker?</label>
-      <router-link :to="{ name: 'Login'}">Logg inn</router-link>
-    </section>
 
-    <section class="feedback" @change="showError">
-      <p>{{errorMsg}}</p>
-    </section>
+    <LoginFeedback :msg="errorMsg"></LoginFeedback>
   </form>
 </template>
 
 <script>
-import { store } from "../../store";
 import axios from "axios";
+
+import LoginFeedback from "./LoginFeedback";
 
 export default {
   name: "CreateUser",
+  components: {
+    LoginFeedback
+  },
   data() {
     return {
       email: null,
@@ -49,16 +50,6 @@ export default {
     };
   },
   methods: {
-    showError() {
-      let form = document.querySelector(".content");
-      let errorDiv = document.querySelector(".feedback");
-      form.classList.add("error");
-      errorDiv.classList.add("error");
-      setTimeout(() => {
-        form.classList.remove("error");
-        errorDiv.classList.remove("error");
-      }, 7000);
-    },
     login(e) {
       e.preventDefault();
       let userDb = `https://localhost:5001/users/`;
@@ -67,7 +58,6 @@ export default {
         if (response.status == 200) {
           this.errorMsg =
             "En bruker med dette brukernavnet eksisterer allerede";
-          this.showError();
         } else if (
           !this.email ||
           !this.password ||
@@ -75,10 +65,8 @@ export default {
           !this.lastname
         ) {
           this.errorMsg = "Vennligst fyll ut alle feltene";
-          this.showError();
         } else if (response.status == 204 && this.password.length < 8) {
           this.errorMsg = "Vennligst velg et lengre passord";
-          this.showError();
         } else if (response.status == 204 && this.password.length > 8) {
           let newUser = {
             email: this.email,
@@ -87,8 +75,12 @@ export default {
             lastname: this.lastname
           };
           axios.post(userDb, newUser).then(() => {
-            store.state.loggedIn = true;
-            store.state.user = newUser;
+            let name = "login";
+            let expires;
+            let date = new Date();
+            date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
+            expires = "; expires=" + date.toGMTString();
+            document.cookie = name + "=" + response.data.id + expires;
             this.$router.push({ name: "Homepage" });
           });
         }
@@ -105,6 +97,8 @@ export default {
   grid-template-columns: 1fr;
   gap: 20px;
   position: relative;
+  padding: 20px;
+  background: var(--card-background);
 }
 
 .form-input {
@@ -122,26 +116,5 @@ export default {
 .create-user a::after {
   content: ">";
   margin-left: 5px;
-}
-
-.feedback {
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  width: 100%;
-  background: rgb(180, 0, 0);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: 0.1s ease-in-out;
-  height: 50px;
-  padding: 10px;
-  z-index: -2;
-}
-
-.feedback.error {
-  bottom: -70px;
 }
 </style>
