@@ -56,6 +56,13 @@ namespace RestaurantAPI.Controllers
             return thisOrder;
         }
 
+        [HttpGet("user/{user}")]
+        public async Task<Order> Get(string user)
+        {
+            Order thisOrder = await _context.Order.FirstOrDefaultAsync(order => order.User == user);
+            return thisOrder;
+        }
+
         [HttpDelete("{id}")]
         public async Task<Order> Delete(int id)
         {

@@ -21,7 +21,8 @@ export default {
       settings: {},
       sitetitle: "Oslo Sushi"
     };
-  }
+  },
+  created() {}
 };
 </script>
 

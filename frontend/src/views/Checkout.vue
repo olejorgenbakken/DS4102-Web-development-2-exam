@@ -69,10 +69,11 @@ export default {
   },
   methods: {
     complete() {
-      let orderURL = "https://localhost:5001/dishes";
+      let orderURL = "https://localhost:5001/orders";
       let newOrder = {
         items: localStorage.getItem("order"),
-        user: store.state.user.email
+        user: store.state.user.email,
+        total: store.total()
       };
       axios.post(orderURL, newOrder);
     }

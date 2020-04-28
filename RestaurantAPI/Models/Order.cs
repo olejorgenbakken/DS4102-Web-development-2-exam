@@ -8,6 +8,7 @@ namespace RestaurantAPI.Models
         [Key]
         public int Id { get; set; }
         public string Items { get; set; }
+        public int Total { get; set; }
         public string User { get; set; }
     }
 
