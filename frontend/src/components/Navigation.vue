@@ -1,11 +1,13 @@
 <template>
   <nav class="global-navigation">
     <section class="nav-content" v-if="loggedIn && !isAdmin">
+      <router-link :to="{name: 'Account'}">Konto</router-link>
       <router-link :to="{name: 'Checkout'}">Handlekurv</router-link>
       <p class="last" @click="logout">Logg ut</p>
     </section>
 
     <section class="nav-content" v-else-if="loggedIn && isAdmin">
+      <router-link :to="{name: 'Account'}">Konto</router-link>
       <router-link :to="{name: 'Checkout'}">Handlekurv</router-link>
       <router-link :to="{name: 'Admin'}">Dashboard</router-link>
       <p class="last" @click="logout">Logg ut</p>
@@ -19,26 +21,38 @@
 </template>
 
 <script>
-import { store } from "../store.js";
+import axios from "axios";
 
 export default {
   name: "Navigation",
   data() {
     return {
-      loggedIn: store.state.loggedIn,
-      isAdmin: store.state.isAdmin
+      loggedIn: null,
+      isAdmin: null
     };
   },
-  watch: {
-    $route() {
-      this.loggedIn = store.state.loggedIn;
-      this.isAdmin = store.state.isAdmin;
+  created() {
+    if (document.cookie) {
+      let cookies = document.cookie.split(";");
+      if (cookies.length > 1) {
+        return "";
+      } else {
+        let loginCookie = cookies[0].split("=");
+        if (loginCookie[0] == "login") {
+          let userID = loginCookie[1];
+          let userDB = `https://localhost:5001/users/id/${userID}`;
+          axios.get(userDB).then(response => {
+            console.log(response);
+            this.loggedIn = true;
+            this.isAdmin = response.data.admin;
+          });
+        }
+      }
     }
   },
   methods: {
     logout() {
-      store.state.loggedIn = false;
-      this.loggedIn = store.state.loggedIn;
+      document.cookie = "login" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
       this.$router.push({ name: "Homepage" });
     }
   }

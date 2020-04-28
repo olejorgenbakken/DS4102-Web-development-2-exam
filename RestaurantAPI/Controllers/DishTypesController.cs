@@ -56,6 +56,13 @@ namespace RestaurantAPI.Controllers
             return thisType;
         }
 
+        [HttpGet("name/{name}")]
+        public async Task<DishType> Get(string name)
+        {
+            DishType thisType = await _context.DishType.FirstOrDefaultAsync(type => type.Name == name);
+            return thisType;
+        }
+
         [HttpDelete("{name}")]
         public async Task<DishType> Delete(string name)
         {

@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import { store } from "../../store.js";
 import axios from "axios";
 import BuyButton from "./BuyButton";
 
@@ -48,10 +47,14 @@ export default {
     return {
       dish: {},
       settings: {},
-      colors: store.state.colors
+      colors: {}
     };
   },
   created() {
+    axios.get("https://localhost:5001/settings/1").then(response => {
+      this.colors = response.data;
+    });
+
     let highlightedDish = "https://localhost:5001/dishes/highlighted/true";
     axios.get(highlightedDish).then(response => {
       if (response.status != 200) {

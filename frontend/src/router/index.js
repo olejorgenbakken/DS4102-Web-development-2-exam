@@ -10,23 +10,16 @@ const routes = [
     component: Homepage,
     name: "Homepage",
     query: "?=dishTerm?=dishType",
-    children: [
-      {
-        path: "login",
-        component: () => import(/* webpackChunkName: 'Login' */ '../views/Login'),
-        children: [
-          {
-            name: "Login",
-            path: "/",
-            component: () => import(/* webpackChunkName: 'ExistingUser' */ '../components/login/LoginForm')
-          }, {
-            name: "CreateUser",
-            path: "new",
-            component: () => import(/* webpackChunkName: 'NewUser' */ '../components/login/CreateUserForm')
-          }
-        ]
-      }
-    ]
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import(/* webpackChunkName: 'Login' */ '../views/Login'),
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: () => import(/* webpackChunkName: 'Account' */ '../views/Account.vue')
   },
   {
     path: "/dish/:id",
@@ -45,7 +38,7 @@ const routes = [
       },
       {
         path: "overview",
-        name: "OrderList",
+        name: "Overview",
         component: () => import(/* webpackChunkName: 'OrderList' */ '../components/checkout/OrderList.vue'),
       },
       {

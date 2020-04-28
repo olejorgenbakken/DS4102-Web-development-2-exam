@@ -6,6 +6,8 @@ using RestaurantAPI.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using System.Linq;
+using System;
 
 namespace RestaurantAPI.Controllers
 {
@@ -29,6 +31,7 @@ namespace RestaurantAPI.Controllers
         [HttpPost]
         public async Task<Order> Post(Order newOrder)
         {
+            newOrder.Date = DateTime.Now.ToString();
             _context.Order.Add(newOrder);
             await _context.SaveChangesAsync();
             return newOrder;
@@ -49,11 +52,17 @@ namespace RestaurantAPI.Controllers
             return updateOrder;
         }
 
-        [HttpGet("{id}")]
-        public async Task<Order> Get(int id)
+        [HttpGet("user/{email}")]
+        public async Task<IEnumerable<Order>> Get(string email)
         {
-            Order thisOrder = await _context.Order.FirstOrDefaultAsync(order => order.Id == id);
-            return thisOrder;
+            List<Order> destinationList = await _context.Order
+                .Where(
+                    order => order.UserEmail.ToLower()
+                    .Contains(email.ToLower())
+                )
+                .ToListAsync();
+
+            return destinationList;
         }
 
         [HttpDelete("{id}")]

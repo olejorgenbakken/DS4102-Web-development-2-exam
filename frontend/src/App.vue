@@ -18,7 +18,6 @@ export default {
   },
   data() {
     return {
-      settings: {},
       sitetitle: "Oslo Sushi"
     };
   }
@@ -134,7 +133,6 @@ label.input {
   padding: 5px 3px;
   margin-top: 3px;
   font-size: 1em;
-  height: 100%;
 }
 
 input[type="text"],

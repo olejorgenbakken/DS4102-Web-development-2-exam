@@ -34,6 +34,14 @@ namespace RestaurantAPI.Controllers
             return newIngredient;
         }
 
+        [HttpPut]
+        public async Task<Ingredient> Put(Ingredient updateIngredient)
+        {
+            _context.Update(updateIngredient);
+            await _context.SaveChangesAsync();
+            return updateIngredient;
+        }
+
         [HttpGet]
         public async Task<IEnumerable<Ingredient>> Get()
         {
@@ -41,7 +49,7 @@ namespace RestaurantAPI.Controllers
             return ingredientList;
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("name/{name}")]
         public async Task<Ingredient> Get(string name)
         {
             Ingredient thisIngredient = await _context.Ingredient.FirstOrDefaultAsync(ingredient => ingredient.Name == name);

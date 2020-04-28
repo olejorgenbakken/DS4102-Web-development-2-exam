@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import { store } from "../store.js";
+import axios from "axios";
+
 export default {
   name: "Footer",
   props: {
@@ -19,8 +20,13 @@ export default {
   },
   data() {
     return {
-      colors: store.state.colors
+      colors: {}
     };
+  },
+  created() {
+    axios.get("https://localhost:5001/settings/1").then(response => {
+      this.colors = response.data;
+    });
   }
 };
 </script>

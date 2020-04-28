@@ -46,12 +46,47 @@
         <input type="number" autocomplete="cc-csc" />
       </section>
     </section>
+
+    <button @click="complete">Betal</button>
   </form>
 </template>
 
 <script>
+import axios from "axios";
+import { store } from "../../store.js";
+
 export default {
-  name: "Payment"
+  name: "Payment",
+  methods: {
+    complete(e) {
+      e.preventDefault();
+      if (document.cookie) {
+        let cookies = document.cookie.split(";");
+        if (cookies.length > 1) {
+          return "";
+        } else {
+          let loginCookie = cookies[0].split("=");
+          if (loginCookie[0] == "login") {
+            let userID = loginCookie[1];
+            let userDB = `https://localhost:5001/users/id/${userID}`;
+            axios.get(userDB).then(response => {
+              let order = {
+                items: JSON.stringify(localStorage.getItem("order")),
+                total: store.total(),
+                useremail: response.data.email
+              };
+              console.log(order);
+              let orderDB = `https://localhost:5001/orders`;
+              axios.post(orderDB, order).then(() => {
+                localStorage.removeItem("order");
+                this.$router.push({ name: "FinishedOrder" });
+              });
+            });
+          }
+        }
+      }
+    }
+  }
 };
 </script>
 

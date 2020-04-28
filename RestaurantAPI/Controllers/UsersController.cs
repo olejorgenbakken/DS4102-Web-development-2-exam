@@ -12,8 +12,6 @@ namespace RestaurantAPI.Controllers
 
     public class UsersController : ControllerBase
     {
-
-
         private readonly RestaurantsContext _context;
 
         public UsersController(RestaurantsContext context)

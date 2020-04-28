@@ -34,11 +34,6 @@ export default {
           order.push({ id: this.id, price: response.data.price });
           localStorage.setItem("order", JSON.stringify(order));
         });
-        let total = 0;
-        order.forEach(item => {
-          total += item.price;
-        });
-        store.state.total = total;
       } else {
         let dishesURL = `https://localhost:5001/dishes/${this.id}`;
         axios.get(dishesURL).then(response => {

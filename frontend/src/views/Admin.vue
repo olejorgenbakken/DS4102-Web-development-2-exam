@@ -2,6 +2,8 @@
   <section class="admin">
     <Greeting class="name" :firstName="user.firstName" :lastName="user.lastName"></Greeting>
     <Settings class="settings"></Settings>
+    <Ingredients class="ingredients"></Ingredients>
+    <DishTypesAdmin class="dish-types"></DishTypesAdmin>
     <AddNewDish class="add-dish"></AddNewDish>
     <section class="menu">
       <header class="menu-header">
@@ -18,9 +20,11 @@
 </template>
 
 <script>
-import { store } from "../store.js";
-import Settings from "../components/admin/Settings.vue";
+import axios from "axios";
 import Greeting from "../components/admin/Greeting.vue";
+import Settings from "../components/admin/Settings.vue";
+import Ingredients from "../components/admin/Ingredients.vue";
+import DishTypesAdmin from "../components/admin/DishTypes.vue";
 import Search from "../components/Search";
 import DishList from "../components/DishList";
 import AddNewDish from "../components/admin/AddNewDish.vue";
@@ -30,25 +34,35 @@ export default {
   components: {
     Greeting,
     Settings,
+    Ingredients,
+    DishTypesAdmin,
     Search,
     DishList,
     AddNewDish
   },
   data() {
     return {
-      loggedIn: store.state.loggedIn,
-      isAdmin: store.state.isAdmin,
-      user: store.state.user,
+      user: null,
       dishes: []
     };
   },
   created() {
-    if (this.loggedIn) {
-      if (!this.isAdmin) {
-        this.$router.push({ name: "Homepage" });
+    if (document.cookie) {
+      let cookies = document.cookie.split(";");
+      if (cookies.length > 1) {
+        return "";
+      } else {
+        let loginCookie = cookies[0].split("=");
+        if (loginCookie[0] == "login") {
+          let userID = loginCookie[1];
+          let userDB = `https://localhost:5001/users/id/${userID}`;
+          axios.get(userDB).then(response => {
+            this.user = response.data;
+          });
+        }
       }
     } else {
-      this.$router.push({ name: "Login" });
+      this.$router.push({ name: "Homepage" });
     }
   }
 };
@@ -75,55 +89,50 @@ export default {
   margin-bottom: 20px;
 }
 
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 890px) {
   .admin {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
-      "name name name settings settings"
-      "user user user user user"
-      "add-dish add-dish add-dish add-dish add-dish"
-      "menu menu menu menu menu ";
+      "settings name"
+      "ingredients add-dish"
+      "dish-types add-dish"
+      "dish-types add-dish"
+      "menu menu";
+  }
+
+  .name,
+  .settings,
+  .add-dish,
+  .ingredients,
+  .dish-types,
+  .menu {
+    align-self: flex-start;
   }
 
   .name {
-    align-self: flex-start;
     grid-area: name;
   }
 
   .settings {
-    align-self: flex-start;
     grid-area: settings;
   }
 
-  .user {
-    align-self: flex-start;
-    grid-area: user;
+  .dish-types {
+    grid-area: dish-types;
+  }
+
+  .ingredients {
+    grid-area: ingredients;
   }
 
   .add-dish {
-    align-self: flex-start;
     grid-area: add-dish;
   }
 
   .menu {
-    align-self: flex-start;
     grid-area: menu;
   }
-}
 
-@media only screen and (min-width: 800px) {
-  .admin {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas:
-      "name add-dish"
-      "settings add-dish"
-      "user add-dish"
-      "empty add-dish"
-      "menu menu";
-  }
-}
-
-@media only screen and (min-width: 800px) {
   .menu-header {
     display: flex;
     flex-direction: column;

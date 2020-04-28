@@ -1,6 +1,9 @@
 <template>
   <section class="order-list">
     <OrderItem v-for="item in order" :key="item.id" :id="item.id"></OrderItem>
+    <router-link :to="{name: 'Payment'}" v-if="$route.path != '/account'">
+      <button>Gå til betaling</button>
+    </router-link>
   </section>
 </template>
 

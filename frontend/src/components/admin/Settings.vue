@@ -1,7 +1,7 @@
 <template>
   <section class="settings card">
     <header>
-      <h2>Innstillinger</h2>
+      <h2>Farger</h2>
     </header>
     <ColorPickerList></ColorPickerList>
   </section>
