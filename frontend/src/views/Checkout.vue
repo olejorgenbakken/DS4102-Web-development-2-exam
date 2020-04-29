@@ -55,11 +55,6 @@ export default {
     };
   },
   created() {
-    if (!localStorage.getItem("order")) {
-      this.$router.push({ name: "NoItems" });
-    } else {
-      this.$router.push({ name: "Overview" });
-    }
     if (document.cookie) {
       let cookies = document.cookie.split(";");
       if (cookies.length > 1) {

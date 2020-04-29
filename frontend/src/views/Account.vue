@@ -4,22 +4,28 @@
       <h2>Konto</h2>
     </header>
     <Greeting class="name" :firstName="user.firstName" :lastName="user.lastName"></Greeting>
+    <AccountManagement class="account-management"></AccountManagement>
+    <OrderHistory class="orders" :orders="orders"></OrderHistory>
   </section>
 </template>
 
 <script>
 import axios from "axios";
 import Greeting from "../components/admin/Greeting.vue";
+import AccountManagement from "../components/account/AccountManagement";
+import OrderHistory from "../components/account/OrderHistory.vue";
 
 export default {
   name: "Account",
   components: {
-    Greeting
+    Greeting,
+    AccountManagement,
+    OrderHistory
   },
   data() {
     return {
-      orders: null,
-      user: null
+      orders: [],
+      user: {}
     };
   },
   created() {
@@ -65,13 +71,19 @@ export default {
   flex-direction: column;
 }
 
+.orders {
+  padding-top: 10px;
+}
+
 @media only screen and (min-width: 890px) {
   .account {
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto 120px 300px auto;
     grid-template-areas:
       "header header"
-      "name e"
-      "orders orders";
+      "orders name"
+      "orders account-management"
+      "orders e";
   }
 
   .name,
@@ -84,7 +96,12 @@ export default {
   }
 
   .orders {
+    padding-top: 0;
     grid-area: orders;
+  }
+
+  .account-management {
+    grid-area: account-management;
   }
 }
 </style>

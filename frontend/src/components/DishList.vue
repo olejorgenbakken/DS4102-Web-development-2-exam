@@ -4,7 +4,7 @@
       <EditableDishItem v-for="dish in dishesToShow" :key="dish.id" :id="dish.id"></EditableDishItem>
     </section>
     <section v-else class="user-list" v-for="dishType in dishTypes" :key="dishType.id">
-      <header class="list-header">
+      <header class="list-header" v-if="dishesToShow.length != 0">
         <h3>{{dishType.name}}</h3>
       </header>
       <section class="user-dishes list">
@@ -23,6 +23,9 @@
         ></DishItem>
       </section>
     </section>
+    <section class="no-dishes" v-if="dishesToShow.length == 0">
+      <NoDishes></NoDishes>
+    </section>
   </section>
 </template>
 
@@ -30,12 +33,14 @@
 import axios from "axios";
 import DishItem from "./user/DishItem";
 import EditableDishItem from "./admin/EditableDishItem";
+import NoDishes from "./user/NoDishes";
 
 export default {
   name: "DishList",
   components: {
     DishItem,
-    EditableDishItem
+    EditableDishItem,
+    NoDishes
   },
   data() {
     return {

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { store } from "../store.js";
 import axios from "axios";
 
 export default {
@@ -24,8 +25,17 @@ export default {
     };
   },
   created() {
-    axios.get("https://localhost:5001/settings/1").then(response => {
-      this.colors = response.data;
+    let settingsURL = `https://localhost:5001/settings`;
+    axios.get(settingsURL).then(response => {
+      if (response.status > 200) {
+        this.colors = {
+          logo: store.state.colors.logo,
+          highlighted: store.state.colors.highlighted,
+          highlightedText: store.state.colors.highlightedText
+        };
+      } else {
+        this.colors = response.data;
+      }
     });
   }
 };

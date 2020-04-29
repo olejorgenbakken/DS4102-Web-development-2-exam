@@ -94,6 +94,7 @@ export default {
     deleteDish() {
       let dishesURL = `https://localhost:5001/dishes/${this.id}`;
       axios.delete(dishesURL);
+      this.$el.style.opacity = "0.3";
     },
     previewPic() {
       let input = this.$el.querySelector("#uploaded-pic");
@@ -157,6 +158,7 @@ export default {
 .dish {
   display: flex;
   flex-direction: column;
+  transition: 0.3s ease-in-out;
 }
 
 .photo {

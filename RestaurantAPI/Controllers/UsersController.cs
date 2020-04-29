@@ -56,10 +56,10 @@ namespace RestaurantAPI.Controllers
             return updateUser;
         }
 
-        [HttpDelete("{email}")]
-        public async Task<User> Delete(string email)
+        [HttpDelete("{id}")]
+        public async Task<User> Delete(int id)
         {
-            User userToDelete = await _context.User.FirstOrDefaultAsync(user => user.Email == email);
+            User userToDelete = await _context.User.FirstOrDefaultAsync(user => user.Id == id);
             _context.Remove(userToDelete);
             await _context.SaveChangesAsync();
             return userToDelete;

@@ -8,32 +8,42 @@
       :value="colors.highlighted"
     ></ColorPicker>
     <ColorPicker
-      v-model="colors.highlightedText"
+      v-model="colors.HighlightedText"
       class="color"
       :text="'Fremhevet tekst'"
-      :value="colors.highlightedText"
+      :value="colors.HighlightedText"
     ></ColorPicker>
   </section>
 </template>
 
 <script>
+import { store } from "../../../store.js";
 import axios from "axios";
 import ColorPicker from "./ColorPickerItem";
 
 export default {
-  name: "Settings",
+  name: "ColorPickerList",
   components: {
     ColorPicker
   },
   data() {
     return {
-      colors: null
+      colors: {}
     };
   },
   created() {
-    let settingsURL = `https://localhost:5001/settings/1`;
+    let settingsURL = `https://localhost:5001/settings`;
     axios.get(settingsURL).then(response => {
-      this.colors = response.data;
+      if (response.status != 200) {
+        console.log(response.status);
+        this.colors = {
+          logo: store.state.colors.logo,
+          highlighted: store.state.colors.highlighted,
+          HighlightedText: store.state.colors.HighlightedText
+        };
+      } else {
+        this.colors = response.data;
+      }
     });
   },
   updated() {

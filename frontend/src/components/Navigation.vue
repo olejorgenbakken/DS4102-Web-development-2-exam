@@ -2,19 +2,19 @@
   <nav class="global-navigation">
     <section class="nav-content" v-if="loggedIn && !isAdmin">
       <router-link :to="{name: 'Account'}">Konto</router-link>
-      <router-link :to="{name: 'Checkout'}">Handlekurv</router-link>
+      <router-link :to="{name: 'Overview'}">Handlekurv</router-link>
       <p class="last" @click="logout">Logg ut</p>
     </section>
 
     <section class="nav-content" v-else-if="loggedIn && isAdmin">
       <router-link :to="{name: 'Account'}">Konto</router-link>
-      <router-link :to="{name: 'Checkout'}">Handlekurv</router-link>
+      <router-link :to="{name: 'Overview'}">Handlekurv</router-link>
       <router-link :to="{name: 'Admin'}">Dashboard</router-link>
       <p class="last" @click="logout">Logg ut</p>
     </section>
 
     <section class="nav-content" v-else>
-      <router-link :to="{name: 'Checkout'}">Handlekurv</router-link>
+      <router-link :to="{name: 'Overview'}">Handlekurv</router-link>
       <router-link class="last" :to="{name: 'Login'}">Logg inn</router-link>
     </section>
   </nav>
@@ -42,9 +42,10 @@ export default {
           let userID = loginCookie[1];
           let userDB = `https://localhost:5001/users/id/${userID}`;
           axios.get(userDB).then(response => {
-            console.log(response);
-            this.loggedIn = true;
-            this.isAdmin = response.data.admin;
+            if (response.status == 200) {
+              this.loggedIn = true;
+              this.isAdmin = response.data.admin;
+            }
           });
         }
       }
@@ -79,8 +80,19 @@ p {
 
 .nav-content {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+  gap: 5px 10px;
+}
+
+@media only screen and (min-width: 410px) {
+  .nav-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
 }
 </style>

@@ -22,10 +22,10 @@ namespace RestaurantAPI.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
-        public async Task<Settings> Get(int id)
+        [HttpGet]
+        public async Task<Settings> Get()
         {
-            Settings allSettings = await _context.Settings.FirstOrDefaultAsync(setting => setting.Id == id);
+            Settings allSettings = await _context.Settings.FirstOrDefaultAsync();
             return allSettings;
         }
 
@@ -35,6 +35,14 @@ namespace RestaurantAPI.Controllers
             _context.Update(updateSetting);
             await _context.SaveChangesAsync();
             return updateSetting;
+        }
+
+        [HttpPost]
+        public async Task<Settings> Post(Settings newSettings)
+        {
+            _context.Settings.Add(newSettings);
+            await _context.SaveChangesAsync();
+            return newSettings;
         }
     }
 

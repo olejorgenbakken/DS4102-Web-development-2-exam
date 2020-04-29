@@ -75,7 +75,6 @@ export default {
           updatedIngredient.name = this.newName;
         })
         .then(() => {
-          console.log(updatedIngredient);
           let ingredientToUpdate = `https://localhost:5001/ingredients/`;
           axios.put(ingredientToUpdate, updatedIngredient);
         });

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantAPI.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System;
 using Microsoft.AspNetCore.Hosting;
 
 namespace RestaurantAPI.Controllers
@@ -41,7 +42,15 @@ namespace RestaurantAPI.Controllers
 
             using (var filestream = new FileStream(absolutepath, FileMode.Create))
             {
-                file.CopyTo(filestream);
+                try
+                {
+                    file.CopyTo(filestream);
+
+                }
+                catch (System.IO.DirectoryNotFoundException)
+                {
+                    Console.Write("You need to create the wwwroot/images directory within the API");
+                }
             }
         }
 

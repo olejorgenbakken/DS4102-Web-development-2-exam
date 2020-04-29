@@ -1,5 +1,5 @@
 <template>
-  <article class="highlighted">
+  <article class="highlighted" v-if="dish.id != undefined">
     <section
       class="photo"
       :style="'background-image: url(https:localhost:5001/images/' + dish.photo + ')'"
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { store } from "../../store.js";
 import axios from "axios";
 import BuyButton from "./BuyButton";
 
@@ -51,8 +52,17 @@ export default {
     };
   },
   created() {
-    axios.get("https://localhost:5001/settings/1").then(response => {
-      this.colors = response.data;
+    let settingsURL = `https://localhost:5001/settings`;
+    axios.get(settingsURL).then(response => {
+      if (response.status > 200) {
+        this.colors = {
+          logo: store.state.colors.logo,
+          highlighted: store.state.colors.highlighted,
+          highlightedText: store.state.colors.highlightedText
+        };
+      } else {
+        this.colors = response.data;
+      }
     });
 
     let highlightedDish = "https://localhost:5001/dishes/highlighted/true";
@@ -60,11 +70,14 @@ export default {
       if (response.status != 200) {
         let randomDish = "https://localhost:5001/dishes";
         axios.get(randomDish).then(response => {
-          let rnd = Math.floor(Math.random() * response.data.length);
-          this.dish = response.data[rnd];
+          if (response.data.length > 0) {
+            let rnd = Math.floor(Math.random() * response.data.length);
+            this.dish = response.data[rnd];
+          }
         });
+      } else {
+        this.dish = response.data;
       }
-      this.dish = response.data;
     });
   }
 };

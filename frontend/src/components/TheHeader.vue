@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { store } from "../store.js";
 import axios from "axios";
 import Navigation from "./Navigation.vue";
 
@@ -25,8 +26,19 @@ export default {
     Navigation
   },
   created() {
-    axios.get("https://localhost:5001/settings/1").then(response => {
-      this.colors = response.data;
+    let settingsURL = `https://localhost:5001/settings`;
+    axios.get(settingsURL).then(response => {
+      if (response.status > 200) {
+        let settingsURL = `https://localhost:5001/settings/`;
+        this.colors = {
+          logo: store.state.colors.logo,
+          highlighted: store.state.colors.highlighted,
+          highlightedText: store.state.colors.highlightedText
+        };
+        axios.post(settingsURL, this.colors);
+      } else {
+        this.colors = response.data;
+      }
     });
   }
 };
