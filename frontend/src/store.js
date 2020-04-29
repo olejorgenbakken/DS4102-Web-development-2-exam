@@ -1,8 +1,8 @@
 export const store = {
     state: {
         colors: {
-            logo: "#0977ff",
-            highlighted: "#b7a900",
+            logo: "#eb7e24",
+            highlighted: "#345691",
             highlightedText: "#ffffff"
         }
     },
