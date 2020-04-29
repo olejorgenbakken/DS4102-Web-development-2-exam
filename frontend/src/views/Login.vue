@@ -14,6 +14,19 @@ export default {
   components: {
     LoginForm,
     CreateUser
+  },
+  beforeCreate() {
+    if (document.cookie) {
+      let cookies = document.cookie.split(";");
+      if (cookies.length > 1) {
+        return "";
+      } else {
+        let loginCookie = cookies[0].split("=");
+        if (loginCookie[0] == "login") {
+          this.$router.push({ name: "Account" });
+        }
+      }
+    }
   }
 };
 </script>

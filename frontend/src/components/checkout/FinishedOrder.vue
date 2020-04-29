@@ -31,7 +31,7 @@ export default {
     };
   },
   created() {
-    let settingsURL = `https://localhost:5001/settings/1`;
+    let settingsURL = `https://localhost:5001/settings`;
     axios.get(settingsURL).then(response => {
       this.colors = response.data;
     });

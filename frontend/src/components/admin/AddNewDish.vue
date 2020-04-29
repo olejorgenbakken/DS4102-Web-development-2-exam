@@ -74,13 +74,15 @@ export default {
   created() {
     let ingredientsURL = `https://localhost:5001/ingredients`;
     axios.get(ingredientsURL).then(response => {
-      response.data.forEach(ingredient => {
-        this.ingredients.push(ingredient.name);
-      });
+      if (response.status == 200 && response.data.length > 0) {
+        response.data.forEach(ingredient => {
+          this.ingredients.push(ingredient.name);
+        });
 
-      this.ingredient.sort((a, b) => {
-        return a.localeCompare(b);
-      });
+        this.ingredients.sort((a, b) => {
+          return a.localeCompare(b);
+        });
+      }
     });
 
     let dishListURL = `https://localhost:5001/dishtypes`;

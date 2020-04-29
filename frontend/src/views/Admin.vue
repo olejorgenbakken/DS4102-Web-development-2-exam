@@ -42,11 +42,11 @@ export default {
   },
   data() {
     return {
-      user: null,
+      user: {},
       dishes: []
     };
   },
-  created() {
+  beforeCreate() {
     if (document.cookie) {
       let cookies = document.cookie.split(";");
       if (cookies.length > 1) {

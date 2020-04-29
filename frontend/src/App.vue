@@ -78,6 +78,10 @@ input {
   font-family: var(--paragraph);
 }
 
+p {
+  line-height: 1.4em;
+}
+
 small {
   font-weight: 400;
 }
@@ -288,11 +292,11 @@ footer {
 
 @media screen and (prefers-color-scheme: dark) {
   :root {
-    --background: #202020;
-    --card-background: #111111;
+    --background: #292929;
+    --card-background: #181818;
     --text: #f5f5f5;
     --links: rgb(85, 139, 255);
-    --footer: #141414;
+    --footer: #0e0e0e;
   }
 
   .card:hover,

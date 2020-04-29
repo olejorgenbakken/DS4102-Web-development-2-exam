@@ -19,6 +19,13 @@ export default {
     return {
       order: JSON.parse(localStorage.getItem("order"))
     };
+  },
+  beforeCreate() {
+    if (!localStorage.getItem("order")) {
+      this.$router.push({ name: "NoItems" });
+    } else {
+      this.$router.push({ name: "Overview" });
+    }
   }
 };
 </script>

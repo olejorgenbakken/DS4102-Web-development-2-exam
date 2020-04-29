@@ -1,10 +1,10 @@
 <template>
-  <section class="card empty">
+  <section class="empty">
     <svg
       aria-hidden="true"
       focusable="false"
       data-prefix="fas"
-      data-icon="map-signs"
+      data-icon="grimace"
       role="img"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
@@ -12,28 +12,38 @@
     >
       <path
         :fill="colors.logo"
-        d="M507.31 84.69L464 41.37c-6-6-14.14-9.37-22.63-9.37H288V16c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v16H56c-13.25 0-24 10.75-24 24v80c0 13.25 10.75 24 24 24h385.37c8.49 0 16.62-3.37 22.63-9.37l43.31-43.31c6.25-6.26 6.25-16.38 0-22.63zM224 496c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V384h-64v112zm232-272H288v-32h-64v32H70.63c-8.49 0-16.62 3.37-22.63 9.37L4.69 276.69c-6.25 6.25-6.25 16.38 0 22.63L48 342.63c6 6 14.14 9.37 22.63 9.37H456c13.25 0 24-10.75 24-24v-80c0-13.25-10.75-24-24-24z"
+        d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zM144 400h-8c-17.7 0-32-14.3-32-32v-8h40v40zm0-56h-40v-8c0-17.7 14.3-32 32-32h8v40zm-8-136c0-17.7 14.3-32 32-32s32 14.3 32 32-14.3 32-32 32-32-14.3-32-32zm72 192h-48v-40h48v40zm0-56h-48v-40h48v40zm64 56h-48v-40h48v40zm0-56h-48v-40h48v40zm64 56h-48v-40h48v40zm0-56h-48v-40h48v40zm-8-104c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm64 128c0 17.7-14.3 32-32 32h-8v-40h40v8zm0-24h-40v-40h8c17.7 0 32 14.3 32 32v8z"
         class
       />
     </svg>
+
     <h2 class="empty-title">Du har ingenting i kurven</h2>
     <router-link :to="{name: 'Homepage'}">Gå tilbake og se om du finner noe du liker</router-link>
   </section>
 </template>
 
 <script>
+import { store } from "../../store.js";
 import axios from "axios";
 export default {
   name: "NoItems",
   data() {
     return {
-      colors: null
+      colors: {}
     };
   },
-  created() {
-    let settingsURL = `https://localhost:5001/settings/1`;
+  beforeMount() {
+    let settingsURL = `https://localhost:5001/settings`;
     axios.get(settingsURL).then(response => {
-      this.colors = response.data;
+      if (response.status > 200) {
+        this.colors = {
+          logo: store.state.colors.logo,
+          highlighted: store.state.colors.highlighted,
+          highlightedText: store.state.colors.highlightedText
+        };
+      } else {
+        this.colors = response.data;
+      }
     });
   }
 };
@@ -49,6 +59,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 20px 40px;
+  background: var(--footer);
 }
 
 .empty-icon {
