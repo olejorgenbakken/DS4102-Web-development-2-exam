@@ -8,10 +8,10 @@
       :value="colors.highlighted"
     ></ColorPicker>
     <ColorPicker
-      v-model="colors.HighlightedText"
+      v-model="colors.highlightedText"
       class="color"
       :text="'Fremhevet tekst'"
-      :value="colors.HighlightedText"
+      :value="colors.highlightedText"
     ></ColorPicker>
   </section>
 </template>
@@ -39,7 +39,7 @@ export default {
         this.colors = {
           logo: store.state.colors.logo,
           highlighted: store.state.colors.highlighted,
-          HighlightedText: store.state.colors.HighlightedText
+          HighlightedText: store.state.colors.highlightedText
         };
       } else {
         this.colors = response.data;
